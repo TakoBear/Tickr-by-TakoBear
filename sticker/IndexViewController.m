@@ -8,10 +8,14 @@
 
 #import "IndexViewController.h"
 #import "SourceViewController.h"
+#import "PhotoViewCell.h"
+#import "DraggableCollectionViewFlowLayout.h"
+#import "UICollectionView+Draggable.h"
+#import "UICollectionViewDataSource_Draggable.h"
 
-@interface IndexViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate>
 {
-    UICollectionViewFlowLayout *flowLayout;
+    DraggableCollectionViewFlowLayout *flowLayout;
     UICollectionView *imageCollectionView;
     NSMutableArray *imageDataArray;
 }
@@ -39,15 +43,16 @@
     }
     
     //Create CollectionView
-    flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    flowLayout = [[DraggableCollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(85, 110)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
     imageCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(10, 80, self.view.frame.size.width - 20, self.view.frame.size.height - 80) collectionViewLayout:flowLayout];
     [imageCollectionView setDelegate:self];
     [imageCollectionView setDataSource:self];
+    [imageCollectionView setDraggable:YES];
     [imageCollectionView setBackgroundColor:[UIColor clearColor]];
-    [imageCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"collectionCell"];
+    [imageCollectionView registerClass:[PhotoViewCell class] forCellWithReuseIdentifier:@"collectionCell"];
     
     [self.view addSubview:imageCollectionView];
     
@@ -85,10 +90,10 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[imageDataArray objectAtIndex:(int)indexPath.item]];
-    [imageView setFrame:CGRectMake(0, 0, 85, 85)];
-    [cell.contentView addSubview:imageView];
+    PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
+    [cell.imgView setImage:[imageDataArray objectAtIndex:indexPath.item]];
+    cell.userInteractionEnabled = YES;
+    
     return cell;
 }
 
@@ -99,7 +104,21 @@
         [self.navigationController pushViewController:sourceVC animated:YES];
     }
 
+}
 
+- (BOOL)collectionView:(LSCollectionViewHelper *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.item == 0) {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)collectionView:(LSCollectionViewHelper *)collectionView moveItemAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+    UIImage *index = [imageDataArray objectAtIndex:fromIndexPath.item];
+    [imageDataArray removeObjectAtIndex:fromIndexPath.item];
+    [imageDataArray insertObject:index atIndex:toIndexPath.item];
 }
 
 @end

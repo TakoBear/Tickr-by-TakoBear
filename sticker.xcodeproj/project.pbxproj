@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D658054C18BEF8DD0002683F /* PhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D658054B18BEF8DD0002683F /* PhotoViewCell.m */; };
+		D658055B18BF1C0D0002683F /* LSCollectionViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055118BF1C0D0002683F /* LSCollectionViewHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		D658055C18BF1C0D0002683F /* LSCollectionViewLayoutHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055318BF1C0D0002683F /* LSCollectionViewLayoutHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		D658055D18BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055618BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		D658055E18BF1C0D0002683F /* UICollectionView+Draggable.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055818BF1C0D0002683F /* UICollectionView+Draggable.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D6E4E77E18B3949B003E1B90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77D18B3949B003E1B90 /* Foundation.framework */; };
 		D6E4E78018B3949B003E1B90 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */; };
 		D6E4E78218B3949B003E1B90 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E78118B3949B003E1B90 /* UIKit.framework */; };
@@ -54,6 +59,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D658054A18BEF8DD0002683F /* PhotoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewCell.h; sourceTree = "<group>"; };
+		D658054B18BEF8DD0002683F /* PhotoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewCell.m; sourceTree = "<group>"; };
+		D658055018BF1C0D0002683F /* LSCollectionViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSCollectionViewHelper.h; sourceTree = "<group>"; };
+		D658055118BF1C0D0002683F /* LSCollectionViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSCollectionViewHelper.m; sourceTree = "<group>"; };
+		D658055218BF1C0D0002683F /* LSCollectionViewLayoutHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSCollectionViewLayoutHelper.h; sourceTree = "<group>"; };
+		D658055318BF1C0D0002683F /* LSCollectionViewLayoutHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSCollectionViewLayoutHelper.m; sourceTree = "<group>"; };
+		D658055518BF1C0D0002683F /* DraggableCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggableCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		D658055618BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		D658055718BF1C0D0002683F /* UICollectionView+Draggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+Draggable.h"; sourceTree = "<group>"; };
+		D658055818BF1C0D0002683F /* UICollectionView+Draggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Draggable.m"; sourceTree = "<group>"; };
+		D658055918BF1C0D0002683F /* UICollectionViewDataSource_Draggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewDataSource_Draggable.h; sourceTree = "<group>"; };
+		D658055A18BF1C0D0002683F /* UICollectionViewLayout_Warpable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewLayout_Warpable.h; sourceTree = "<group>"; };
 		D6E4E77A18B3949B003E1B90 /* sticker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sticker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E4E77D18B3949B003E1B90 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -121,6 +138,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D658054D18BF1C0D0002683F /* External */ = {
+			isa = PBXGroup;
+			children = (
+				D658054E18BF1C0D0002683F /* DraggableCollectionView */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		D658054E18BF1C0D0002683F /* DraggableCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				D658054F18BF1C0D0002683F /* Helpers */,
+				D658055418BF1C0D0002683F /* Layout */,
+				D658055718BF1C0D0002683F /* UICollectionView+Draggable.h */,
+				D658055818BF1C0D0002683F /* UICollectionView+Draggable.m */,
+				D658055918BF1C0D0002683F /* UICollectionViewDataSource_Draggable.h */,
+				D658055A18BF1C0D0002683F /* UICollectionViewLayout_Warpable.h */,
+			);
+			path = DraggableCollectionView;
+			sourceTree = "<group>";
+		};
+		D658054F18BF1C0D0002683F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D658055018BF1C0D0002683F /* LSCollectionViewHelper.h */,
+				D658055118BF1C0D0002683F /* LSCollectionViewHelper.m */,
+				D658055218BF1C0D0002683F /* LSCollectionViewLayoutHelper.h */,
+				D658055318BF1C0D0002683F /* LSCollectionViewLayoutHelper.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D658055418BF1C0D0002683F /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				D658055518BF1C0D0002683F /* DraggableCollectionViewFlowLayout.h */,
+				D658055618BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
 		D6E4E77118B3949B003E1B90 = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +213,7 @@
 		D6E4E78318B3949B003E1B90 /* sticker */ = {
 			isa = PBXGroup;
 			children = (
+				D658054D18BF1C0D0002683F /* External */,
 				D6E4E78C18B3949B003E1B90 /* AppDelegate.h */,
 				D6E4E78D18B3949B003E1B90 /* AppDelegate.m */,
 				D6E4E78F18B3949B003E1B90 /* Main.storyboard */,
@@ -164,6 +223,8 @@
 				D6E9354D18B9F9C70086802C /* SourceViewController.m */,
 				D6E4E7B518B39ADC003E1B90 /* GroupViewController.h */,
 				D6E4E7B618B39ADC003E1B90 /* GroupViewController.m */,
+				D658054A18BEF8DD0002683F /* PhotoViewCell.h */,
+				D658054B18BEF8DD0002683F /* PhotoViewCell.m */,
 				D6E4E79518B3949B003E1B90 /* Images.xcassets */,
 				D6E4E78418B3949B003E1B90 /* Supporting Files */,
 			);
@@ -345,7 +406,12 @@
 				D6E4E7B718B39ADC003E1B90 /* GroupViewController.m in Sources */,
 				D6E9354E18B9F9C70086802C /* SourceViewController.m in Sources */,
 				D6E4E79418B3949B003E1B90 /* IndexViewController.m in Sources */,
+				D658054C18BEF8DD0002683F /* PhotoViewCell.m in Sources */,
 				D6E4E78E18B3949B003E1B90 /* AppDelegate.m in Sources */,
+				D658055C18BF1C0D0002683F /* LSCollectionViewLayoutHelper.m in Sources */,
+				D658055E18BF1C0D0002683F /* UICollectionView+Draggable.m in Sources */,
+				D658055D18BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m in Sources */,
+				D658055B18BF1C0D0002683F /* LSCollectionViewHelper.m in Sources */,
 				D6E4E78A18B3949B003E1B90 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
