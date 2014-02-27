@@ -7,12 +7,22 @@
 //
 
 #import "AppDelegate.h"
+#import "IndexViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    // Override point for customization after application launch
+    IndexViewController *indexVC = [[IndexViewController alloc] init];
+    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:indexVC];
+    [navigation setToolbarHidden:YES];
+    [_window setRootViewController:navigation];
+    [_window setBackgroundColor:[UIColor whiteColor]];
+    
+    [application setStatusBarHidden:NO];
+    [application setStatusBarStyle:UIStatusBarStyleDefault];
+    
     return YES;
 }
 							

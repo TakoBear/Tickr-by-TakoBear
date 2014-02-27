@@ -8,7 +8,7 @@
 
 #import "GroupViewController.h"
 
-@interface GroupViewController ()
+@interface GroupViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
 
@@ -27,7 +27,33 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor redColor];
+    UITableView *groupTableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 400, 800)] autorelease];
+    groupTableView.delegate = self;
+    groupTableView.dataSource = self;
+    groupTableView.backgroundColor = [UIColor greenColor];
+    [self.view addSubview:groupTableView];
 }
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"cellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+    cell.textLabel.text = [NSString stringWithFormat:@"row %ld",(long)indexPath.row];
+    return cell;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
