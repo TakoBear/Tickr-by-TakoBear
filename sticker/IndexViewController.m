@@ -28,7 +28,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:0.9 green:0.7 blue:0.6 alpha:1];
+    self.view.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.3];
     
     //Data source
     imageDataArray = [NSMutableArray new];

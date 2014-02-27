@@ -7,10 +7,11 @@
 //
 
 #import "SourceViewController.h"
+#import "EditViewController.h"
 
 @interface SourceViewController () <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
-    
+    UIImagePickerController *imagePicker;
 }
 @end
 
@@ -65,22 +66,20 @@
 
 - (void)cameraAction
 {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.allowsEditing = YES;
     [self presentViewController:imagePicker animated:YES completion:nil];
-    [imagePicker release];
 }
 
 #pragma mark - Method to get Image
 
 - (void)getLocalPhoto
 {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
     [self presentViewController:imagePicker animated:YES completion:nil];
-    [imagePicker release];
     
 }
 
@@ -94,12 +93,21 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *pickImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    [imagePicker release];
     [self sendImageToEditViewControllWith:pickImage];
-    [pickImage release];
 }
 
-- (void)sendImageToEditViewControllWith:(id)image
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker;
 {
-    
+    [imagePicker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)sendImageToEditViewControllWith:(UIImage *)image
+{
+    EditViewController *editViewController = [[EditViewController alloc] init];
+    editViewController.originImage = image;
+    [self.navigationController pushViewController:editViewController animated:NO];
+    [editViewController release];
 }
 @end

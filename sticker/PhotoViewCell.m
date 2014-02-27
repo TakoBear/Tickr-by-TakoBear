@@ -16,6 +16,7 @@
     if (self) {
         // Initialization code
         _imgView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _imgView.contentMode = UIViewContentModeScaleAspectFit;
         _imgView.userInteractionEnabled = YES;
         [self.contentView addSubview:_imgView];
         [_imgView release];
