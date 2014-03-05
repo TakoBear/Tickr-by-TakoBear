@@ -13,6 +13,7 @@
 		D658055D18BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055618BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D658055E18BF1C0D0002683F /* UICollectionView+Draggable.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055818BF1C0D0002683F /* UICollectionView+Draggable.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D658056118BF26140002683F /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D658056018BF26140002683F /* EditViewController.m */; };
+		D6B4D14118C0C60F0025AC01 /* SHLineKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B4D14018C0C60F0025AC01 /* SHLineKit.m */; };
 		D6E4E77E18B3949B003E1B90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77D18B3949B003E1B90 /* Foundation.framework */; };
 		D6E4E78018B3949B003E1B90 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */; };
 		D6E4E78218B3949B003E1B90 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E78118B3949B003E1B90 /* UIKit.framework */; };
@@ -74,6 +75,8 @@
 		D658055A18BF1C0D0002683F /* UICollectionViewLayout_Warpable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewLayout_Warpable.h; sourceTree = "<group>"; };
 		D658055F18BF26140002683F /* EditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
 		D658056018BF26140002683F /* EditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
+		D6B4D13F18C0C60F0025AC01 /* SHLineKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHLineKit.h; sourceTree = "<group>"; };
+		D6B4D14018C0C60F0025AC01 /* SHLineKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHLineKit.m; sourceTree = "<group>"; };
 		D6E4E77A18B3949B003E1B90 /* sticker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sticker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E4E77D18B3949B003E1B90 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -200,6 +203,8 @@
 		D658056318BF268F0002683F /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				D658054D18BF1C0D0002683F /* External */,
+				D6B4D13E18C0C60F0025AC01 /* SHLineKit */,
 				D658054A18BEF8DD0002683F /* PhotoViewCell.h */,
 				D658054B18BEF8DD0002683F /* PhotoViewCell.m */,
 			);
@@ -212,6 +217,15 @@
 				D6E9352718B8D0350086802C /* imageData */,
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		D6B4D13E18C0C60F0025AC01 /* SHLineKit */ = {
+			isa = PBXGroup;
+			children = (
+				D6B4D13F18C0C60F0025AC01 /* SHLineKit.h */,
+				D6B4D14018C0C60F0025AC01 /* SHLineKit.m */,
+			);
+			path = SHLineKit;
 			sourceTree = "<group>";
 		};
 		D6E4E77118B3949B003E1B90 = {
@@ -250,7 +264,6 @@
 				D658056418BF26A50002683F /* Resource */,
 				D658056318BF268F0002683F /* Class */,
 				D658056218BF26300002683F /* ViewController */,
-				D658054D18BF1C0D0002683F /* External */,
 				D6E4E78C18B3949B003E1B90 /* AppDelegate.h */,
 				D6E4E78D18B3949B003E1B90 /* AppDelegate.m */,
 				D6E4E78F18B3949B003E1B90 /* Main.storyboard */,
@@ -434,6 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6E4E7B718B39ADC003E1B90 /* GroupViewController.m in Sources */,
+				D6B4D14118C0C60F0025AC01 /* SHLineKit.m in Sources */,
 				D6E9354E18B9F9C70086802C /* SourceViewController.m in Sources */,
 				D6E4E79418B3949B003E1B90 /* IndexViewController.m in Sources */,
 				D658054C18BEF8DD0002683F /* PhotoViewCell.m in Sources */,

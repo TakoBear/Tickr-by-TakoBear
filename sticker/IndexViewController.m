@@ -12,6 +12,8 @@
 #import "DraggableCollectionViewFlowLayout.h"
 #import "UICollectionView+Draggable.h"
 #import "UICollectionViewDataSource_Draggable.h"
+#import "SHLineKit.h"
+
 
 @interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -103,8 +105,12 @@
         SourceViewController *sourceVC = [[SourceViewController alloc] init];
         [self.navigationController pushViewController:sourceVC animated:YES];
     }
-
+    else {
+        [SHLineKit shareLineWithImage:[imageDataArray objectAtIndex:indexPath.item]];
+    }
 }
+
+#pragma mark - Draggable delegate
 
 - (BOOL)collectionView:(LSCollectionViewHelper *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -120,5 +126,6 @@
     [imageDataArray removeObjectAtIndex:fromIndexPath.item];
     [imageDataArray insertObject:index atIndex:toIndexPath.item];
 }
+
 
 @end
