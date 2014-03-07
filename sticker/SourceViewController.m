@@ -8,8 +8,9 @@
 
 #import "SourceViewController.h"
 #import "EditViewController.h"
+#import "ASIHTTPRequest.h"
 
-@interface SourceViewController () <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface SourceViewController () <UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
 {
     UIImagePickerController *imagePicker;
 }
@@ -47,12 +48,19 @@
     [self.view addSubview:localPhoto];
     [localPhoto release];
     
-    UIButton *googleSearch = [[UIButton alloc] initWithFrame:CGRectMake(50, 320, 150, 100)];
-    googleSearch.backgroundColor =[UIColor colorWithRed:0.5 green:0.5 blue:0.7 alpha:0.7];
-    [googleSearch setTitle:@"googleSearch" forState:UIControlStateNormal];
-    [googleSearch addTarget:self action:@selector(googleSearchAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:googleSearch];
-    [googleSearch release];
+    UITextField *searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(50, 320, 220, 100)];
+    searchTextField.delegate = self;
+    searchTextField.placeholder = @"google search";
+    searchTextField.borderStyle = UITextBorderStyleRoundedRect;
+    [self.view addSubview:searchTextField];
+    [searchTextField release];
+    
+//    UIButton *googleSearch = [[UIButton alloc] initWithFrame:CGRectMake(50, 440, 150, 100)];
+//    googleSearch.backgroundColor =[UIColor colorWithRed:0.5 green:0.5 blue:0.7 alpha:0.7];
+//    [googleSearch setTitle:@"googleSearch" forState:UIControlStateNormal];
+//    [googleSearch addTarget:self action:@selector(googleSearchAction) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:googleSearch];
+//    [googleSearch release];
 
 }
 
@@ -83,9 +91,52 @@
     
 }
 
-- (void)googleSearchAction
+- (void)googleSearchActionWithText:(NSString *)text
 {
+    NSString *textUTF8 = [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *searchString = [NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@",textUTF8];
+
+    NSURL *searchURL = [NSURL URLWithString:searchString];
+
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:searchURL];
+    [request setRequestMethod:@"GET"];
+    [request setTimeOutSeconds:1.0f];
+    [request setDelegate:self];
+    [request setDidFinishSelector:@selector(didFinishRequest:)];
+    [request setDidFailSelector:@selector(didFailRequest:)];
+    [request startAsynchronous];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:searchURL];
+//
+//    NSHTTPURLResponse *response = nil;
+//    NSError *error = nil;
+//    
+//    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+//    
+//    
+//    NSString *responseString = [[NSString alloc] initWithData:responseData  encoding:NSUTF8StringEncoding];
+//    
+//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     
+    }
+
+- (void)didFinishRequest:(ASIHTTPRequest *)request
+{
+    NSData *data = [request responseData];
+    NSString *responseString = [[NSString alloc] initWithData:data  encoding:NSUTF8StringEncoding];
+    
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSDictionary *responseDataDic =  [json objectForKey:@"responseData"];
+    NSArray *resultsArray = [responseDataDic objectForKey:@"results"];
+    NSLog(@"responseString = %@",responseString);
+    NSLog(@"json = %@",json);
+
+}
+
+
+- (void)didFailRequest:(ASIHTTPRequest *)request
+{
+    NSError *error = request.error;
+    NSLog(@"error = %@",error);
 }
 
 #pragma mark - UIimagePickerController Delegate
@@ -109,5 +160,18 @@
     editViewController.originImage = image;
     [self.navigationController pushViewController:editViewController animated:NO];
     [editViewController release];
+}
+
+#pragma mark - UITextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    if ([textField.text length] > 0) {
+        [self googleSearchActionWithText:textField.text];
+        return YES;
+    } else {
+        return NO;
+    }
 }
 @end
