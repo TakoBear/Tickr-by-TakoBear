@@ -34,8 +34,31 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, 320, 320)];
-    imageView.image = _originImage;
+    CGRect rect = CGRectZero;
+    float width = _originImage.size.width;
+    float height = _originImage.size.height;
+    float ratio = width/height;
+    if (width > height) {
+        rect.size = CGSizeMake(200, 200 / ratio);
+    } else {
+        rect.size = CGSizeMake(200 * ratio, 200);
+    }
+    
+    UIGraphicsBeginImageContext( rect.size );
+    [_originImage drawInRect:rect];
+    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    NSData *imageData = UIImagePNGRepresentation(picture1);
+    UIImage *img=[UIImage imageWithData:imageData];
+    
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, 200, 400)];
+    imageView.center = CGPointMake(self.view.center.x, imageView.center.y);
+    imageView.layer.borderWidth = 2.0f;
+    imageView.layer.borderColor = [[UIColor blackColor] CGColor];
+    imageView.image = img;
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView];
     [imageView release];
     
