@@ -15,23 +15,30 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        [self setIsProgress:NO];
+        
         _imgView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imgView.contentMode = UIViewContentModeScaleAspectFit;
         _imgView.backgroundColor = [UIColor clearColor];
         _imgView.userInteractionEnabled = YES;
+        
         [self.contentView addSubview:_imgView];
+        [self.contentView addSubview:_progressView];
+        
         [_imgView release];
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)setIsProgress:(BOOL)isProgress
 {
-    // Drawing code
+    _isProgress = isProgress;
+    if (_isProgress) {
+        _progressView = [[DACircularProgressView alloc] initWithFrame:self.bounds];
+        _progressView.roundedCorners = YES;
+        _progressView.trackTintColor = [UIColor clearColor];
+        [self.contentView addSubview:_progressView];
+    }
 }
-*/
 
 @end

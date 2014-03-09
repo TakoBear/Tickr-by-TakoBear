@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0325E7F118CCA0E8000D3F20 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325E7F018CCA0E8000D3F20 /* DACircularProgressView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D6507EA718C7576900168E31 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D6507E5618C7576900168E31 /* ASIAuthenticationDialog.m */; };
 		D6507EA818C7576900168E31 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6507E5918C7576900168E31 /* ASIDataCompressor.m */; };
 		D6507EA918C7576900168E31 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6507E5B18C7576900168E31 /* ASIDataDecompressor.m */; };
@@ -89,6 +90,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0325E7EF18CCA0E8000D3F20 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
+		0325E7F018CCA0E8000D3F20 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
 		D6507E5518C7576900168E31 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		D6507E5618C7576900168E31 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		D6507E5718C7576900168E31 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -234,6 +237,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0325E7EE18CCA0E8000D3F20 /* DACircularProgress */ = {
+			isa = PBXGroup;
+			children = (
+				0325E7EF18CCA0E8000D3F20 /* DACircularProgressView.h */,
+				0325E7F018CCA0E8000D3F20 /* DACircularProgressView.m */,
+			);
+			path = DACircularProgress;
+			sourceTree = "<group>";
+		};
 		D6507E5418C7576900168E31 /* ASIHTTP */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,6 +316,7 @@
 		D658054D18BF1C0D0002683F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				0325E7EE18CCA0E8000D3F20 /* DACircularProgress */,
 				D65380CC18CB5B7100DA6794 /* SDWebImage */,
 				D6507E5418C7576900168E31 /* ASIHTTP */,
 				D658054E18BF1C0D0002683F /* DraggableCollectionView */,
@@ -641,6 +654,7 @@
 				D65380C918CB103900DA6794 /* GoogleSearchViewController.m in Sources */,
 				D658055B18BF1C0D0002683F /* LSCollectionViewHelper.m in Sources */,
 				D65380F218CB5B7100DA6794 /* SDWebImagePrefetcher.m in Sources */,
+				0325E7F118CCA0E8000D3F20 /* DACircularProgressView.m in Sources */,
 				D6E4E78A18B3949B003E1B90 /* main.m in Sources */,
 				D65380F018CB5B7100DA6794 /* SDWebImageDownloaderOperation.m in Sources */,
 				D6507EAB18C7576900168E31 /* ASIFormDataRequest.m in Sources */,

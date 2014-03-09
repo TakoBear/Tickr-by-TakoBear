@@ -49,7 +49,7 @@
     [self.view addSubview:localPhoto];
     [localPhoto release];
     
-    UIButton *googleSearch = [[UIButton alloc] initWithFrame:CGRectMake(50, 440, 150, 100)];
+    UIButton *googleSearch = [[UIButton alloc] initWithFrame:CGRectMake(50, 320, 150, 100)];
     googleSearch.backgroundColor =[UIColor colorWithRed:0.5 green:0.5 blue:0.7 alpha:0.7];
     [googleSearch setTitle:@"googleSearch" forState:UIControlStateNormal];
     [googleSearch addTarget:self action:@selector(googleSearchAction) forControlEvents:UIControlEventTouchUpInside];
@@ -57,8 +57,6 @@
     [googleSearch release];
 
 }
-
-
 
 - (void)didReceiveMemoryWarning
 {

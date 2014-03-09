@@ -16,7 +16,7 @@
 #define kGOOGLE_IMAGE_SEARCH_API @"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
 #define kTEXT_FIELD_TAG 101
 
-@interface GoogleSearchViewController ()<UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
+@interface GoogleSearchViewController ()<UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate, ASIProgressDelegate>
 {
     NSMutableArray *tbImageURLArray;
     NSMutableArray *originImageURLArray;
@@ -57,7 +57,8 @@
     [searchTextField release];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(125,125)];
+    [flowLayout setItemSize:CGSizeMake(100,100)];
+    [flowLayout setMinimumInteritemSpacing:0.0f];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
     googleCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(10, 155, self.view.bounds.size.width-20, self.view.bounds.size.height-155) collectionViewLayout:flowLayout];
@@ -135,10 +136,11 @@
 {
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:searchURL];
     [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:2.0f];
+    [request setTimeOutSeconds:10.0f];
     [request setDelegate:self];
     [request setDidFinishSelector:@selector(didFinishRequest:)];
     [request setDidFailSelector:@selector(didFailRequest:)];
+    [request setDownloadProgressDelegate:self];
     [request startAsynchronous];
     
     [request release];
@@ -203,11 +205,26 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"googleImageCell" forIndexPath:indexPath];
-        NSURL *imageURL = [NSURL URLWithString:[tbImageURLArray objectAtIndex:indexPath.item]];
+    __block PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"googleImageCell" forIndexPath:indexPath];
+    cell.isProgress = YES;
+    NSURL *imageURL = [NSURL URLWithString:[tbImageURLArray objectAtIndex:indexPath.item]];
     
-    [cell.imgView setImageWithURL:imageURL placeholderImage:nil];
-        cell.userInteractionEnabled = YES;
+    [cell.imgView setImageWithURL:imageURL placeholderImage:nil
+                          options:0
+                         progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                            
+                             if (expectedSize > 0) {
+                                 CGFloat progress = (CGFloat)receivedSize / (CGFloat)expectedSize;
+                                 [cell.progressView setProgress:progress animated:YES];
+                             }
+                             
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        [cell.progressView setProgress:0.0f animated:YES];
+        [cell.imgView setImage:image];
+    }];
+    
+    cell.userInteractionEnabled = YES;
+    
     return cell;
 }
 

@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DACircularProgressView.h"
 
 @interface PhotoViewCell : UICollectionViewCell
 
 @property (nonatomic, retain) UIImageView *imgView;
+@property (nonatomic) BOOL isProgress;
+@property (nonatomic) DACircularProgressView *progressView;
 
 @end
