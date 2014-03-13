@@ -29,7 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.view.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.3];
     
     //Data source
@@ -93,6 +92,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
+    [cell.imgView setContentMode:UIViewContentModeScaleAspectFit];
     [cell.imgView setImage:[imageDataArray objectAtIndex:indexPath.item]];
     cell.userInteractionEnabled = YES;
     

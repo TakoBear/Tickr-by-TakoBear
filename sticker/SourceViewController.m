@@ -86,7 +86,9 @@
 - (void)googleSearchAction
 {
     GoogleSearchViewController *searchVC = [[GoogleSearchViewController alloc] init];
-    [self.navigationController pushViewController:searchVC animated:YES];
+    UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:searchVC] autorelease];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
     [searchVC release];
 }
 

@@ -14,9 +14,9 @@
 
 
 #define kGOOGLE_IMAGE_SEARCH_API @"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
-#define kTEXT_FIELD_TAG 101
+#define kSEARCH_BAR_TAG 101
 
-@interface GoogleSearchViewController ()<UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate, ASIProgressDelegate>
+@interface GoogleSearchViewController ()<UISearchBarDelegate,UICollectionViewDataSource,UICollectionViewDelegate, ASIProgressDelegate>
 {
     NSMutableArray *tbImageURLArray;
     NSMutableArray *originImageURLArray;
@@ -43,25 +43,38 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.2];
-    
     tbImageURLArray = [NSMutableArray new];
     originImageURLArray = [NSMutableArray new];
     
-    UITextField *searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(50, 85, 220, 50)];
-    searchTextField.delegate = self;
-    searchTextField.placeholder = @"google search";
-    searchTextField.borderStyle = UITextBorderStyleRoundedRect;
-    searchTextField.tag = kTEXT_FIELD_TAG;
-    [self.view addSubview:searchTextField];
-    [searchTextField release];
+    //To avoid clear background
+    self.view.backgroundColor = [UIColor whiteColor];
+    UIView *whiteView = [[UIView alloc] initWithFrame:self.view.bounds];
+    whiteView.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.3];
+    [self.view addSubview:whiteView];
+    [whiteView release];
     
+    //Create gesture to dismiss searchbar
+    gestureTextField = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboadOfSearchBar)];
+    
+    //Create Searchbar
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width-40, 40)];
+    searchBar.center = CGPointMake(self.view.center.x,searchBar.center.y);
+    searchBar.delegate = self;
+    searchBar.placeholder = @"start to search";
+    searchBar.barTintColor = [UIColor whiteColor];
+    searchBar.tag = kSEARCH_BAR_TAG;
+    [self.navigationController.navigationBar addSubview:searchBar];
+    [searchBar becomeFirstResponder];
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont systemFontOfSize:16]];
+    [searchBar release];
+    
+    //Create Collection View
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(100,100)];
     [flowLayout setMinimumInteritemSpacing:0.0f];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
-    googleCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(10, 155, self.view.bounds.size.width-20, self.view.bounds.size.height-155) collectionViewLayout:flowLayout];
+    googleCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(4, 70, self.view.bounds.size.width-8, self.view.bounds.size.height-70) collectionViewLayout:flowLayout];
     googleCollectionView.delegate = self;
     googleCollectionView.dataSource = self;
     googleCollectionView.backgroundColor = [UIColor clearColor];
@@ -70,7 +83,6 @@
     [self.view addSubview:googleCollectionView];
     [googleCollectionView release];
     
-    gestureTextField = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboadOfTextField)];
 }
 
 - (void)dealloc
@@ -86,23 +98,6 @@
     [gestureTextField release];
 }
 
-#pragma mark - TextField event 
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField;
-{
-    [self.view addGestureRecognizer:gestureTextField];
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField;
-{
-    [self.view removeGestureRecognizer:gestureTextField];
-}
-
-- (void)dismissKeyboadOfTextField
-{
-    [(UITextField *)[self.view viewWithTag:kTEXT_FIELD_TAG] resignFirstResponder];
-    [self.view removeGestureRecognizer:gestureTextField];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -110,24 +105,54 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - UITextField Delegate
+#pragma mark - UISearchBar Delegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    [textField resignFirstResponder];
-    if ([textField.text length] > 0) {
-        [tbImageURLArray removeAllObjects];
-        [originImageURLArray removeAllObjects];
-        inputString = [[textField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] retain];
-        //retain to avoid crash!
-        NSString *searchString = [NSString stringWithFormat:@"%@%@&rsz=8",kGOOGLE_IMAGE_SEARCH_API,inputString];
-        NSURL *searchURL = [NSURL URLWithString:searchString];
-        searchCount = 8;
-        [self googleSearchWithUrl:searchURL];
-        return YES;
-    } else {
-        return NO;
+    [self.view addGestureRecognizer:gestureTextField];
+    [searchBar setShowsCancelButton:YES animated:YES];
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [self.view removeGestureRecognizer:gestureTextField];
+    return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    NSString *text = searchBar.text;
+    
+    if (text.length == 0 ) {
+        [searchBar resignFirstResponder];
+        return;
     }
+    
+    [tbImageURLArray removeAllObjects];
+    [originImageURLArray removeAllObjects];
+    inputString = [[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] retain];
+    //retain to avoid crash!
+    NSString *searchString = [NSString stringWithFormat:@"%@%@&rsz=8",kGOOGLE_IMAGE_SEARCH_API,inputString];
+    NSURL *searchURL = [NSURL URLWithString:searchString];
+    searchCount = 8;
+    [self googleSearchWithUrl:searchURL];
+    
+    [searchBar resignFirstResponder];
+    
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
+- (void)dismissKeyboadOfSearchBar
+{
+    UISearchBar *searchBar = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:kSEARCH_BAR_TAG];
+    [searchBar resignFirstResponder];
+    [self.view removeGestureRecognizer:gestureTextField];
 }
 
 #pragma mark - ASIHTTPRequest
@@ -208,7 +233,8 @@
     __block PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"googleImageCell" forIndexPath:indexPath];
     cell.isProgress = YES;
     NSURL *imageURL = [NSURL URLWithString:[tbImageURLArray objectAtIndex:indexPath.item]];
-    
+    [cell.imgView setContentMode:UIViewContentModeScaleAspectFill];
+    [cell.imgView setClipsToBounds:YES];
     [cell.imgView setImageWithURL:imageURL placeholderImage:nil
                           options:0
                          progress:^(NSInteger receivedSize, NSInteger expectedSize) {
@@ -223,19 +249,15 @@
         [cell.imgView setImage:image];
     }];
     
-    cell.userInteractionEnabled = YES;
-    
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSURL *imageURL = [NSURL URLWithString:[originImageURLArray objectAtIndex:indexPath.item]];
-    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-    UIImage *image = [UIImage imageWithData:imageData];
-    EditViewController *editViewController = [[EditViewController alloc] init];
-    editViewController.originImage = image;
+    EditViewController *editViewController = [[EditViewController alloc] initWithURL:imageURL];
     [self.navigationController pushViewController:editViewController animated:YES];
+    
     [editViewController release];
 }
 

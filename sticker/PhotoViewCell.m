@@ -18,7 +18,6 @@
         [self setIsProgress:NO];
         
         _imgView = [[UIImageView alloc] initWithFrame:self.bounds];
-        _imgView.contentMode = UIViewContentModeScaleAspectFit;
         _imgView.backgroundColor = [UIColor clearColor];
         _imgView.userInteractionEnabled = YES;
         

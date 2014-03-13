@@ -7,8 +7,13 @@
 //
 
 #import "EditViewController.h"
+#import "SDWebImage/UIImageView+WebCache.h"
+#import "SDWebImage/UIImage+WebP.h"
 
 @interface EditViewController ()
+{
+    NSURL *contentsURL;
+}
 
 @end
 
@@ -30,10 +35,55 @@
     }
     return self;
 }
+
+- (id)initWithURL:(NSURL *)url
+{
+    self = [super init];
+    if (self) {
+        contentsURL = url;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    //To avoid clear background
+    self.view.backgroundColor = [UIColor whiteColor];
+    UIView *whiteView = [[UIView alloc] initWithFrame:self.view.bounds];
+    whiteView.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.3];
+    [self.view addSubview:whiteView];
+    [whiteView release];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, 200, 400)];
+    
+    if (contentsURL != nil) {
+        [imageView setImageWithURL:contentsURL];
+    } else {
+        imageView.image = _originImage;
+    }
+    
+    imageView.center = CGPointMake(self.view.center.x, imageView.center.y);
+    imageView.layer.borderWidth = 2.0f;
+    imageView.layer.borderColor = [[UIColor blackColor] CGColor];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.view addSubview:imageView];
+    [imageView release];
+    
+    //set completion image
+    
+    UIButton *save = [[UIButton alloc] initWithFrame:CGRectMake(10, 440, 100, 40)];
+    save.backgroundColor =[UIColor colorWithRed:0.5 green:0.5 blue:0.7 alpha:0.7];
+    [save setTitle:@"save" forState:UIControlStateNormal];
+    [save addTarget:self action:@selector(saveAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:save];
+    [save release];
+    
+}
+
+- (void)saveAction
+{
+    //resize image method
     CGRect rect = CGRectZero;
     float width = _originImage.size.width;
     float height = _originImage.size.height;
@@ -52,29 +102,7 @@
     NSData *imageData = UIImagePNGRepresentation(picture1);
     UIImage *img=[UIImage imageWithData:imageData];
     
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, 200, 400)];
-    imageView.center = CGPointMake(self.view.center.x, imageView.center.y);
-    imageView.layer.borderWidth = 2.0f;
-    imageView.layer.borderColor = [[UIColor blackColor] CGColor];
-    imageView.image = img;
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.view addSubview:imageView];
-    [imageView release];
-    
-    //set completion image
-    _completionImage = _originImage;
-    
-    UIButton *save = [[UIButton alloc] initWithFrame:CGRectMake(10, 440, 100, 40)];
-    save.backgroundColor =[UIColor colorWithRed:0.5 green:0.5 blue:0.7 alpha:0.7];
-    [save setTitle:@"save" forState:UIControlStateNormal];
-    [save addTarget:self action:@selector(saveAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:save];
-    [save release];
-}
-
-- (void)saveAction
-{
+    _completionImage = img;
     
 }
 

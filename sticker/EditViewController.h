@@ -13,4 +13,6 @@
 @property (nonatomic, retain) UIImage *originImage;
 @property (nonatomic, retain) UIImage *completionImage;
 
+- (id)initWithURL:(NSURL *)url;
+
 @end

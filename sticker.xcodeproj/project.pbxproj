@@ -360,14 +360,14 @@
 		D658056218BF26300002683F /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D65380C718CB103900DA6794 /* GoogleSearchViewController.h */,
-				D65380C818CB103900DA6794 /* GoogleSearchViewController.m */,
-				D6E4E79218B3949B003E1B90 /* IndexViewController.h */,
-				D6E4E79318B3949B003E1B90 /* IndexViewController.m */,
 				D6E4E7B518B39ADC003E1B90 /* GroupViewController.h */,
 				D6E4E7B618B39ADC003E1B90 /* GroupViewController.m */,
+				D6E4E79218B3949B003E1B90 /* IndexViewController.h */,
+				D6E4E79318B3949B003E1B90 /* IndexViewController.m */,
 				D6E9354C18B9F9C70086802C /* SourceViewController.h */,
 				D6E9354D18B9F9C70086802C /* SourceViewController.m */,
+				D65380C718CB103900DA6794 /* GoogleSearchViewController.h */,
+				D65380C818CB103900DA6794 /* GoogleSearchViewController.m */,
 				D658055F18BF26140002683F /* EditViewController.h */,
 				D658056018BF26140002683F /* EditViewController.m */,
 			);
