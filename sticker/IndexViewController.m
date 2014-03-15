@@ -62,6 +62,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
+    self.navigationController.toolbarHidden = YES;
 }
 
 - (void)dealloc
