@@ -13,6 +13,6 @@
 
 @property (nonatomic, retain) UIImageView *imgView;
 @property (nonatomic) BOOL isProgress;
-@property (nonatomic) DACircularProgressView *progressView;
+@property (nonatomic, assign) DACircularProgressView *progressView;
 
 @end

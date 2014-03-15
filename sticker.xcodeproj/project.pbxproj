@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0325E7F118CCA0E8000D3F20 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325E7F018CCA0E8000D3F20 /* DACircularProgressView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		0337CDEB18D4290C0083300C /* SHImageEditorFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337CDEA18D4290C0083300C /* SHImageEditorFrameView.m */; };
+		0337CDEF18D42AFB0083300C /* SHImageEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337CDEE18D42AFB0083300C /* SHImageEditorViewController.m */; };
+		0337CDF218D43AF50083300C /* PhotoEditedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337CDF118D43AF50083300C /* PhotoEditedViewController.m */; };
+		0337CDF518D4543A0083300C /* PaintingImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337CDF418D4543A0083300C /* PaintingImageViewController.m */; };
 		D6507EA718C7576900168E31 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D6507E5618C7576900168E31 /* ASIAuthenticationDialog.m */; };
 		D6507EA818C7576900168E31 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6507E5918C7576900168E31 /* ASIDataCompressor.m */; };
 		D6507EA918C7576900168E31 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6507E5B18C7576900168E31 /* ASIDataDecompressor.m */; };
@@ -41,7 +45,6 @@
 		D658055C18BF1C0D0002683F /* LSCollectionViewLayoutHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055318BF1C0D0002683F /* LSCollectionViewLayoutHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D658055D18BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055618BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D658055E18BF1C0D0002683F /* UICollectionView+Draggable.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055818BF1C0D0002683F /* UICollectionView+Draggable.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		D658056118BF26140002683F /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D658056018BF26140002683F /* EditViewController.m */; };
 		D6B4D14118C0C60F0025AC01 /* SHLineKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B4D14018C0C60F0025AC01 /* SHLineKit.m */; };
 		D6E4E77E18B3949B003E1B90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77D18B3949B003E1B90 /* Foundation.framework */; };
 		D6E4E78018B3949B003E1B90 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */; };
@@ -92,6 +95,15 @@
 /* Begin PBXFileReference section */
 		0325E7EF18CCA0E8000D3F20 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
 		0325E7F018CCA0E8000D3F20 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		0337CDE918D4290C0083300C /* SHImageEditorFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHImageEditorFrameView.h; sourceTree = "<group>"; };
+		0337CDEA18D4290C0083300C /* SHImageEditorFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHImageEditorFrameView.m; sourceTree = "<group>"; };
+		0337CDEC18D429370083300C /* SHImageEditorFrameProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHImageEditorFrameProtocol.h; sourceTree = "<group>"; };
+		0337CDED18D42AFB0083300C /* SHImageEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHImageEditorViewController.h; sourceTree = "<group>"; };
+		0337CDEE18D42AFB0083300C /* SHImageEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHImageEditorViewController.m; sourceTree = "<group>"; };
+		0337CDF018D43AF50083300C /* PhotoEditedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoEditedViewController.h; sourceTree = "<group>"; };
+		0337CDF118D43AF50083300C /* PhotoEditedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoEditedViewController.m; sourceTree = "<group>"; };
+		0337CDF318D4543A0083300C /* PaintingImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintingImageViewController.h; sourceTree = "<group>"; };
+		0337CDF418D4543A0083300C /* PaintingImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintingImageViewController.m; sourceTree = "<group>"; };
 		D6507E5518C7576900168E31 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		D6507E5618C7576900168E31 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		D6507E5718C7576900168E31 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -162,8 +174,6 @@
 		D658055818BF1C0D0002683F /* UICollectionView+Draggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Draggable.m"; sourceTree = "<group>"; };
 		D658055918BF1C0D0002683F /* UICollectionViewDataSource_Draggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewDataSource_Draggable.h; sourceTree = "<group>"; };
 		D658055A18BF1C0D0002683F /* UICollectionViewLayout_Warpable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewLayout_Warpable.h; sourceTree = "<group>"; };
-		D658055F18BF26140002683F /* EditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
-		D658056018BF26140002683F /* EditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
 		D6B4D13F18C0C60F0025AC01 /* SHLineKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHLineKit.h; sourceTree = "<group>"; };
 		D6B4D14018C0C60F0025AC01 /* SHLineKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHLineKit.m; sourceTree = "<group>"; };
 		D6E4E77A18B3949B003E1B90 /* sticker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sticker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -244,6 +254,18 @@
 				0325E7F018CCA0E8000D3F20 /* DACircularProgressView.m */,
 			);
 			path = DACircularProgress;
+			sourceTree = "<group>";
+		};
+		0337CDE818D428D00083300C /* SHImageEditor */ = {
+			isa = PBXGroup;
+			children = (
+				0337CDEC18D429370083300C /* SHImageEditorFrameProtocol.h */,
+				0337CDE918D4290C0083300C /* SHImageEditorFrameView.h */,
+				0337CDEA18D4290C0083300C /* SHImageEditorFrameView.m */,
+				0337CDED18D42AFB0083300C /* SHImageEditorViewController.h */,
+				0337CDEE18D42AFB0083300C /* SHImageEditorViewController.m */,
+			);
+			path = SHImageEditor;
 			sourceTree = "<group>";
 		};
 		D6507E5418C7576900168E31 /* ASIHTTP */ = {
@@ -368,8 +390,10 @@
 				D6E9354D18B9F9C70086802C /* SourceViewController.m */,
 				D65380C718CB103900DA6794 /* GoogleSearchViewController.h */,
 				D65380C818CB103900DA6794 /* GoogleSearchViewController.m */,
-				D658055F18BF26140002683F /* EditViewController.h */,
-				D658056018BF26140002683F /* EditViewController.m */,
+				0337CDF018D43AF50083300C /* PhotoEditedViewController.h */,
+				0337CDF118D43AF50083300C /* PhotoEditedViewController.m */,
+				0337CDF318D4543A0083300C /* PaintingImageViewController.h */,
+				0337CDF418D4543A0083300C /* PaintingImageViewController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -378,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				D658054D18BF1C0D0002683F /* External */,
+				0337CDE818D428D00083300C /* SHImageEditor */,
 				D6B4D13E18C0C60F0025AC01 /* SHLineKit */,
 				D658054A18BEF8DD0002683F /* PhotoViewCell.h */,
 				D658054B18BEF8DD0002683F /* PhotoViewCell.m */,
@@ -551,7 +576,7 @@
 		D6E4E77218B3949B003E1B90 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = TakoBear;
 				TargetAttributes = {
 					D6E4E77918B3949B003E1B90 = {
@@ -629,10 +654,12 @@
 				D6E4E7B718B39ADC003E1B90 /* GroupViewController.m in Sources */,
 				D6B4D14118C0C60F0025AC01 /* SHLineKit.m in Sources */,
 				D6507EA818C7576900168E31 /* ASIDataCompressor.m in Sources */,
+				0337CDF518D4543A0083300C /* PaintingImageViewController.m in Sources */,
 				D6E9354E18B9F9C70086802C /* SourceViewController.m in Sources */,
 				D6507EAE18C7576900168E31 /* ASINetworkQueue.m in Sources */,
 				D65380F318CB5B7100DA6794 /* UIButton+WebCache.m in Sources */,
 				D6E4E79418B3949B003E1B90 /* IndexViewController.m in Sources */,
+				0337CDEB18D4290C0083300C /* SHImageEditorFrameView.m in Sources */,
 				D65380F518CB5B7100DA6794 /* UIImage+MultiFormat.m in Sources */,
 				D658054C18BEF8DD0002683F /* PhotoViewCell.m in Sources */,
 				D65380EE18CB5B7100DA6794 /* SDWebImageDecoder.m in Sources */,
@@ -649,14 +676,15 @@
 				D6507EAC18C7576900168E31 /* ASIHTTPRequest.m in Sources */,
 				D658055D18BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m in Sources */,
 				D65380ED18CB5B7100DA6794 /* SDWebImageCompat.m in Sources */,
-				D658056118BF26140002683F /* EditViewController.m in Sources */,
 				D65380EA18CB5B7100DA6794 /* MKAnnotationView+WebCache.m in Sources */,
 				D65380C918CB103900DA6794 /* GoogleSearchViewController.m in Sources */,
 				D658055B18BF1C0D0002683F /* LSCollectionViewHelper.m in Sources */,
 				D65380F218CB5B7100DA6794 /* SDWebImagePrefetcher.m in Sources */,
+				0337CDF218D43AF50083300C /* PhotoEditedViewController.m in Sources */,
 				0325E7F118CCA0E8000D3F20 /* DACircularProgressView.m in Sources */,
 				D6E4E78A18B3949B003E1B90 /* main.m in Sources */,
 				D65380F018CB5B7100DA6794 /* SDWebImageDownloaderOperation.m in Sources */,
+				0337CDEF18D42AFB0083300C /* SHImageEditorViewController.m in Sources */,
 				D6507EAB18C7576900168E31 /* ASIFormDataRequest.m in Sources */,
 				D65380F118CB5B7100DA6794 /* SDWebImageManager.m in Sources */,
 				D65380F618CB5B7100DA6794 /* UIImage+WebP.m in Sources */,

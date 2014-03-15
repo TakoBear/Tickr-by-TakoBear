@@ -10,8 +10,7 @@
 #import "ASIHTTPRequest.h"
 #import "PhotoViewCell.h"
 #import "UIImageView+WebCache.h"
-#import "EditViewController.h"
-
+#import "PhotoEditedViewController.h"
 
 #define kGOOGLE_IMAGE_SEARCH_API @"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
 #define kSEARCH_BAR_TAG 101
@@ -24,6 +23,8 @@
     int searchCount;
     NSString *inputString;
     UITapGestureRecognizer *gestureTextField;
+    
+    BOOL isRequestFinished;
 }
 
 @end
@@ -83,12 +84,22 @@
     [self.view addSubview:googleCollectionView];
     [googleCollectionView release];
     
+    UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissGoogleSearch)];
+    
+    self.toolbarItems = @[cancelBtn];
+    
+    [self.navigationController setToolbarHidden:NO];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    isRequestFinished = YES;
 }
 
 - (void)dealloc
 {
-    [super dealloc];
-    
     [tbImageURLArray removeAllObjects];
     [originImageURLArray removeAllObjects];
     
@@ -96,6 +107,8 @@
     [originImageURLArray release];
     [inputString release];
     [gestureTextField release];
+    
+    [super dealloc];
 }
 
 
@@ -103,6 +116,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UI Action
+- (void)dismissGoogleSearch
+{
+    // Add boolean value to prevent request does not finish
+    if (isRequestFinished) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - UISearchBar Delegate
@@ -159,6 +181,7 @@
 
 - (void)googleSearchWithUrl:(NSURL *)searchURL
 {
+    isRequestFinished = NO;
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:searchURL];
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:10.0f];
@@ -174,6 +197,7 @@
 
 - (void)didFinishRequest:(ASIHTTPRequest *)request
 {
+    isRequestFinished = YES;
     NSData *data = [request responseData];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSDictionary *responseDataDic = [json objectForKey:@"responseData"];
@@ -204,6 +228,7 @@
 
 - (void)didFailRequest:(ASIHTTPRequest *)request
 {
+    isRequestFinished = YES;
     NSError *error = request.error;
     searchCount -= 8;
     NSLog(@"error = %@",error);
@@ -255,7 +280,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSURL *imageURL = [NSURL URLWithString:[originImageURLArray objectAtIndex:indexPath.item]];
-    EditViewController *editViewController = [[EditViewController alloc] initWithURL:imageURL];
+    PhotoEditedViewController *editViewController = [[PhotoEditedViewController alloc] initWithURL:imageURL];
+    editViewController.checkBounds = YES; // For checking bounds, the minimum scale is constrained to 1
+    [editViewController reset:NO];
+    
     [self.navigationController pushViewController:editViewController animated:YES];
     
     [editViewController release];

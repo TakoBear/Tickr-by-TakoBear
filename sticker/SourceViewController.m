@@ -7,7 +7,7 @@
 //
 
 #import "SourceViewController.h"
-#import "EditViewController.h"
+#import "PhotoEditedViewController.h"
 #import "ASIHTTPRequest.h"
 #import "GoogleSearchViewController.h"
 
@@ -109,8 +109,12 @@
 
 - (void)sendImageToEditViewControllWith:(UIImage *)image
 {
-    EditViewController *editViewController = [[EditViewController alloc] init];
-    editViewController.originImage = image;
+    PhotoEditedViewController *editViewController = [[PhotoEditedViewController alloc] init];
+    editViewController.sourceImage = image;
+    editViewController.previewImage = image;
+    editViewController.checkBounds = YES;
+    [editViewController reset:NO];
+    
     [self.navigationController pushViewController:editViewController animated:NO];
     [editViewController release];
 }
