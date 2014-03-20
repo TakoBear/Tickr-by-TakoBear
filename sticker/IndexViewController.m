@@ -13,13 +13,15 @@
 #import "UICollectionView+Draggable.h"
 #import "UICollectionViewDataSource_Draggable.h"
 #import "SHLineKit.h"
-
+#import "StickerAppConstants.h"
 
 @interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate>
 {
     DraggableCollectionViewFlowLayout *flowLayout;
     UICollectionView *imageCollectionView;
     NSMutableArray *imageDataArray;
+    NSString *documentPath;
+    NSOperationQueue *cellQueue;
 }
 
 @end
@@ -31,17 +33,29 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.3];
     
-    //Data source
     imageDataArray = [NSMutableArray new];
-    UIImage *imageAdd = [UIImage imageNamed:@"addData.png"];
-    [imageDataArray addObject:imageAdd];
+    cellQueue = [[NSOperationQueue alloc] init];
+    cellQueue.maxConcurrentOperationCount = 1;
     
-    for (int number = 1 ; number <= 17; number++) {
-        @autoreleasepool {
-            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.PNG",number]];
-            [imageDataArray addObject:[image copy]];
-        }
+    //Create a StickerDocument folder in path : var/.../Document/
+    NSArray *docDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    documentPath = [[docDirectory objectAtIndex:0] retain];
+    NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    if (![fileManager fileExistsAtPath:stickerPath]) {
+        [fileManager createDirectoryAtPath:stickerPath
+               withIntermediateDirectories:YES
+                                attributes:nil
+                                     error:&error];
     }
+    //Get only "image name" from  path : var/.../Document/StickerDocument/* and sort ascending by name
+    NSArray *fileArray = [[NSArray arrayWithArray:[fileManager contentsOfDirectoryAtPath:stickerPath error:&error]] retain];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES selector:@selector(compare:)];
+    fileArray = [fileArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    imageDataArray = [[NSMutableArray arrayWithArray:fileArray] retain];
+    UIImage *addDataImage = [UIImage imageNamed:@"addData.png"];
+    [imageDataArray insertObject:addDataImage atIndex:0];
     
     //Create CollectionView
     flowLayout = [[DraggableCollectionViewFlowLayout alloc] init];
@@ -69,6 +83,9 @@
 {
     [flowLayout release];
     [imageCollectionView release];
+    [imageDataArray release];
+    [documentPath release];
+    [cellQueue release];
     [super dealloc];
 }
 
@@ -87,6 +104,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    
     return imageDataArray.count;
 }
 
@@ -94,8 +112,26 @@
 {
     PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
     [cell.imgView setContentMode:UIViewContentModeScaleAspectFit];
-    [cell.imgView setImage:[imageDataArray objectAtIndex:indexPath.item]];
-    cell.userInteractionEnabled = YES;
+    
+    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+        UIImage *image;
+        if (indexPath.item == 0) {
+            image = [imageDataArray objectAtIndex:0];
+        } else {
+            NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+            NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
+            NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
+            image = [UIImage imageWithData:imageData];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [cell.imgView setImage:image];
+        });
+        
+    }];
+    
+    operation.queuePriority = (indexPath.item == 0) ? NSOperationQueuePriorityVeryHigh :NSOperationQueuePriorityLow;
+    [cellQueue addOperation:operation];
+    
     
     return cell;
 }
@@ -107,7 +143,10 @@
         [self.navigationController pushViewController:sourceVC animated:YES];
     }
     else {
-        [SHLineKit shareLineWithImage:[imageDataArray objectAtIndex:indexPath.item]];
+        NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+        NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
+        NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
+        [SHLineKit shareLineWithImage:[UIImage imageWithData:imageData]];
     }
 }
 
@@ -121,12 +160,21 @@
     return YES;
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+    if (indexPath.item == 0 || toIndexPath.item == 0) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)collectionView:(LSCollectionViewHelper *)collectionView moveItemAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
     UIImage *index = [imageDataArray objectAtIndex:fromIndexPath.item];
     [imageDataArray removeObjectAtIndex:fromIndexPath.item];
     [imageDataArray insertObject:index atIndex:toIndexPath.item];
 }
+
 
 
 @end

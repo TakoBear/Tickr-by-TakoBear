@@ -104,6 +104,7 @@
 		0337CDF118D43AF50083300C /* PhotoEditedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoEditedViewController.m; sourceTree = "<group>"; };
 		0337CDF318D4543A0083300C /* PaintingImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintingImageViewController.h; sourceTree = "<group>"; };
 		0337CDF418D4543A0083300C /* PaintingImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintingImageViewController.m; sourceTree = "<group>"; };
+		D62739AB18DAA63E003924E2 /* StickerAppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StickerAppConstants.h; sourceTree = "<group>"; };
 		D6507E5518C7576900168E31 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		D6507E5618C7576900168E31 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		D6507E5718C7576900168E31 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -401,6 +402,7 @@
 		D658056318BF268F0002683F /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				D62739AB18DAA63E003924E2 /* StickerAppConstants.h */,
 				D658054D18BF1C0D0002683F /* External */,
 				0337CDE818D428D00083300C /* SHImageEditor */,
 				D6B4D13E18C0C60F0025AC01 /* SHLineKit */,
