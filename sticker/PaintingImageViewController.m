@@ -8,6 +8,7 @@
 
 #import "PaintingImageViewController.h"
 #import "StickerAppConstants.h"
+#import "FileControl.h"
 
 #define kMAIN_IMGVIEW_TAG       1001
 #define kTMP_DRAWIMGVIEW_TAG    1002
@@ -149,6 +150,20 @@
     UIImage *saveImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     UIImageWriteToSavedPhotosAlbum(saveImage, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
+    NSString *imageName = [NSString stringWithFormat:@"Sticker%@",[dateFormatter stringFromDate:[NSDate date]]];
+    [dateFormatter release];
+    
+//    NSArray *docDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentPath = [[docDirectory objectAtIndex:0] retain];
+//    NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+    NSString *stickerPath = [[[FileControl mainPath] documentPath] stringByAppendingPathComponent:kFileStoreDirectory];
+    
+    NSData *imageData = UIImagePNGRepresentation(saveImage);
+    [imageData writeToFile:[stickerPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",imageName]] atomically:YES];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
     
