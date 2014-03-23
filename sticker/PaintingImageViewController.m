@@ -17,6 +17,7 @@
 {
     UIImage *_srcImage;
     UIColor *_drawColor;
+    CGPoint currentPoint;
     CGPoint lastPoint;
     
     CGFloat brushWidth;
@@ -26,6 +27,8 @@
     CGFloat opacity;
     
     BOOL mouseSwiped;
+    BOOL isErasing;
+    BOOL isGoogleSearchNavController;
 }
 
 @end
@@ -44,25 +47,34 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    red = 0.0f;
+    red = 255.0f;
     green = 0.0f;
     blue = 0.0f;
     opacity = 1.0f;
-    _drawColor = RGBA(red, green, blue, opacity);
+    _drawColor = [RGBA(red, green, blue, opacity) retain];
     brushWidth = 10.0f;
+    isGoogleSearchNavController = NO;
+    isErasing = NO;
     
     UIImageView *mainImgView = [[[UIImageView alloc] initWithFrame:self.view.bounds] autorelease];
     mainImgView.image = _srcImage;
+    mainImgView.backgroundColor = [UIColor clearColor];
     mainImgView.tag = kMAIN_IMGVIEW_TAG;
     [self setView:mainImgView];
+    [self.view setBackgroundColor:[UIColor clearColor]];
     
-    UIImageView *tmpDrawImgView = [[[UIImageView alloc] initWithFrame:self.view.bounds] autorelease];
+    UIImageView *tmpDrawImgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
     tmpDrawImgView.tag = kTMP_DRAWIMGVIEW_TAG;
+    tmpDrawImgView.backgroundColor = [UIColor clearColor];
     mainImgView.userInteractionEnabled = YES;
     [self.view addSubview:tmpDrawImgView];
     
     UIBarButtonItem *saveBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Save", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(savePhotos:)] autorelease];
     self.navigationItem.rightBarButtonItem = saveBtn;
+    
+    UIBarButtonItem *writeBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Write", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(setWritingMode:)] autorelease];
+    UIBarButtonItem *eraseBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Erase", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(setEraseMode:)] autorelease];
+    self.toolbarItems = @[writeBtn, eraseBtn];
     
 }
 
@@ -73,6 +85,7 @@
     for (UIView *view in self.navigationController.navigationBar.subviews) {
         if ([view isKindOfClass:[UISearchBar class]]) {
             [view setHidden:YES];
+            isGoogleSearchNavController = YES;
         }
     }
 }
@@ -88,33 +101,19 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    UIImageView *tempDrawImage = (UIImageView *)[self.view viewWithTag:kTMP_DRAWIMGVIEW_TAG];
     mouseSwiped = YES;
     UITouch *touch = [touches anyObject];
-    CGPoint currentPoint = [touch locationInView:self.view];
+    currentPoint = [touch locationInView:self.view];
     
-    UIGraphicsBeginImageContext(self.view.frame.size);
-    [tempDrawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
-    CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brushWidth );
-    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, 1.0);
-    CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
-    
-    CGContextStrokePath(UIGraphicsGetCurrentContext());
-    tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext();
-    [tempDrawImage setAlpha:opacity];
-    UIGraphicsEndImageContext();
-    
-    lastPoint = currentPoint;
+    [self handleTouches];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
+    UITouch *touch = [touches anyObject];
+    currentPoint = [touch locationInView:self.view];
+    
     UIImageView *tempDrawImage = (UIImageView *)[self.view viewWithTag:kTMP_DRAWIMGVIEW_TAG];
-    UIImageView *imgView = (UIImageView *)[self view];
     
     if(!mouseSwiped) {
         UIGraphicsBeginImageContext(self.view.frame.size);
@@ -129,6 +128,83 @@
         tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
     }
+
+}
+
+- (void)handleTouches
+{
+    if (!isErasing) {
+        [self drawNewLine];
+    } else {
+        [self eraseLine];
+    }
+}
+
+- (void)drawNewLine
+{
+    UIImageView *tempDrawImage = (UIImageView *)[self.view viewWithTag:kTMP_DRAWIMGVIEW_TAG];
+    
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [tempDrawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
+    CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+    CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), _drawColor.CGColor);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 10);
+    CGContextBeginPath(UIGraphicsGetCurrentContext());
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
+    
+    CGContextStrokePath(UIGraphicsGetCurrentContext());
+    tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext();
+    [tempDrawImage setAlpha:opacity];
+    UIGraphicsEndImageContext();
+    
+    lastPoint = currentPoint;
+    
+}
+
+- (void)eraseLine
+{
+    UIImageView *tempDrawImage = (UIImageView *)[self.view viewWithTag:kTMP_DRAWIMGVIEW_TAG];
+    [tempDrawImage setBackgroundColor:[UIColor clearColor]];
+    
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [tempDrawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeClear);
+    
+    CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 10);
+    
+    CGContextBeginPath(UIGraphicsGetCurrentContext());
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
+    
+    CGContextStrokePath(UIGraphicsGetCurrentContext());
+    tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    lastPoint = currentPoint;
+    
+    [tempDrawImage setNeedsDisplay];
+}
+
+#pragma mark - Action
+
+- (void)setWritingMode:(id)sender
+{
+    isErasing = NO;
+}
+
+- (void)setEraseMode:(id)sender
+{
+    isErasing = YES;
+}
+
+- (void)savePhotos:(id)sender
+{
+    UIImageView *tempDrawImage = (UIImageView *)[self.view viewWithTag:kTMP_DRAWIMGVIEW_TAG];
+    UIImageView *imgView = (UIImageView *)[self view];
     
     UIGraphicsBeginImageContext(self.view.frame.size);
     [imgView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
@@ -136,20 +212,9 @@
     imgView.image = UIGraphicsGetImageFromCurrentImageContext();
     tempDrawImage.image = nil;
     UIGraphicsEndImageContext();
-}
-
-#pragma mark - Action
-
-- (void)savePhotos:(id)sender
-{
-    UIImageView *tempDrawImage = (UIImageView *)[self.view viewWithTag:kTMP_DRAWIMGVIEW_TAG];
-    UIImageView *imgView = (UIImageView *)[self view];
     
-    UIGraphicsBeginImageContextWithOptions(imgView.bounds.size, NO, 0.0);
-    [imgView.image drawInRect:CGRectMake(0, 0, imgView.frame.size.width, imgView.frame.size.height)];
-    UIImage *saveImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    UIImageWriteToSavedPhotosAlbum(saveImage, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+    UIImageWriteToSavedPhotosAlbum(imgView.image, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -162,19 +227,21 @@
 //    NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
     NSString *stickerPath = [[[FileControl mainPath] documentPath] stringByAppendingPathComponent:kFileStoreDirectory];
     
-    NSData *imageData = UIImagePNGRepresentation(saveImage);
+    NSData *imageData = UIImagePNGRepresentation(imgView.image);
     [imageData writeToFile:[stickerPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",imageName]] atomically:YES];
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    /*
-    [self.navigationController.viewControllers[0] dismissViewControllerAnimated:YES completion:^{
-        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"Message" message:@"Succeed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alerView show];
-        [alerView release];
-    }];
-    */
+    if (isGoogleSearchNavController) {
+        [self.navigationController.viewControllers[0] dismissViewControllerAnimated:YES completion:^{
+            UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"Message" message:@"Succeed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alerView show];
+            [alerView release];
+        }];
+    } else {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
+
+#pragma mark - Helper Method
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
