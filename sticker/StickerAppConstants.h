@@ -7,3 +7,5 @@
 //
 
 #define kFileStoreDirectory      @"StickerDocument"
+
+#define RGBA(R,G,B,A) [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
