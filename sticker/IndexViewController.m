@@ -14,6 +14,7 @@
 #import "UICollectionViewDataSource_Draggable.h"
 #import "SHLineKit.h"
 #import "StickerAppConstants.h"
+#import "FileControl.h"
 
 @interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -22,6 +23,7 @@
     NSMutableArray *imageDataArray;
     NSString *documentPath;
     NSOperationQueue *cellQueue;
+    BOOL isDeleteMode;
 }
 
 @end
@@ -36,7 +38,12 @@
     imageDataArray = [NSMutableArray new];
     cellQueue = [[NSOperationQueue alloc] init];
     cellQueue.maxConcurrentOperationCount = 1;
-    
+    isDeleteMode = NO;
+    //Create navigation bar & items
+    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
+                                                             target:self
+                                                             action:@selector(changeDeleteMode)];
+    self.navigationItem.rightBarButtonItem = deleteButton;
     //Create a StickerDocument folder in path : var/.../Document/
     NSArray *docDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     documentPath = [[docDirectory objectAtIndex:0] retain];
@@ -75,8 +82,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
     self.navigationController.toolbarHidden = YES;
+    if (imageCollectionView) {
+        [imageCollectionView reloadData];
+    }
 }
 
 - (void)dealloc
@@ -95,6 +105,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)changeDeleteMode
+{
+    isDeleteMode = !isDeleteMode;
+    [imageCollectionView reloadData];
+}
+
 #pragma mark - CollectionView dataSource & Delegate
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -110,20 +126,27 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
     [cell.imgView setContentMode:UIViewContentModeScaleAspectFit];
     
     NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-        UIImage *image;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIImage *image;
         if (indexPath.item == 0) {
             image = [imageDataArray objectAtIndex:0];
+            cell.deleteImgView.hidden = YES;
         } else {
             NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
             NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
             NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
             image = [UIImage imageWithData:imageData];
+            if (isDeleteMode) {
+                cell.deleteImgView.hidden = NO;
+            } else {
+                cell.deleteImgView.hidden = YES;
+            }
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
             [cell.imgView setImage:image];
         });
         
@@ -140,13 +163,26 @@
 {
     if (indexPath.item == 0) {
         SourceViewController *sourceVC = [[SourceViewController alloc] init];
+        if (isDeleteMode) {
+            [self changeDeleteMode];
+        }
         [self.navigationController pushViewController:sourceVC animated:YES];
     }
     else {
-        NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
-        NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
-        NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
-        [SHLineKit shareLineWithImage:[UIImage imageWithData:imageData]];
+        
+        if (isDeleteMode) {
+            NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+            NSString *deletePath = [NSString stringWithFormat:@"%@/%@",stickerPath,imageDataArray[indexPath.item]];
+            BOOL isRemove = [[FileControl mainPath] removeFileAtPath:deletePath];
+            NSLog(@" Remove : %@",isRemove ? @"Success" : @"Failed");
+            [imageDataArray removeObjectAtIndex:indexPath.item];
+            [imageCollectionView reloadData];
+        } else {
+            NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+            NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
+            NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
+            [SHLineKit shareLineWithImage:[UIImage imageWithData:imageData]];
+        }
     }
 }
 

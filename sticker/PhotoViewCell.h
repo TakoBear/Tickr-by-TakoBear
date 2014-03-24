@@ -12,6 +12,7 @@
 @interface PhotoViewCell : UICollectionViewCell
 
 @property (nonatomic, retain) UIImageView *imgView;
+@property (nonatomic, retain) UIImageView *deleteImgView;
 @property (nonatomic) BOOL isProgress;
 @property (nonatomic, assign) DACircularProgressView *progressView;
 
