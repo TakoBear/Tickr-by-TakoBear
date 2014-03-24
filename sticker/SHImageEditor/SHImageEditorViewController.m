@@ -455,7 +455,7 @@ static const NSTimeInterval kAnimationIntervalTransform = 0.2;
     
 }
 
-- (IBAction)handlePinch:(UIPinchGestureRecognizer *)recognizer
+- (void)handlePinch:(UIPinchGestureRecognizer *)recognizer
 {
     if([self handleGestureState:recognizer.state]) {
         if(recognizer.state == UIGestureRecognizerStateBegan){
@@ -476,7 +476,7 @@ static const NSTimeInterval kAnimationIntervalTransform = 0.2;
     }
 }
 
-- (IBAction)handleTap:(UITapGestureRecognizer *)recogniser {
+- (void)handleTap:(UITapGestureRecognizer *)recogniser {
     [self reset:YES];
 }
 

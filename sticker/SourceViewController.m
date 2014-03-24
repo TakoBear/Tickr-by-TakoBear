@@ -118,7 +118,7 @@
     PhotoEditedViewController *editViewController = [[PhotoEditedViewController alloc] init];
     editViewController.sourceImage = image;
     editViewController.previewImage = image;
-    editViewController.checkBounds = YES;
+//    editViewController.checkBounds = YES;
     [editViewController reset:NO];
     
     [self.navigationController pushViewController:editViewController animated:NO];

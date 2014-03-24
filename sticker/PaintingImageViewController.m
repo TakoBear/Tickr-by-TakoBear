@@ -56,14 +56,14 @@
     isGoogleSearchNavController = NO;
     isErasing = NO;
     
-    UIImageView *mainImgView = [[[UIImageView alloc] initWithFrame:self.view.bounds] autorelease];
+    UIImageView *mainImgView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, self.view.frame.size.width)] autorelease];
     mainImgView.image = _srcImage;
     mainImgView.backgroundColor = [UIColor clearColor];
     mainImgView.tag = kMAIN_IMGVIEW_TAG;
-    [self setView:mainImgView];
-    [self.view setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:mainImgView];
+    [self.view setBackgroundColor:[UIColor blackColor]];
     
-    UIImageView *tmpDrawImgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    UIImageView *tmpDrawImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, self.view.frame.size.width)];
     tmpDrawImgView.tag = kTMP_DRAWIMGVIEW_TAG;
     tmpDrawImgView.backgroundColor = [UIColor clearColor];
     mainImgView.userInteractionEnabled = YES;
@@ -204,11 +204,11 @@
 - (void)savePhotos:(id)sender
 {
     UIImageView *tempDrawImage = (UIImageView *)[self.view viewWithTag:kTMP_DRAWIMGVIEW_TAG];
-    UIImageView *imgView = (UIImageView *)[self view];
+    UIImageView *imgView = (UIImageView *)[self.view viewWithTag:kMAIN_IMGVIEW_TAG];
     
-    UIGraphicsBeginImageContext(self.view.frame.size);
-    [imgView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
-    [tempDrawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:opacity];
+    UIGraphicsBeginImageContext(imgView.frame.size);
+    [imgView.image drawInRect:CGRectMake(0, 0, imgView.frame.size.width, imgView.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+    [tempDrawImage.image drawInRect:CGRectMake(0, 0, imgView.frame.size.width, imgView.frame.size.height) blendMode:kCGBlendModeNormal alpha:opacity];
     imgView.image = UIGraphicsGetImageFromCurrentImageContext();
     tempDrawImage.image = nil;
     UIGraphicsEndImageContext();
