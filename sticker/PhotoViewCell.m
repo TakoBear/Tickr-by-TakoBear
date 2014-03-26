@@ -26,7 +26,7 @@
         _deleteImgView.userInteractionEnabled = YES;
         UIImage *deleteImage = [UIImage imageNamed:@"Delete.png"];
         [_deleteImgView setImage:deleteImage];
-        _deleteImgView.frame = CGRectMake(self.bounds.size.width * 2/3, 0, self.bounds.size.width *1/3, self.bounds.size.height *1/3);
+        _deleteImgView.frame = CGRectMake(0, 0, self.bounds.size.width *1/3, self.bounds.size.width *1/3);
         _deleteImgView.hidden = YES;
         [_imgView addSubview:_deleteImgView];
         

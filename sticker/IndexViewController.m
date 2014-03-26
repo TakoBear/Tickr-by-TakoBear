@@ -15,6 +15,7 @@
 #import "SHLineKit.h"
 #import "StickerAppConstants.h"
 #import "FileControl.h"
+#import "SettingViewController.h"
 
 @interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -22,7 +23,7 @@
     UICollectionView *imageCollectionView;
     NSMutableArray *imageDataArray;
     NSString *documentPath;
-    NSOperationQueue *cellQueue;
+//    NSOperationQueue *cellQueue;
     BOOL isDeleteMode;
 }
 
@@ -36,14 +37,20 @@
     self.view.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.3];
     
     imageDataArray = [NSMutableArray new];
-    cellQueue = [[NSOperationQueue alloc] init];
-    cellQueue.maxConcurrentOperationCount = 1;
+//    cellQueue = [[NSOperationQueue alloc] init];
+//    cellQueue.maxConcurrentOperationCount = 1;
     isDeleteMode = NO;
     //Create navigation bar & items
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
                                                              target:self
                                                              action:@selector(changeDeleteMode)];
+    
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Setting.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView)];
+    
     self.navigationItem.rightBarButtonItem = deleteButton;
+    self.navigationItem.leftBarButtonItem = settingButton;
+    
+    
     //Create a StickerDocument folder in path : var/.../Document/
     NSArray *docDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     documentPath = [[docDirectory objectAtIndex:0] retain];
@@ -95,7 +102,7 @@
     [imageCollectionView release];
     [imageDataArray release];
     [documentPath release];
-    [cellQueue release];
+//    [cellQueue release];
     [super dealloc];
 }
 
@@ -109,6 +116,13 @@
 {
     isDeleteMode = !isDeleteMode;
     [imageCollectionView reloadData];
+}
+
+- (void)pushToSettingView
+{
+    SettingViewController *settingVC = [[SettingViewController alloc] init];
+    [self.navigationController pushViewController:settingVC animated:YES];
+    [settingVC release];
 }
 
 #pragma mark - CollectionView dataSource & Delegate
@@ -130,8 +144,8 @@
     PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
     [cell.imgView setContentMode:UIViewContentModeScaleAspectFit];
     
-    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
+//    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
             UIImage *image;
         if (indexPath.item == 0) {
             image = [imageDataArray objectAtIndex:0];
@@ -148,13 +162,13 @@
             }
         }
             [cell.imgView setImage:image];
-        });
-        
-    }];
-    
-    operation.queuePriority = (indexPath.item == 0) ? NSOperationQueuePriorityVeryHigh :NSOperationQueuePriorityLow;
-    [cellQueue addOperation:operation];
-    
+//        });
+//        
+//    }];
+//    
+//    operation.queuePriority = (indexPath.item == 0) ? NSOperationQueuePriorityVeryHigh :NSOperationQueuePriorityLow;
+//    [cellQueue addOperation:operation];
+
     
     return cell;
 }
@@ -169,7 +183,6 @@
         [self.navigationController pushViewController:sourceVC animated:YES];
     }
     else {
-        
         if (isDeleteMode) {
             NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
             NSString *deletePath = [NSString stringWithFormat:@"%@/%@",stickerPath,imageDataArray[indexPath.item]];
