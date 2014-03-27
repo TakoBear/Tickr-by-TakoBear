@@ -7,7 +7,7 @@
 //
 
 #import "PaintingImageViewController.h"
-#import "StickerAppConstants.h"
+#import "settingVariable.h"
 #import "FileControl.h"
 
 #define kMAIN_IMGVIEW_TAG       1001

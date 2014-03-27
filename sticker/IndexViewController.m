@@ -12,10 +12,10 @@
 #import "DraggableCollectionViewFlowLayout.h"
 #import "UICollectionView+Draggable.h"
 #import "UICollectionViewDataSource_Draggable.h"
-#import "SHLineKit.h"
-#import "StickerAppConstants.h"
 #import "FileControl.h"
 #import "SettingViewController.h"
+#import "ChatManager.h"
+#import "SettingVariable.h"
 
 @interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -35,6 +35,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.3];
+    [SettingVariable sharedInstance];
     
     imageDataArray = [NSMutableArray new];
 //    cellQueue = [[NSOperationQueue alloc] init];
@@ -194,7 +195,11 @@
             NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
             NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
             NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
-            [SHLineKit shareLineWithImage:[UIImage imageWithData:imageData]];
+            ChatManager *chatManager = [ChatManager new];
+            ChatApp *chat = [chatManager currentChatAppWithType];
+            if ([chat isUserInstalledApp]) {
+                [chat shareWithImage:imageData];
+            }
         }
     }
 }

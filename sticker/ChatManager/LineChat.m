@@ -1,12 +1,12 @@
 //
-//  SHLineKit.m
-//  SHLineKitDemo
+//  LineChat.m
+//  sticker
 //
-//  Created by shouian on 2014/2/2.
-//  Copyright (c) 2014年 shouian. All rights reserved.
+//  Created by 李健銘 on 2014/3/27.
+//  Copyright (c) 2014年 TakoBear. All rights reserved.
 //
 
-#import "SHLineKit.h"
+#import "LineChat.h"
 
 @interface UIPasteboard(Line)
 
@@ -29,25 +29,21 @@
 
 @end
 
-@implementation SHLineKit
+@implementation LineChat
 
-+ (BOOL)isUserInstallLine
+- (BOOL)isUserInstalledApp
 {
-    // You can type line:// with Safari, this is the same effect
     return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"line://"]];
 }
 
-+ (void)shareLineWithMessage:(NSString *)message
-{
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"line://msg/text/%@", [message stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]];
-}
-
-+ (void)shareLineWithImage:(UIImage *)image
+- (void)shareWithImage:(NSData *)imageData
 {
     UIPasteboard *pasteboard = [UIPasteboard generatePasteLineBoard];
-    [pasteboard setData:UIImageJPEGRepresentation(image, 1.0f) forPasteboardType:@"public.jpeg"];
+    [pasteboard setData:imageData forPasteboardType:@"public.jpeg"];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"line://msg/image/%@", pasteboard.name]]];
 }
+
+
 
 @end
