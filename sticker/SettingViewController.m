@@ -158,13 +158,13 @@
         switch (indexPath.row) {
             case ChatAppType_Line:
             {
-                [[SettingVariable sharedInstance].variableDictonary setValue:[NSNumber numberWithInt:ChatAppType_Line] forKey:kChooseChatAppTypeKey];
+                [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithInt:ChatAppType_Line] forKey:kChooseChatAppTypeKey];
                 [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:ChatAppType_Line] forKey:kChooseChatAppTypeKey];
             }
                 break;
             case ChatAppType_WhatsApp:
             {
-                [[SettingVariable sharedInstance].variableDictonary setValue:[NSNumber numberWithInt:ChatAppType_WhatsApp] forKey:kChooseChatAppTypeKey];
+                [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithInt:ChatAppType_WhatsApp] forKey:kChooseChatAppTypeKey];
                 [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:ChatAppType_WhatsApp] forKey:kChooseChatAppTypeKey];
             }
                 break;

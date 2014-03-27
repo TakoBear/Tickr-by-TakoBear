@@ -15,7 +15,7 @@
 
 - (ChatApp *)currentChatAppWithType
 {
-    int chatAppType = [[[SettingVariable sharedInstance].variableDictonary objectForKey:kChooseChatAppTypeKey] intValue];
+    int chatAppType = [[[SettingVariable sharedInstance].variableDictionary objectForKey:kChooseChatAppTypeKey] intValue];
     switch (chatAppType) {
         case ChatAppType_Line:
         {

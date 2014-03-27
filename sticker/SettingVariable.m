@@ -22,18 +22,26 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _variableDictonary = [[NSMutableDictionary alloc] init];
+        _variableDictionary = [[NSMutableDictionary alloc] init];
         
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         
         if (![userDefault objectForKey:kChooseChatAppTypeKey]) {
             [userDefault setObject:[NSNumber numberWithInt:ChatAppType_Line] forKey:kChooseChatAppTypeKey];
         } else {
-            [_variableDictonary setValue:[userDefault objectForKey:kChooseChatAppTypeKey] forKey:kChooseChatAppTypeKey];
+            [_variableDictionary setValue:[userDefault objectForKey:kChooseChatAppTypeKey] forKey:kChooseChatAppTypeKey];
         }
     
     }
     return self;
 }
+
+- (void)addImagetoImageDataArray:(NSString *)imageName
+{
+    if ([_variableDictionary objectForKey:kImageDataArrayKey]) {
+        [[_variableDictionary objectForKey:kImageDataArrayKey] addObject:imageName];
+    }
+}
+
 
 @end

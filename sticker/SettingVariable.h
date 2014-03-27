@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 
 #define kFileStoreDirectory      @"StickerDocument"
+#define kPhotoAlbumName          @"StickerAlbum"
 #define RGBA(R,G,B,A) [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
 
-//ChatApp type key
+//Variable Dictionary key
 #define kChooseChatAppTypeKey @"choose_chatApp_key"
+#define kImageDataArrayKey    @"Image_Data_Array"
 
 typedef NS_ENUM(int, ChatAppType) {
     ChatAppType_Line,
@@ -23,6 +25,8 @@ typedef NS_ENUM(int, ChatAppType) {
 
 + (SettingVariable *)sharedInstance;
 
-@property (nonatomic, retain) NSMutableDictionary *variableDictonary;
+- (void)addImagetoImageDataArray:(NSString *)imageName;
+
+@property (nonatomic, retain) NSMutableDictionary *variableDictionary;
 
 @end

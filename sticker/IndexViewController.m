@@ -35,7 +35,6 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.3];
-    [SettingVariable sharedInstance];
     
     imageDataArray = [NSMutableArray new];
 //    cellQueue = [[NSOperationQueue alloc] init];
@@ -71,6 +70,10 @@
     imageDataArray = [[NSMutableArray arrayWithArray:fileArray] retain];
     UIImage *addDataImage = [UIImage imageNamed:@"addData.png"];
     [imageDataArray insertObject:addDataImage atIndex:0];
+    SettingVariable *settingVariable = [SettingVariable sharedInstance];
+    [settingVariable.variableDictionary setObject:imageDataArray forKey:kImageDataArrayKey];
+
+    
     
     //Create CollectionView
     flowLayout = [[DraggableCollectionViewFlowLayout alloc] init];
@@ -93,6 +96,7 @@
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.toolbarHidden = YES;
     if (imageCollectionView) {
+        imageDataArray = [[SettingVariable sharedInstance].variableDictionary objectForKey:kImageDataArrayKey];
         [imageCollectionView reloadData];
     }
 }
@@ -228,7 +232,6 @@
     [imageDataArray removeObjectAtIndex:fromIndexPath.item];
     [imageDataArray insertObject:index atIndex:toIndexPath.item];
 }
-
 
 
 @end
