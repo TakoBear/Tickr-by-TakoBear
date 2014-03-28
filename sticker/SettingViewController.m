@@ -111,7 +111,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    if (section == 0) {
+        return 3;
+    } else if (section == 1) {
+        return 2;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,6 +136,8 @@
                 cell.textLabel.text = NSLocalizedString(@"Line", @"");
             } else if (indexPath.row == 1) {
                 cell.textLabel.text = NSLocalizedString(@"WhatsAPP", @"");
+            } else if (indexPath.row == 2) {
+                cell.textLabel.text = NSLocalizedString(@"WeChat", @"");
             }
         }
             break;
@@ -166,6 +173,12 @@
             {
                 [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithInt:ChatAppType_WhatsApp] forKey:kChooseChatAppTypeKey];
                 [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:ChatAppType_WhatsApp] forKey:kChooseChatAppTypeKey];
+            }
+                break;
+            case ChatAppType_WeChat:
+            {
+                [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithInt:ChatAppType_WeChat] forKey:kChooseChatAppTypeKey];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:ChatAppType_WeChat] forKey:kChooseChatAppTypeKey];
             }
                 break;
                 

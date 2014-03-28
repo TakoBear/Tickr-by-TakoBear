@@ -10,24 +10,33 @@
 #import "SettingVariable.h"
 #import "LineChat.h"
 #import "WhatsApp.h"
+#import "WeChatApp.h"
 
 @implementation ChatManager
 
 - (ChatApp *)currentChatAppWithType
 {
     int chatAppType = [[[SettingVariable sharedInstance].variableDictionary objectForKey:kChooseChatAppTypeKey] intValue];
+    ChatApp *chat;
     switch (chatAppType) {
         case ChatAppType_Line:
         {
-            ChatApp *chat = [LineChat new];
+            chat = [LineChat new];
             return chat;
         }
             break;
         case ChatAppType_WhatsApp:
         {
-            ChatApp *chat = [WhatsApp new];
+            chat = [WhatsApp new];
             return chat;
         }
+            break;
+        case ChatAppType_WeChat:
+        {
+            chat = [WeChatApp new];
+            return chat;
+        }
+            break;
         default:
             break;
     }

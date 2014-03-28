@@ -8,11 +8,19 @@
 
 #import "AppDelegate.h"
 #import "IndexViewController.h"
+#import "WXApi.h"
+#import "SettingVariable.h"
+
+@interface AppDelegate() <WXApiDelegate>
+
+@end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [WXApi registerApp:WXAPI_KEY];
+    
     // Override point for customization after application launch
     IndexViewController *indexVC = [[IndexViewController alloc] init];
     UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:indexVC];
@@ -51,6 +59,18 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    NSString *scheme = (NSString *)url.scheme;
+    BOOL bResult = YES;
+    
+    if ([scheme isEqualToString:WXAPI_KEY]) {
+        bResult = [WXApi handleOpenURL:url delegate:self];
+    }
+    
+    return YES;
 }
 
 @end

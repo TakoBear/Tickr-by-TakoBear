@@ -54,6 +54,9 @@
 		D658055C18BF1C0D0002683F /* LSCollectionViewLayoutHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055318BF1C0D0002683F /* LSCollectionViewLayoutHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D658055D18BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055618BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D658055E18BF1C0D0002683F /* UICollectionView+Draggable.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055818BF1C0D0002683F /* UICollectionView+Draggable.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		D67D0F0B18E5523E00A62B34 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D0F0818E5523E00A62B34 /* libWeChatSDK.a */; };
+		D67D0F0E18E5528500A62B34 /* WeChatApp.m in Sources */ = {isa = PBXBuildFile; fileRef = D67D0F0D18E5528500A62B34 /* WeChatApp.m */; };
+		D67D0F1218E5550700A62B34 /* UIImage+ResizeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D67D0F1118E5550700A62B34 /* UIImage+ResizeImage.m */; };
 		D6E4E77E18B3949B003E1B90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77D18B3949B003E1B90 /* Foundation.framework */; };
 		D6E4E78018B3949B003E1B90 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */; };
 		D6E4E78218B3949B003E1B90 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E78118B3949B003E1B90 /* UIKit.framework */; };
@@ -184,6 +187,13 @@
 		D658055818BF1C0D0002683F /* UICollectionView+Draggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Draggable.m"; sourceTree = "<group>"; };
 		D658055918BF1C0D0002683F /* UICollectionViewDataSource_Draggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewDataSource_Draggable.h; sourceTree = "<group>"; };
 		D658055A18BF1C0D0002683F /* UICollectionViewLayout_Warpable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewLayout_Warpable.h; sourceTree = "<group>"; };
+		D67D0F0818E5523E00A62B34 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		D67D0F0918E5523E00A62B34 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		D67D0F0A18E5523E00A62B34 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		D67D0F0C18E5528500A62B34 /* WeChatApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeChatApp.h; sourceTree = "<group>"; };
+		D67D0F0D18E5528500A62B34 /* WeChatApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatApp.m; sourceTree = "<group>"; };
+		D67D0F1018E5550700A62B34 /* UIImage+ResizeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeImage.h"; sourceTree = "<group>"; };
+		D67D0F1118E5550700A62B34 /* UIImage+ResizeImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeImage.m"; sourceTree = "<group>"; };
 		D6E4E77A18B3949B003E1B90 /* sticker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sticker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E4E77D18B3949B003E1B90 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -218,6 +228,7 @@
 			files = (
 				D6507ED618C75A7500168E31 /* libz.dylib in Frameworks */,
 				D6507ED418C75A1F00168E31 /* MobileCoreServices.framework in Frameworks */,
+				D67D0F0B18E5523E00A62B34 /* libWeChatSDK.a in Frameworks */,
 				D6507ED218C75A1900168E31 /* SystemConfiguration.framework in Frameworks */,
 				D6507ED018C759FD00168E31 /* CFNetwork.framework in Frameworks */,
 				D6E4E78018B3949B003E1B90 /* CoreGraphics.framework in Frameworks */,
@@ -274,12 +285,15 @@
 		D63558E218E422300077D98B /* ChatManager */ = {
 			isa = PBXGroup;
 			children = (
+				D67D0F0718E5523E00A62B34 /* WeChatSDK */,
 				D63558E518E422300077D98B /* ChatManager.h */,
 				D63558E618E422300077D98B /* ChatManager.m */,
 				D63558E318E422300077D98B /* ChatApp.h */,
 				D63558E418E422300077D98B /* ChatApp.m */,
 				D63558E718E422300077D98B /* LineChat.h */,
 				D63558E818E422300077D98B /* LineChat.m */,
+				D67D0F0C18E5528500A62B34 /* WeChatApp.h */,
+				D67D0F0D18E5528500A62B34 /* WeChatApp.m */,
 				D63558ED18E423440077D98B /* WhatsApp.h */,
 				D63558EC18E423440077D98B /* WhatsApp.m */,
 			);
@@ -443,6 +457,25 @@
 			name = Resource;
 			sourceTree = "<group>";
 		};
+		D67D0F0718E5523E00A62B34 /* WeChatSDK */ = {
+			isa = PBXGroup;
+			children = (
+				D67D0F0818E5523E00A62B34 /* libWeChatSDK.a */,
+				D67D0F0918E5523E00A62B34 /* WXApi.h */,
+				D67D0F0A18E5523E00A62B34 /* WXApiObject.h */,
+			);
+			path = WeChatSDK;
+			sourceTree = "<group>";
+		};
+		D67D0F0F18E5550700A62B34 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D67D0F1018E5550700A62B34 /* UIImage+ResizeImage.h */,
+				D67D0F1118E5550700A62B34 /* UIImage+ResizeImage.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		D6E4E77118B3949B003E1B90 = {
 			isa = PBXGroup;
 			children = (
@@ -481,6 +514,7 @@
 		D6E4E78318B3949B003E1B90 /* sticker */ = {
 			isa = PBXGroup;
 			children = (
+				D67D0F0F18E5550700A62B34 /* Categories */,
 				D658056418BF26A50002683F /* Resource */,
 				D658056318BF268F0002683F /* Class */,
 				D658056218BF26300002683F /* ViewController */,
@@ -664,6 +698,7 @@
 				D6507EAC18C7576900168E31 /* ASIHTTPRequest.m in Sources */,
 				D658055D18BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m in Sources */,
 				D65380ED18CB5B7100DA6794 /* SDWebImageCompat.m in Sources */,
+				D67D0F0E18E5528500A62B34 /* WeChatApp.m in Sources */,
 				D65380EA18CB5B7100DA6794 /* MKAnnotationView+WebCache.m in Sources */,
 				D65380C918CB103900DA6794 /* GoogleSearchViewController.m in Sources */,
 				D608DD0018DEDD71001A9DCA /* FileControl+Camera.m in Sources */,
@@ -682,6 +717,7 @@
 				D6507EA918C7576900168E31 /* ASIDataDecompressor.m in Sources */,
 				D65380EC18CB5B7100DA6794 /* SDImageCache.m in Sources */,
 				D63558F118E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
+				D67D0F1218E5550700A62B34 /* UIImage+ResizeImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -815,8 +851,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sticker/sticker-Prefix.pch";
 				INFOPLIST_FILE = "sticker/sticker-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/sticker/ChatManager/WeChatSDK",
+				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "55CC7663-CC68-47D0-88B0-2183F3042913";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -832,8 +874,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sticker/sticker-Prefix.pch";
 				INFOPLIST_FILE = "sticker/sticker-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/sticker/ChatManager/WeChatSDK",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "55CC7663-CC68-47D0-88B0-2183F3042913";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

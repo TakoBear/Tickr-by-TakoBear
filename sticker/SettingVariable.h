@@ -12,13 +12,17 @@
 #define kPhotoAlbumName          @"StickerAlbum"
 #define RGBA(R,G,B,A) [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
 
+// Register
+#define WXAPI_KEY               @"wxe386966df7b712ca"
+
 //Variable Dictionary key
 #define kChooseChatAppTypeKey @"choose_chatApp_key"
 #define kImageDataArrayKey    @"Image_Data_Array"
 
 typedef NS_ENUM(int, ChatAppType) {
     ChatAppType_Line,
-    ChatAppType_WhatsApp
+    ChatAppType_WhatsApp,
+    ChatAppType_WeChat
 };
 
 @interface SettingVariable : NSObject
