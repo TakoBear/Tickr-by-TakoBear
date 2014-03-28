@@ -9,6 +9,7 @@
 #import "PhotoEditedViewController.h"
 #import "PaintingImageViewController.h"
 #import "ASIHTTPRequest.h"
+#import "Categories/UIImage+ResizeImage.h"
 
 @interface PhotoEditedViewController()
 {
@@ -34,32 +35,6 @@
 {
     [super viewDidLoad];
     
-    if (_url != nil) {
-        // Send Request to background 
-        __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:_url];
-        [request setRequestMethod:@"GET"];
-        [request setTimeOutSeconds:10.0f];
-        [request setDelegate:self];
-        [request setDownloadProgressDelegate:self];
-        [request setCompletionBlock:^{
-            if ((request.responseStatusCode == 200) || (request.responseStatusCode == 201) ) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.sourceImage = [UIImage imageWithData:request.responseData];
-                    self.previewImage = self.sourceImage;
-                    [self reset:NO];
-                    [self viewWillAppear:NO];
-                });
-            }
-        }];
-        [request startAsynchronous];
-    }
-    
-    // Original Setting
-    self.cropRect = CGRectMake(0, 120, self.view.frame.size.width, self.view.frame.size.width);
-    self.maximumScale = 10;
-    
-    [self.view setBackgroundColor:[UIColor blackColor]];
-    
     // Set up To next UI
     UIBarButtonItem *nextBtn = [[[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)] autorelease];
     self.navigationItem.rightBarButtonItem = nextBtn;
@@ -71,6 +46,36 @@
     
     NSArray *btnItems = @[squareBtn, landscapeBtn, lportraitBtn];
     self.toolbarItems = btnItems;
+    
+    if (_url != nil) {
+        // Send Request to background 
+        __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:_url];
+        [request setRequestMethod:@"GET"];
+        [request setTimeOutSeconds:10.0f];
+        [request setDelegate:self];
+        [request setDownloadProgressDelegate:self];
+        [request setCompletionBlock:^{
+            if ((request.responseStatusCode == 200) || (request.responseStatusCode == 201) ) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIImage *reqImg = [UIImage imageWithData:request.responseData];
+                    reqImg = [UIImage resizeImageWithSize:reqImg resize:reqImg.size];
+                    self.sourceImage = reqImg;
+                    self.previewImage = self.sourceImage;
+                    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+                    [self reset:NO];
+                    [self viewWillAppear:NO];
+                });
+            }
+        }];
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        [request startAsynchronous];
+    }
+    
+    // Original Setting
+    self.cropRect = CGRectMake(0, 120, self.view.frame.size.width, self.view.frame.size.width);
+    self.maximumScale = 10;
+    
+    [self.view setBackgroundColor:[UIColor blackColor]];
     
     [self.navigationController setToolbarHidden:NO];
 }

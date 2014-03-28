@@ -1,3 +1,4 @@
+
 //
 //  SHImageEditorViewController.m
 //  sticker
@@ -187,25 +188,25 @@ static const NSTimeInterval kAnimationIntervalTransform = 0.2;
     
     [self.view setMultipleTouchEnabled:YES];
     
-    panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    panRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)] autorelease];
     panRecognizer.cancelsTouchesInView = NO;
     panRecognizer.delegate = self;
     panRecognizer.enabled = self.panEnabled;
     [frameView addGestureRecognizer:panRecognizer];
     
-    rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotation:)];
+    rotationRecognizer = [[[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotation:)] autorelease];
     rotationRecognizer.cancelsTouchesInView = NO;
     rotationRecognizer.delegate = self;
     rotationRecognizer.enabled = self.rotateEnabled;
     [frameView addGestureRecognizer:rotationRecognizer];
     
-    pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+    pinchRecognizer = [[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)] autorelease];
     pinchRecognizer.cancelsTouchesInView = NO;
     pinchRecognizer.delegate = self;
     pinchRecognizer.enabled = self.scaleEnabled;
     [frameView addGestureRecognizer:pinchRecognizer];
     
-    tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)] autorelease];
     tapRecognizer.numberOfTapsRequired = 2;
     tapRecognizer.enabled = self.tapToResetEnabled;
     [frameView addGestureRecognizer:tapRecognizer];

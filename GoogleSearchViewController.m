@@ -256,23 +256,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     __block PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"googleImageCell" forIndexPath:indexPath];
-    cell.isProgress = YES;
-    NSURL *imageURL = [NSURL URLWithString:[tbImageURLArray objectAtIndex:indexPath.item]];
-    [cell.imgView setContentMode:UIViewContentModeScaleAspectFill];
-    [cell.imgView setClipsToBounds:YES];
-    [cell.imgView setImageWithURL:imageURL placeholderImage:nil
-                          options:0
-                         progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                            
-                             if (expectedSize > 0) {
-                                 CGFloat progress = (CGFloat)receivedSize / (CGFloat)expectedSize;
-                                 [cell.progressView setProgress:progress animated:YES];
-                             }
-                             
-    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-        [cell.progressView setProgress:0.0f animated:YES];
-        [cell.imgView setImage:image];
-    }];
+    @autoreleasepool {
+        NSURL *imageURL = [NSURL URLWithString:[tbImageURLArray objectAtIndex:indexPath.item]];
+        [cell.imgView setContentMode:UIViewContentModeScaleAspectFill];
+        [cell.imgView setClipsToBounds:YES];
+        [cell.imgView setImageWithURL:imageURL];
+    }
     
     return cell;
 }

@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self setIsProgress:NO];
+//        [self setIsProgress:NO];
         
         _imgView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imgView.backgroundColor = [UIColor clearColor];
@@ -31,22 +31,22 @@
         [_imgView addSubview:_deleteImgView];
         
         [self.contentView addSubview:_imgView];
-        [self.contentView addSubview:_progressView];
+//        [self.contentView addSubview:_progressView];
         [_deleteImgView release];
         [_imgView release];
     }
     return self;
 }
 
-- (void)setIsProgress:(BOOL)isProgress
-{
-    _isProgress = isProgress;
-    if (_isProgress) {
-        _progressView = [[DACircularProgressView alloc] initWithFrame:self.bounds];
-        _progressView.roundedCorners = YES;
-        _progressView.trackTintColor = [UIColor clearColor];
-        [self.contentView addSubview:_progressView];
-    }
-}
+//- (void)setIsProgress:(BOOL)isProgress
+//{
+//    _isProgress = isProgress;
+//    if (_isProgress) {
+//        _progressView = [[[DACircularProgressView alloc] initWithFrame:self.bounds] autorelease];
+//        _progressView.roundedCorners = YES;
+//        _progressView.trackTintColor = [UIColor clearColor];
+//        [self.contentView addSubview:_progressView];
+//    }
+//}
 
 @end
