@@ -7,12 +7,14 @@
 //
 
 #import "PaintingImageViewController.h"
-#import "settingVariable.h"
+#import "SettingVariable.h"
 #import "FileControl.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 
 #define kMAIN_IMGVIEW_TAG       1001
 #define kTMP_DRAWIMGVIEW_TAG    1002
+
+#define kIMG_VIEW_STATUS_HEIGHT 120
 
 @interface PaintingImageViewController ()
 {
@@ -57,14 +59,14 @@
     isGoogleSearchNavController = NO;
     isErasing = NO;
     
-    UIImageView *mainImgView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, self.view.frame.size.width)] autorelease];
+    UIImageView *mainImgView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, kIMG_VIEW_STATUS_HEIGHT, self.view.frame.size.width, self.view.frame.size.width)] autorelease];
     mainImgView.image = _srcImage;
     mainImgView.backgroundColor = [UIColor clearColor];
     mainImgView.tag = kMAIN_IMGVIEW_TAG;
     [self.view addSubview:mainImgView];
     [self.view setBackgroundColor:[UIColor blackColor]];
     
-    UIImageView *tmpDrawImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, self.view.frame.size.width)];
+    UIImageView *tmpDrawImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kIMG_VIEW_STATUS_HEIGHT, self.view.frame.size.width, self.view.frame.size.width)];
     tmpDrawImgView.tag = kTMP_DRAWIMGVIEW_TAG;
     tmpDrawImgView.backgroundColor = [UIColor clearColor];
     mainImgView.userInteractionEnabled = YES;
@@ -122,8 +124,8 @@
         CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
         CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brushWidth);
         CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, opacity);
-        CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-        CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
+        CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y - kIMG_VIEW_STATUS_HEIGHT);
+        CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y - kIMG_VIEW_STATUS_HEIGHT);
         CGContextStrokePath(UIGraphicsGetCurrentContext());
         CGContextFlush(UIGraphicsGetCurrentContext());
         tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext();
@@ -145,16 +147,16 @@
 {
     UIImageView *tempDrawImage = (UIImageView *)[self.view viewWithTag:kTMP_DRAWIMGVIEW_TAG];
     
-    UIGraphicsBeginImageContext(self.view.frame.size);
-    [tempDrawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    UIGraphicsBeginImageContext(tempDrawImage.frame.size);
+    [tempDrawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width)];
     
     CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
     CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), _drawColor.CGColor);
     CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 10);
     CGContextBeginPath(UIGraphicsGetCurrentContext());
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y - kIMG_VIEW_STATUS_HEIGHT);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y - kIMG_VIEW_STATUS_HEIGHT);
     
     CGContextStrokePath(UIGraphicsGetCurrentContext());
     tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext();
@@ -170,8 +172,8 @@
     UIImageView *tempDrawImage = (UIImageView *)[self.view viewWithTag:kTMP_DRAWIMGVIEW_TAG];
     [tempDrawImage setBackgroundColor:[UIColor clearColor]];
     
-    UIGraphicsBeginImageContext(self.view.frame.size);
-    [tempDrawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    UIGraphicsBeginImageContext(tempDrawImage.frame.size);
+    [tempDrawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width)];
     
     CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeClear);
     
@@ -179,8 +181,8 @@
     CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 10);
     
     CGContextBeginPath(UIGraphicsGetCurrentContext());
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y - kIMG_VIEW_STATUS_HEIGHT);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y - kIMG_VIEW_STATUS_HEIGHT);
     
     CGContextStrokePath(UIGraphicsGetCurrentContext());
     tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext();
