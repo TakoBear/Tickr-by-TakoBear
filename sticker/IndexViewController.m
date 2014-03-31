@@ -44,9 +44,9 @@
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
                                                              target:self
                                                              action:@selector(changeDeleteMode)];
-    
-    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Setting.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView)];
-    
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dropmenu_pressed.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView)];
+    settingButton.tintColor = [UIColor orangeColor];
+
     self.navigationItem.rightBarButtonItem = deleteButton;
     self.navigationItem.leftBarButtonItem = settingButton;
     
