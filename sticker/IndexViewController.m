@@ -34,7 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.3];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     imageDataArray = [NSMutableArray new];
 //    cellQueue = [[NSOperationQueue alloc] init];

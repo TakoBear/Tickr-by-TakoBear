@@ -50,7 +50,7 @@
     //To avoid clear background
     self.view.backgroundColor = [UIColor whiteColor];
     UIView *whiteView = [[UIView alloc] initWithFrame:self.view.bounds];
-    whiteView.backgroundColor = [UIColor colorWithRed:0.4 green:0.6 blue:0.8 alpha:0.3];
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView];
     [whiteView release];
     
@@ -62,7 +62,6 @@
     searchBar.center = CGPointMake(self.view.center.x,searchBar.center.y);
     searchBar.delegate = self;
     searchBar.placeholder = @"start to search";
-    searchBar.barTintColor = [UIColor whiteColor];
     searchBar.tag = kSEARCH_BAR_TAG;
     [self.navigationController.navigationBar addSubview:searchBar];
     [searchBar becomeFirstResponder];
