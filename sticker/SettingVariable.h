@@ -11,6 +11,7 @@
 #define kFileStoreDirectory      @"StickerDocument"
 #define kPhotoAlbumName          @"StickerAlbum"
 #define RGBA(R,G,B,A) [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
+#define kAddMenuIconSize    80
 
 // Register
 #define WXAPI_KEY               @"wxe386966df7b712ca"

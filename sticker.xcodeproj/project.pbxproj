@@ -21,6 +21,7 @@
 		D63558EE18E423440077D98B /* WhatsApp.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558EC18E423440077D98B /* WhatsApp.m */; };
 		D63558F118E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558F018E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.m */; };
 		D64C01AA18E400970058EDCE /* SettingVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C01A918E400970058EDCE /* SettingVariable.m */; };
+		D64F129118E99F5D006BA06E /* JMDropMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = D64F129018E99F5D006BA06E /* JMDropMenuView.m */; };
 		D6507EA718C7576900168E31 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D6507E5618C7576900168E31 /* ASIAuthenticationDialog.m */; };
 		D6507EA818C7576900168E31 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6507E5918C7576900168E31 /* ASIDataCompressor.m */; };
 		D6507EA918C7576900168E31 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6507E5B18C7576900168E31 /* ASIDataDecompressor.m */; };
@@ -117,6 +118,8 @@
 		D63558F018E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsLibrary+CustomPhotoAlbum.m"; sourceTree = "<group>"; };
 		D64C01A818E400970058EDCE /* SettingVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingVariable.h; sourceTree = "<group>"; };
 		D64C01A918E400970058EDCE /* SettingVariable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingVariable.m; sourceTree = "<group>"; };
+		D64F128F18E99F5D006BA06E /* JMDropMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDropMenuView.h; sourceTree = "<group>"; };
+		D64F129018E99F5D006BA06E /* JMDropMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDropMenuView.m; sourceTree = "<group>"; };
 		D6507E5518C7576900168E31 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		D6507E5618C7576900168E31 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		D6507E5718C7576900168E31 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -300,6 +303,15 @@
 			path = ChatManager;
 			sourceTree = "<group>";
 		};
+		D64F128E18E99F48006BA06E /* JMDropMenu */ = {
+			isa = PBXGroup;
+			children = (
+				D64F128F18E99F5D006BA06E /* JMDropMenuView.h */,
+				D64F129018E99F5D006BA06E /* JMDropMenuView.m */,
+			);
+			name = JMDropMenu;
+			sourceTree = "<group>";
+		};
 		D6507E5418C7576900168E31 /* ASIHTTP */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +450,7 @@
 		D658056318BF268F0002683F /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				D64F128E18E99F48006BA06E /* JMDropMenu */,
 				D658054D18BF1C0D0002683F /* External */,
 				0337CDE818D428D00083300C /* SHImageEditor */,
 				D63558E218E422300077D98B /* ChatManager */,
@@ -709,6 +722,7 @@
 				D6E4E78A18B3949B003E1B90 /* main.m in Sources */,
 				D65380F018CB5B7100DA6794 /* SDWebImageDownloaderOperation.m in Sources */,
 				0337CDEF18D42AFB0083300C /* SHImageEditorViewController.m in Sources */,
+				D64F129118E99F5D006BA06E /* JMDropMenuView.m in Sources */,
 				D6507EAB18C7576900168E31 /* ASIFormDataRequest.m in Sources */,
 				D63558EE18E423440077D98B /* WhatsApp.m in Sources */,
 				D65380F118CB5B7100DA6794 /* SDWebImageManager.m in Sources */,

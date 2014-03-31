@@ -16,15 +16,23 @@
 #import "SettingViewController.h"
 #import "ChatManager.h"
 #import "SettingVariable.h"
+#import "JMDropMenuView.h"
 
-@interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate>
+typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
+    kAdd_Photo_From_Camera,
+    kAdd_Photo_From_Album,
+    kAdd_Photo_From_Search
+};
+
+@interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate,JMDropMenuViewDelegate>
 {
     DraggableCollectionViewFlowLayout *flowLayout;
     UICollectionView *imageCollectionView;
     NSMutableArray *imageDataArray;
     NSString *documentPath;
 //    NSOperationQueue *cellQueue;
-    BOOL isDeleteMode;
+    BOOL isAddMode;
+    JMDropMenuView *dropMenu;
 }
 
 @end
@@ -36,18 +44,20 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    
     imageDataArray = [NSMutableArray new];
+
 //    cellQueue = [[NSOperationQueue alloc] init];
 //    cellQueue.maxConcurrentOperationCount = 1;
-    isDeleteMode = NO;
+    isAddMode = NO;
     //Create navigation bar & items
-    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                              target:self
-                                                             action:@selector(changeDeleteMode)];
+                                                             action:@selector(displayAddMenu)];
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dropmenu_pressed.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView)];
     settingButton.tintColor = [UIColor orangeColor];
 
-    self.navigationItem.rightBarButtonItem = deleteButton;
+    self.navigationItem.rightBarButtonItem = addButton;
     self.navigationItem.leftBarButtonItem = settingButton;
     
     
@@ -89,6 +99,27 @@
     
     [self.view addSubview:imageCollectionView];
     
+    //Create drop menu
+    UIImageView *cameraDrop = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kAddMenuIconSize, kAddMenuIconSize)];
+    cameraDrop.backgroundColor = [UIColor clearColor];
+    [cameraDrop setImage:[UIImage imageNamed:@"camera.png"]];
+    [self.view addSubview:cameraDrop];
+    
+    UIImageView *albumDrop = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kAddMenuIconSize, kAddMenuIconSize)];
+    albumDrop.backgroundColor = [UIColor clearColor];
+    [albumDrop setImage:[UIImage imageNamed:@"album.png"]];
+    [self.view addSubview:albumDrop];
+    
+    UIImageView *searchDrop = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kAddMenuIconSize, kAddMenuIconSize)];
+    searchDrop.backgroundColor = [UIColor clearColor];
+    [searchDrop setImage:[UIImage imageNamed:@"search.png"]];
+    [self.view addSubview:searchDrop];
+    
+    dropMenu= [[JMDropMenuView alloc] initWithViews:@[cameraDrop, albumDrop, searchDrop]];
+    dropMenu.frame = CGRectMake(self.view.bounds.size.width - kAddMenuIconSize, 70, kAddMenuIconSize, kAddMenuIconSize *3);
+    dropMenu.delegate = self;
+    [self.view addSubview:dropMenu];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -117,17 +148,46 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)changeDeleteMode
-{
-    isDeleteMode = !isDeleteMode;
-    [imageCollectionView reloadData];
-}
 
 - (void)pushToSettingView
 {
     SettingViewController *settingVC = [[SettingViewController alloc] init];
     [self.navigationController pushViewController:settingVC animated:YES];
     [settingVC release];
+}
+
+#pragma mark - Drop menu Delegate for add photo
+
+- (void)displayAddMenu
+{
+    if (isAddMode) {
+        [dropMenu dismiss];
+    } else {
+        [dropMenu popOut];
+    }
+    isAddMode = !isAddMode;
+}
+
+- (void)dropMenu:(JMDropMenuView *)menu didSelectAtIndex:(NSInteger)index;
+{
+    switch (index) {
+        case kAdd_Photo_From_Album:{
+            
+        }
+            break;
+        case kAdd_Photo_From_Camera:{
+            
+        }
+            break;
+        case kAdd_Photo_From_Search:{
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 #pragma mark - CollectionView dataSource & Delegate
@@ -160,11 +220,7 @@
             NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
             NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
             image = [UIImage imageWithData:imageData];
-            if (isDeleteMode) {
-                cell.deleteImgView.hidden = NO;
-            } else {
-                cell.deleteImgView.hidden = YES;
-            }
+            
         }
             [cell.imgView setImage:image];
 //        });
@@ -182,20 +238,11 @@
 {
     if (indexPath.item == 0) {
         SourceViewController *sourceVC = [[SourceViewController alloc] init];
-        if (isDeleteMode) {
-            [self changeDeleteMode];
-        }
+        
         [self.navigationController pushViewController:sourceVC animated:YES];
     }
     else {
-        if (isDeleteMode) {
-            NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
-            NSString *deletePath = [NSString stringWithFormat:@"%@/%@",stickerPath,imageDataArray[indexPath.item]];
-            BOOL isRemove = [[FileControl mainPath] removeFileAtPath:deletePath];
-            NSLog(@" Remove : %@",isRemove ? @"Success" : @"Failed");
-            [imageDataArray removeObjectAtIndex:indexPath.item];
-            [imageCollectionView reloadData];
-        } else {
+        
             NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
             NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
             NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
@@ -204,7 +251,6 @@
             if ([chat isUserInstalledApp]) {
                 [chat shareWithImage:imageData];
             }
-        }
     }
 }
 
