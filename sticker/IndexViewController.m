@@ -17,6 +17,8 @@
 #import "ChatManager.h"
 #import "SettingVariable.h"
 #import "JMDropMenuView.h"
+#import "PhotoEditedViewController.h"
+#import "GoogleSearchViewController.h"
 
 typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     kAdd_Photo_From_Camera,
@@ -24,7 +26,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     kAdd_Photo_From_Search
 };
 
-@interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate,JMDropMenuViewDelegate>
+@interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate,JMDropMenuViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     DraggableCollectionViewFlowLayout *flowLayout;
     UICollectionView *imageCollectionView;
@@ -33,6 +35,8 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 //    NSOperationQueue *cellQueue;
     BOOL isAddMode;
     JMDropMenuView *dropMenu;
+    BOOL isAnimate;
+    UIImagePickerController *imagePicker;
 }
 
 @end
@@ -50,6 +54,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 //    cellQueue = [[NSOperationQueue alloc] init];
 //    cellQueue.maxConcurrentOperationCount = 1;
     isAddMode = NO;
+    isAnimate = NO;
     //Create navigation bar & items
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                              target:self
@@ -117,6 +122,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     
     dropMenu= [[JMDropMenuView alloc] initWithViews:@[cameraDrop, albumDrop, searchDrop]];
     dropMenu.frame = CGRectMake(self.view.bounds.size.width - kAddMenuIconSize, 70, kAddMenuIconSize, kAddMenuIconSize *3);
+    dropMenu.animateInterval = 0.3;
     dropMenu.delegate = self;
     [self.view addSubview:dropMenu];
     
@@ -138,6 +144,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [imageCollectionView release];
     [imageDataArray release];
     [documentPath release];
+    [dropMenu release];
 //    [cellQueue release];
     [super dealloc];
 }
@@ -151,6 +158,10 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (void)pushToSettingView
 {
+    if (isAddMode) {
+        [dropMenu dismiss];
+        isAddMode = NO;
+    }
     SettingViewController *settingVC = [[SettingViewController alloc] init];
     [self.navigationController pushViewController:settingVC animated:YES];
     [settingVC release];
@@ -158,11 +169,29 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 #pragma mark - Drop menu Delegate for add photo
 
+- (void)didFinishedPopOutWithDropMenu:(JMDropMenuView *)menu
+{
+    dropMenu.userInteractionEnabled = YES;
+    isAnimate = NO;
+}
+
+- (void)didFinishedDismissWithDropMenu:(JMDropMenuView *)menu
+{
+    imageCollectionView.userInteractionEnabled = YES;
+    isAnimate = NO;
+}
+
 - (void)displayAddMenu
 {
+    if (isAnimate) {
+        return;
+    }
+    isAnimate = YES;
+    dropMenu.userInteractionEnabled = NO;
     if (isAddMode) {
         [dropMenu dismiss];
     } else {
+        imageCollectionView.userInteractionEnabled = NO;
         [dropMenu popOut];
     }
     isAddMode = !isAddMode;
@@ -170,17 +199,21 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (void)dropMenu:(JMDropMenuView *)menu didSelectAtIndex:(NSInteger)index;
 {
+//    [dropMenu dismiss];
+    [dropMenu resetPosition];
+    isAddMode = NO;
+    imageCollectionView.userInteractionEnabled = YES;
     switch (index) {
         case kAdd_Photo_From_Album:{
-            
+            [self getLocalPhoto];
         }
             break;
         case kAdd_Photo_From_Camera:{
-            
+            [self cameraAction];
         }
             break;
         case kAdd_Photo_From_Search:{
-            
+            [self googleSearchAction];
         }
             break;
             
@@ -214,7 +247,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
             UIImage *image;
         if (indexPath.item == 0) {
             image = [imageDataArray objectAtIndex:0];
-            cell.deleteImgView.hidden = YES;
         } else {
             NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
             NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
@@ -277,7 +309,76 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     UIImage *index = [imageDataArray objectAtIndex:fromIndexPath.item];
     [imageDataArray removeObjectAtIndex:fromIndexPath.item];
     [imageDataArray insertObject:index atIndex:toIndexPath.item];
+    NSLog(@"from : %d , to : %d",fromIndexPath.item,toIndexPath.item);
 }
+
+- (void)deletePhoto:(NSNumber *)number
+{
+    
+//    NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+//    NSString *deletePath = [NSString stringWithFormat:@"%@/%@",stickerPath,imageDataArray[number.intValue]];
+//    BOOL isRemove = [[FileControl mainPath] removeFileAtPath:deletePath];
+//    NSLog(@" Remove : %@",isRemove ? @"Success" : @"Failed");
+//    [imageDataArray removeObjectAtIndex:number.intValue];
+    [imageCollectionView reloadData];
+
+}
+
+#pragma mark - Method to get Image
+
+- (void)cameraAction
+{
+    imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePicker.allowsEditing = YES;
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (void)getLocalPhoto
+{
+    imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    [self presentViewController:imagePicker animated:YES completion:nil];
+    
+}
+
+- (void)googleSearchAction
+{
+    GoogleSearchViewController *searchVC = [[GoogleSearchViewController alloc] init];
+    UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:searchVC] autorelease];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+    [searchVC release];
+}
+
+#pragma mark - UIimagePickerController Delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *pickImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    [imagePicker release];
+    [self sendImageToEditViewControllWith:pickImage];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker;
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)sendImageToEditViewControllWith:(UIImage *)image
+{
+    PhotoEditedViewController *editViewController = [[PhotoEditedViewController alloc] init];
+    editViewController.sourceImage = image;
+    editViewController.previewImage = image;
+    //    editViewController.checkBounds = YES;
+    [editViewController reset:NO];
+    
+    [self.navigationController pushViewController:editViewController animated:NO];
+    [editViewController release];
+}
+
 
 
 @end

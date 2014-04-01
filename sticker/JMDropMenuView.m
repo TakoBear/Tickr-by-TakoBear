@@ -35,6 +35,9 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
     self = [super init];
     if (self) {
         _imgViews = [imgViews copy];
+        if (!_animateInterval) {
+            _animateInterval = 0.5;
+        }
     }
     return self;
 }
@@ -126,10 +129,14 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
     JMDropAnimationComplete complete = ^(BOOL finished) {
         if (finished && (imgViewsCount != _imgViews.count) && (imgViewsCount != 0)) {
             [self popOut];
+        } else {
+            if (_delegate && [_delegate respondsToSelector:@selector(didFinishedPopOutWithDropMenu:)]) {
+                [_delegate didFinishedPopOutWithDropMenu:self];
+            }
         }
     };
     
-    [UIView animateWithDuration:0.5f delay:0 options:UIViewAnimationOptionCurveEaseOut animations:animation completion:complete];
+    [UIView animateWithDuration:_animateInterval delay:0 options:UIViewAnimationOptionCurveEaseOut animations:animation completion:complete];
     
 }
 
@@ -164,10 +171,13 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
             [self dismiss];
         } else {
             [self resetPosition];
+            if (_delegate && [_delegate respondsToSelector:@selector(didFinishedDismissWithDropMenu:)]) {
+                [_delegate didFinishedDismissWithDropMenu:self];
+            }
         }
     };
     
-    [UIView animateWithDuration:0.3f delay:0 options:UIViewAnimationOptionCurveEaseOut animations:animation completion:complete];
+    [UIView animateWithDuration:_animateInterval delay:0 options:UIViewAnimationOptionCurveEaseOut animations:animation completion:complete];
     
 }
 
