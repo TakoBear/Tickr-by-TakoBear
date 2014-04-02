@@ -89,10 +89,10 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     
     //Create CollectionView
     flowLayout = [[DraggableCollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(85, 110)];
+    [flowLayout setItemSize:CGSizeMake(90,90)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
-    imageCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(10, 80, self.view.frame.size.width - 20, self.view.frame.size.height - 80) collectionViewLayout:flowLayout];
+    imageCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(5, 10, self.view.frame.size.width-10, self.view.frame.size.height) collectionViewLayout:flowLayout];
     [imageCollectionView setDelegate:self];
     [imageCollectionView setDataSource:self];
     [imageCollectionView setDraggable:YES];
@@ -121,6 +121,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     dropMenu.frame = CGRectMake(self.view.bounds.size.width - kAddMenuIconSize, 70, kAddMenuIconSize, kAddMenuIconSize *3);
     dropMenu.animateInterval = 0.3;
     dropMenu.delegate = self;
+    dropMenu.userInteractionEnabled = NO;
     [self.view addSubview:dropMenu];
     
 }
@@ -180,6 +181,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (void)didFinishedDismissWithDropMenu:(JMDropMenuView *)menu
 {
+    dropMenu.userInteractionEnabled = NO;
     imageCollectionView.userInteractionEnabled = YES;
     isAnimate = NO;
 }
@@ -274,6 +276,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
             [chat shareWithImage:imageData];
         }
     }
+
 }
 
 #pragma mark - Draggable delegate
@@ -362,7 +365,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [self.navigationController pushViewController:editViewController animated:NO];
     [editViewController release];
 }
-
 
 
 @end
