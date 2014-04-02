@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
                                                              target:self
                                                              action:@selector(displayAddMenu)];
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dropmenu_pressed.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView)];
-    settingButton.tintColor = [UIColor orangeColor];
+    settingButton.tintColor = [UIColor whiteColor];
 
     self.navigationItem.rightBarButtonItem = addButton;
     self.navigationItem.leftBarButtonItem = settingButton;
