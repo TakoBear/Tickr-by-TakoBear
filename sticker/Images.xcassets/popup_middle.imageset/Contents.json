@@ -4,11 +4,6 @@
       "idiom" : "universal",
       "scale" : "1x",
       "filename" : "popup_middle.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "popup_middle@2x.png"
     }
   ],
   "info" : {
