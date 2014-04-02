@@ -15,7 +15,7 @@
 #define kAddMenuIconSize    80
 
 // Register
-#define WXAPI_KEY               @"wxe386966df7b712ca"
+#define WXAPI_KEY               @"wxa4216b78b4ef4a3c"
 
 //Variable Dictionary key
 #define kChooseChatAppTypeKey @"choose_chatApp_key"
