@@ -20,6 +20,7 @@
 //Variable Dictionary key
 #define kChooseChatAppTypeKey @"choose_chatApp_key"
 #define kImageDataArrayKey    @"Image_Data_Array"
+#define kIMDefaultKey         @"IM_Default_Key"
 
 typedef NS_ENUM(int, ChatAppType) {
     ChatAppType_Line,

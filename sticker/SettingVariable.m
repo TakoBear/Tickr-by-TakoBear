@@ -31,6 +31,12 @@
         } else {
             [_variableDictionary setValue:[userDefault objectForKey:kChooseChatAppTypeKey] forKey:kChooseChatAppTypeKey];
         }
+        
+        if ([userDefault objectForKey:kIMDefaultKey] == nil) {
+            [userDefault setObject:[NSNumber numberWithBool:NO] forKey:kIMDefaultKey];
+        } else {
+            [_variableDictionary setValue:[userDefault objectForKey:kIMDefaultKey] forKey:kIMDefaultKey];
+        }
     
     }
     return self;

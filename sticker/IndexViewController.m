@@ -433,11 +433,18 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
             case 0:
             {
                 [switchBtn addTarget:self action:@selector(switchDefaultIMSetting:) forControlEvents:UIControlEventTouchUpInside];
+                BOOL isOn = [[NSUserDefaults standardUserDefaults] boolForKey:kIMDefaultKey];
+                [switchBtn setOn:isOn];
+                
+                if (isOn) {
+                    RATreeView *treeView = (RATreeView *)[(REMenuItem *)[settingMenu.items objectAtIndex:0] customView];
+                    [treeView expandRowForItem:optionData[0] withRowAnimation:RATreeViewRowAnimationBottom];
+                }
+                
             }
                 break;
             case 1:
             {
-                
             }
                 break;
         }
@@ -447,6 +454,16 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         NSLog(@"item %d", treeNodeInfo.positionInSiblings);
         
     } else {
+        int chatType = [[[NSUserDefaults standardUserDefaults] objectForKey:kChooseChatAppTypeKey] intValue];
+        int row = treeNodeInfo.positionInSiblings;
+        UIImage *selectedImg = [UIImage imageNamed:@"selected.png"];
+        UIImageView *selectedImgView = [[[UIImageView alloc] initWithImage:selectedImg] autorelease];
+        if ( chatType == row) {
+            cell.accessoryView = selectedImgView;
+        } else {
+            cell.accessoryView = nil;
+        }
+
         cell.textLabel.textColor = [UIColor redColor];
     }
     
@@ -474,6 +491,40 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 }
 
 #pragma mark TreeView Delegate methods
+
+- (void)treeView:(RATreeView *)treeView didSelectRowForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+{
+    ///TODO: Select item
+    if (treeNodeInfo.treeDepthLevel == 1) {
+        switch (treeNodeInfo.positionInSiblings) {
+            case ChatAppType_Line:
+            {
+                [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithInt:ChatAppType_Line] forKey:kChooseChatAppTypeKey];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:ChatAppType_Line] forKey:kChooseChatAppTypeKey];
+
+            }
+                break;
+            case ChatAppType_WhatsApp:
+            {
+                [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithInt:ChatAppType_WhatsApp] forKey:kChooseChatAppTypeKey];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:ChatAppType_WhatsApp] forKey:kChooseChatAppTypeKey];
+            }
+                break;
+            case ChatAppType_WeChat:
+            {
+                [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithInt:ChatAppType_WeChat] forKey:kChooseChatAppTypeKey];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:ChatAppType_WeChat] forKey:kChooseChatAppTypeKey];
+            }
+                break;
+            default:
+                break;
+        }
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [treeView reloadRows];
+
+    }
+}
 
 - (CGFloat)treeView:(RATreeView *)treeView heightForRowForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
 {
@@ -521,6 +572,9 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         [treeView collapseRowForItem:optionData[0] withRowAnimation:RATreeViewRowAnimationTop];
     }
     // Save setting to userinfo
+    [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithBool:obj.isOn] forKey:kIMDefaultKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:obj.isOn] forKey:kIMDefaultKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)switchAlbumSetting:(id)sender
