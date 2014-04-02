@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		031656AE18EBF22A0019E7F3 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0316568E18EBF22A0019E7F3 /* RECommonFunctions.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656AF18EBF22A0019E7F3 /* REMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0316569018EBF22A0019E7F3 /* REMenu.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656B018EBF22A0019E7F3 /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0316569218EBF22A0019E7F3 /* REMenuContainerView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656B118EBF22A0019E7F3 /* REMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0316569418EBF22A0019E7F3 /* REMenuItem.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656B218EBF22A0019E7F3 /* REMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0316569618EBF22A0019E7F3 /* REMenuItemView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656B318EBF22A0019E7F3 /* RADataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0316569918EBF22A0019E7F3 /* RADataObject.m */; };
+		031656B418EBF22A0019E7F3 /* RATreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0316569B18EBF22A0019E7F3 /* RATreeNode.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656B518EBF22A0019E7F3 /* RATreeNodeCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0316569D18EBF22A0019E7F3 /* RATreeNodeCollectionController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656B618EBF22A0019E7F3 /* RATreeNodeInfo+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 0316569F18EBF22A0019E7F3 /* RATreeNodeInfo+Private.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656B718EBF22A0019E7F3 /* RATreeNodeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 031656A118EBF22A0019E7F3 /* RATreeNodeInfo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656B818EBF22A0019E7F3 /* RATreeView+Enums.m in Sources */ = {isa = PBXBuildFile; fileRef = 031656A318EBF22A0019E7F3 /* RATreeView+Enums.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656B918EBF22A0019E7F3 /* RATreeView+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 031656A518EBF22A0019E7F3 /* RATreeView+Private.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656BA18EBF22A0019E7F3 /* RATreeView+TableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 031656A718EBF22A0019E7F3 /* RATreeView+TableViewDataSource.m */; };
+		031656BB18EBF22A0019E7F3 /* RATreeView+TableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 031656A918EBF22A0019E7F3 /* RATreeView+TableViewDelegate.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656BC18EBF22A0019E7F3 /* RATreeView+UIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 031656AB18EBF22A0019E7F3 /* RATreeView+UIScrollView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		031656BD18EBF22A0019E7F3 /* RATreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 031656AD18EBF22A0019E7F3 /* RATreeView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		0325E7F118CCA0E8000D3F20 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325E7F018CCA0E8000D3F20 /* DACircularProgressView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		0337CDEB18D4290C0083300C /* SHImageEditorFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337CDEA18D4290C0083300C /* SHImageEditorFrameView.m */; };
 		0337CDEF18D42AFB0083300C /* SHImageEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337CDEE18D42AFB0083300C /* SHImageEditorViewController.m */; };
@@ -89,6 +105,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0316568D18EBF22A0019E7F3 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
+		0316568E18EBF22A0019E7F3 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
+		0316568F18EBF22A0019E7F3 /* REMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenu.h; sourceTree = "<group>"; };
+		0316569018EBF22A0019E7F3 /* REMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenu.m; sourceTree = "<group>"; };
+		0316569118EBF22A0019E7F3 /* REMenuContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuContainerView.h; sourceTree = "<group>"; };
+		0316569218EBF22A0019E7F3 /* REMenuContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuContainerView.m; sourceTree = "<group>"; };
+		0316569318EBF22A0019E7F3 /* REMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuItem.h; sourceTree = "<group>"; };
+		0316569418EBF22A0019E7F3 /* REMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItem.m; sourceTree = "<group>"; };
+		0316569518EBF22A0019E7F3 /* REMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuItemView.h; sourceTree = "<group>"; };
+		0316569618EBF22A0019E7F3 /* REMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItemView.m; sourceTree = "<group>"; };
+		0316569818EBF22A0019E7F3 /* RADataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RADataObject.h; sourceTree = "<group>"; };
+		0316569918EBF22A0019E7F3 /* RADataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RADataObject.m; sourceTree = "<group>"; };
+		0316569A18EBF22A0019E7F3 /* RATreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RATreeNode.h; sourceTree = "<group>"; };
+		0316569B18EBF22A0019E7F3 /* RATreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RATreeNode.m; sourceTree = "<group>"; };
+		0316569C18EBF22A0019E7F3 /* RATreeNodeCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RATreeNodeCollectionController.h; sourceTree = "<group>"; };
+		0316569D18EBF22A0019E7F3 /* RATreeNodeCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RATreeNodeCollectionController.m; sourceTree = "<group>"; };
+		0316569E18EBF22A0019E7F3 /* RATreeNodeInfo+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RATreeNodeInfo+Private.h"; sourceTree = "<group>"; };
+		0316569F18EBF22A0019E7F3 /* RATreeNodeInfo+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RATreeNodeInfo+Private.m"; sourceTree = "<group>"; };
+		031656A018EBF22A0019E7F3 /* RATreeNodeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RATreeNodeInfo.h; sourceTree = "<group>"; };
+		031656A118EBF22A0019E7F3 /* RATreeNodeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RATreeNodeInfo.m; sourceTree = "<group>"; };
+		031656A218EBF22A0019E7F3 /* RATreeView+Enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RATreeView+Enums.h"; sourceTree = "<group>"; };
+		031656A318EBF22A0019E7F3 /* RATreeView+Enums.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RATreeView+Enums.m"; sourceTree = "<group>"; };
+		031656A418EBF22A0019E7F3 /* RATreeView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RATreeView+Private.h"; sourceTree = "<group>"; };
+		031656A518EBF22A0019E7F3 /* RATreeView+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RATreeView+Private.m"; sourceTree = "<group>"; };
+		031656A618EBF22A0019E7F3 /* RATreeView+TableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RATreeView+TableViewDataSource.h"; sourceTree = "<group>"; };
+		031656A718EBF22A0019E7F3 /* RATreeView+TableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RATreeView+TableViewDataSource.m"; sourceTree = "<group>"; };
+		031656A818EBF22A0019E7F3 /* RATreeView+TableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RATreeView+TableViewDelegate.h"; sourceTree = "<group>"; };
+		031656A918EBF22A0019E7F3 /* RATreeView+TableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RATreeView+TableViewDelegate.m"; sourceTree = "<group>"; };
+		031656AA18EBF22A0019E7F3 /* RATreeView+UIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RATreeView+UIScrollView.h"; sourceTree = "<group>"; };
+		031656AB18EBF22A0019E7F3 /* RATreeView+UIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RATreeView+UIScrollView.m"; sourceTree = "<group>"; };
+		031656AC18EBF22A0019E7F3 /* RATreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RATreeView.h; sourceTree = "<group>"; };
+		031656AD18EBF22A0019E7F3 /* RATreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RATreeView.m; sourceTree = "<group>"; };
 		0325E7EF18CCA0E8000D3F20 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
 		0325E7F018CCA0E8000D3F20 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
 		0337CDE918D4290C0083300C /* SHImageEditorFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHImageEditorFrameView.h; sourceTree = "<group>"; };
@@ -253,6 +301,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0316568C18EBF22A0019E7F3 /* REMenu */ = {
+			isa = PBXGroup;
+			children = (
+				0316568D18EBF22A0019E7F3 /* RECommonFunctions.h */,
+				0316568E18EBF22A0019E7F3 /* RECommonFunctions.m */,
+				0316568F18EBF22A0019E7F3 /* REMenu.h */,
+				0316569018EBF22A0019E7F3 /* REMenu.m */,
+				0316569118EBF22A0019E7F3 /* REMenuContainerView.h */,
+				0316569218EBF22A0019E7F3 /* REMenuContainerView.m */,
+				0316569318EBF22A0019E7F3 /* REMenuItem.h */,
+				0316569418EBF22A0019E7F3 /* REMenuItem.m */,
+				0316569518EBF22A0019E7F3 /* REMenuItemView.h */,
+				0316569618EBF22A0019E7F3 /* REMenuItemView.m */,
+			);
+			path = REMenu;
+			sourceTree = "<group>";
+		};
+		0316569718EBF22A0019E7F3 /* RATreeView */ = {
+			isa = PBXGroup;
+			children = (
+				0316569818EBF22A0019E7F3 /* RADataObject.h */,
+				0316569918EBF22A0019E7F3 /* RADataObject.m */,
+				0316569A18EBF22A0019E7F3 /* RATreeNode.h */,
+				0316569B18EBF22A0019E7F3 /* RATreeNode.m */,
+				0316569C18EBF22A0019E7F3 /* RATreeNodeCollectionController.h */,
+				0316569D18EBF22A0019E7F3 /* RATreeNodeCollectionController.m */,
+				0316569E18EBF22A0019E7F3 /* RATreeNodeInfo+Private.h */,
+				0316569F18EBF22A0019E7F3 /* RATreeNodeInfo+Private.m */,
+				031656A018EBF22A0019E7F3 /* RATreeNodeInfo.h */,
+				031656A118EBF22A0019E7F3 /* RATreeNodeInfo.m */,
+				031656A218EBF22A0019E7F3 /* RATreeView+Enums.h */,
+				031656A318EBF22A0019E7F3 /* RATreeView+Enums.m */,
+				031656A418EBF22A0019E7F3 /* RATreeView+Private.h */,
+				031656A518EBF22A0019E7F3 /* RATreeView+Private.m */,
+				031656A618EBF22A0019E7F3 /* RATreeView+TableViewDataSource.h */,
+				031656A718EBF22A0019E7F3 /* RATreeView+TableViewDataSource.m */,
+				031656A818EBF22A0019E7F3 /* RATreeView+TableViewDelegate.h */,
+				031656A918EBF22A0019E7F3 /* RATreeView+TableViewDelegate.m */,
+				031656AA18EBF22A0019E7F3 /* RATreeView+UIScrollView.h */,
+				031656AB18EBF22A0019E7F3 /* RATreeView+UIScrollView.m */,
+				031656AC18EBF22A0019E7F3 /* RATreeView.h */,
+				031656AD18EBF22A0019E7F3 /* RATreeView.m */,
+			);
+			path = RATreeView;
+			sourceTree = "<group>";
+		};
 		0325E7EE18CCA0E8000D3F20 /* DACircularProgress */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,6 +478,8 @@
 			children = (
 				D63558EF18E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.h */,
 				D63558F018E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.m */,
+				0316568C18EBF22A0019E7F3 /* REMenu */,
+				0316569718EBF22A0019E7F3 /* RATreeView */,
 				D608DCF718DEDD71001A9DCA /* FileControl */,
 				0325E7EE18CCA0E8000D3F20 /* DACircularProgress */,
 				D65380CC18CB5B7100DA6794 /* SDWebImage */,
@@ -685,19 +781,26 @@
 				D65380F418CB5B7100DA6794 /* UIImage+GIF.m in Sources */,
 				D6E4E7B718B39ADC003E1B90 /* GroupViewController.m in Sources */,
 				D6507EA818C7576900168E31 /* ASIDataCompressor.m in Sources */,
+				031656B818EBF22A0019E7F3 /* RATreeView+Enums.m in Sources */,
 				0337CDF518D4543A0083300C /* PaintingImageViewController.m in Sources */,
 				D6E9354E18B9F9C70086802C /* SourceViewController.m in Sources */,
 				D6507EAE18C7576900168E31 /* ASINetworkQueue.m in Sources */,
 				D608DD0118DEDD71001A9DCA /* FileControl.m in Sources */,
+				031656BC18EBF22A0019E7F3 /* RATreeView+UIScrollView.m in Sources */,
 				D65380F318CB5B7100DA6794 /* UIButton+WebCache.m in Sources */,
 				D6E4E79418B3949B003E1B90 /* IndexViewController.m in Sources */,
+				031656AF18EBF22A0019E7F3 /* REMenu.m in Sources */,
 				0337CDEB18D4290C0083300C /* SHImageEditorFrameView.m in Sources */,
 				D65380F518CB5B7100DA6794 /* UIImage+MultiFormat.m in Sources */,
 				D658054C18BEF8DD0002683F /* PhotoViewCell.m in Sources */,
 				D65380EE18CB5B7100DA6794 /* SDWebImageDecoder.m in Sources */,
 				D6507EAA18C7576900168E31 /* ASIDownloadCache.m in Sources */,
+				031656AE18EBF22A0019E7F3 /* RECommonFunctions.m in Sources */,
+				031656B218EBF22A0019E7F3 /* REMenuItemView.m in Sources */,
 				D6507EAD18C7576900168E31 /* ASIInputStream.m in Sources */,
+				031656B918EBF22A0019E7F3 /* RATreeView+Private.m in Sources */,
 				D6E4E78E18B3949B003E1B90 /* AppDelegate.m in Sources */,
+				031656B418EBF22A0019E7F3 /* RATreeNode.m in Sources */,
 				D63558EB18E422300077D98B /* LineChat.m in Sources */,
 				D63558EA18E422300077D98B /* ChatManager.m in Sources */,
 				D608DD0818E26CB6001A9DCA /* SettingViewController.m in Sources */,
@@ -711,6 +814,7 @@
 				D6507EAC18C7576900168E31 /* ASIHTTPRequest.m in Sources */,
 				D658055D18BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m in Sources */,
 				D65380ED18CB5B7100DA6794 /* SDWebImageCompat.m in Sources */,
+				031656BA18EBF22A0019E7F3 /* RATreeView+TableViewDataSource.m in Sources */,
 				D67D0F0E18E5528500A62B34 /* WeChatApp.m in Sources */,
 				D65380EA18CB5B7100DA6794 /* MKAnnotationView+WebCache.m in Sources */,
 				D65380C918CB103900DA6794 /* GoogleSearchViewController.m in Sources */,
@@ -718,18 +822,26 @@
 				D658055B18BF1C0D0002683F /* LSCollectionViewHelper.m in Sources */,
 				D65380F218CB5B7100DA6794 /* SDWebImagePrefetcher.m in Sources */,
 				0337CDF218D43AF50083300C /* PhotoEditedViewController.m in Sources */,
+				031656B518EBF22A0019E7F3 /* RATreeNodeCollectionController.m in Sources */,
 				0325E7F118CCA0E8000D3F20 /* DACircularProgressView.m in Sources */,
+				031656B718EBF22A0019E7F3 /* RATreeNodeInfo.m in Sources */,
 				D6E4E78A18B3949B003E1B90 /* main.m in Sources */,
 				D65380F018CB5B7100DA6794 /* SDWebImageDownloaderOperation.m in Sources */,
 				0337CDEF18D42AFB0083300C /* SHImageEditorViewController.m in Sources */,
 				D64F129118E99F5D006BA06E /* JMDropMenuView.m in Sources */,
+				031656B018EBF22A0019E7F3 /* REMenuContainerView.m in Sources */,
 				D6507EAB18C7576900168E31 /* ASIFormDataRequest.m in Sources */,
+				031656BD18EBF22A0019E7F3 /* RATreeView.m in Sources */,
+				031656BB18EBF22A0019E7F3 /* RATreeView+TableViewDelegate.m in Sources */,
+				031656B318EBF22A0019E7F3 /* RADataObject.m in Sources */,
 				D63558EE18E423440077D98B /* WhatsApp.m in Sources */,
 				D65380F118CB5B7100DA6794 /* SDWebImageManager.m in Sources */,
 				D65380F618CB5B7100DA6794 /* UIImage+WebP.m in Sources */,
 				D63558E918E422300077D98B /* ChatApp.m in Sources */,
+				031656B618EBF22A0019E7F3 /* RATreeNodeInfo+Private.m in Sources */,
 				D6507EA918C7576900168E31 /* ASIDataDecompressor.m in Sources */,
 				D65380EC18CB5B7100DA6794 /* SDImageCache.m in Sources */,
+				031656B118EBF22A0019E7F3 /* REMenuItem.m in Sources */,
 				D63558F118E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				D67D0F1218E5550700A62B34 /* UIImage+ResizeImage.m in Sources */,
 			);
@@ -861,6 +973,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sticker/sticker-Prefix.pch";
@@ -871,7 +984,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55CC7663-CC68-47D0-88B0-2183F3042913";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -884,6 +997,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sticker/sticker-Prefix.pch";
@@ -893,7 +1007,7 @@
 					"$(PROJECT_DIR)/sticker/ChatManager/WeChatSDK",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55CC7663-CC68-47D0-88B0-2183F3042913";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};

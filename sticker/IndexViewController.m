@@ -19,6 +19,10 @@
 #import "JMDropMenuView.h"
 #import "PhotoEditedViewController.h"
 #import "GoogleSearchViewController.h"
+// For popout setting menus
+#import "External/REMenu/REMenu.h"
+#import "External/RATreeView/RADataObject.h"
+#import "External/RATreeView/RATreeView.h"
 
 typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     kAdd_Photo_From_Camera,
@@ -26,15 +30,18 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     kAdd_Photo_From_Search
 };
 
-@interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate,JMDropMenuViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate,JMDropMenuViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, RATreeViewDataSource, RATreeViewDelegate>
 {
     DraggableCollectionViewFlowLayout *flowLayout;
     JMDropMenuView *dropMenu;
+    REMenu *settingMenu;
     UICollectionView *imageCollectionView;
     NSMutableArray *imageDataArray;
+    NSArray *optionData;
     NSString *documentPath;
     UIImagePickerController *imagePicker;
     BOOL isAddMode;
+    BOOL isSettingOpen;
     BOOL isAnimate;
     BOOL isDeleteMode;
 }
@@ -52,6 +59,34 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isAddMode = NO;
     isAnimate = NO;
     isDeleteMode = NO;
+    
+    // Configure Setting icon
+    // Customise TreeView
+    RADataObject *appLINE = [RADataObject dataObjectWithName:@"LINE" children:nil];
+    RADataObject *appWhatsApp = [RADataObject dataObjectWithName:@"WhatsApp" children:nil];
+    RADataObject *appWeChat = [RADataObject dataObjectWithName:@"WeChat" children:nil];
+    RADataObject *defaultIM = [RADataObject dataObjectWithName:NSLocalizedString(@"Default IM", nil) children:@[appLINE, appWhatsApp, appWeChat]];
+    
+    RADataObject *destinationObj = [RADataObject dataObjectWithName:@"Save to Group Album" children:nil];
+    
+    RATreeView *treeView = [[RATreeView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:RATreeViewStylePlain];
+    [treeView setBackgroundColor:[UIColor clearColor]];
+    [treeView setSeparatorColor:[UIColor clearColor]];
+    treeView.delegate = self;
+    treeView.dataSource = self;
+    
+    // Compose the MenuItem
+    REMenuItem *settingItem = [[REMenuItem alloc] initWithCustomView:treeView];
+    optionData = @[defaultIM, destinationObj]; [optionData retain];
+    [treeView reloadData];
+    
+    settingMenu = [[REMenu alloc] initWithItems:@[settingItem]];
+    [settingMenu.backgroundView setBackgroundColor:[UIColor clearColor]];
+    [settingMenu setBorderColor:[UIColor clearColor]];
+    [settingMenu setBackgroundColor:[UIColor clearColor]];
+    settingMenu.itemHeight = self.view.frame.size.height;
+    
+    isSettingOpen = NO;
     
     //Create navigation bar & items
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -144,6 +179,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [imageDataArray release];
     [documentPath release];
     [dropMenu release];
+    [settingMenu release];
 //    [cellQueue release];
     [super dealloc];
 }
@@ -157,13 +193,24 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (void)pushToSettingView
 {
-    if (isAddMode) {
-        [dropMenu dismiss];
-        isAddMode = NO;
+    if (isSettingOpen) {
+        [settingMenu close];
+        for (UIBarButtonItem *btn in self.navigationItem.rightBarButtonItems) {
+            btn.enabled = YES;
+        }
+        imageCollectionView.userInteractionEnabled = YES;
+    } else {
+        if (isAddMode) {
+            [dropMenu dismiss];
+            isAddMode = NO;
+        }
+        for (UIBarButtonItem *btn in self.navigationItem.rightBarButtonItems) {
+            btn.enabled = NO;
+        }
+        imageCollectionView.userInteractionEnabled = NO;
+        [settingMenu showFromNavigationController:self.navigationController];
     }
-    SettingViewController *settingVC = [[SettingViewController alloc] init];
-    [self.navigationController pushViewController:settingVC animated:YES];
-    [settingVC release];
+    isSettingOpen = !isSettingOpen;
 }
 
 - (void)changeDeleteMode
@@ -365,6 +412,118 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [editViewController release];
 }
 
+#pragma mark TreeView Data Source
 
+- (UITableViewCell *)treeView:(RATreeView *)treeView cellForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+{
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+
+    cell.textLabel.text = ((RADataObject *)item).name;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    if (treeNodeInfo.treeDepthLevel == 0) {
+        
+        cell.textLabel.textColor = [UIColor blackColor];
+        UISwitch *switchBtn = [[[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 60, 40)] autorelease];
+        
+        switch (treeNodeInfo.positionInSiblings) {
+            case 0:
+            {
+                [switchBtn addTarget:self action:@selector(switchDefaultIMSetting:) forControlEvents:UIControlEventTouchUpInside];
+            }
+                break;
+            case 1:
+            {
+                
+            }
+                break;
+        }
+        
+        cell.accessoryView = switchBtn;
+        
+        NSLog(@"item %d", treeNodeInfo.positionInSiblings);
+        
+    } else {
+        cell.textLabel.textColor = [UIColor redColor];
+    }
+    
+    return cell;
+}
+
+- (NSInteger)treeView:(RATreeView *)treeView numberOfChildrenOfItem:(id)item
+{
+    if (item == nil) {
+        return [optionData count];
+    }
+    
+    RADataObject *_data = item;
+    return [_data.children count];
+}
+
+- (id)treeView:(RATreeView *)treeView child:(NSInteger)index ofItem:(id)item
+{
+    RADataObject *_data = item;
+    if (item == nil) {
+        return [optionData objectAtIndex:index];
+    }
+    
+    return [_data.children objectAtIndex:index];
+}
+
+#pragma mark TreeView Delegate methods
+
+- (CGFloat)treeView:(RATreeView *)treeView heightForRowForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+{
+    return 55;
+}
+
+- (NSInteger)treeView:(RATreeView *)treeView indentationLevelForRowForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+{
+    return 3 * treeNodeInfo.treeDepthLevel;
+}
+
+- (BOOL)treeView:(RATreeView *)treeView shouldExpandItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+{
+    return NO;
+}
+
+- (BOOL)treeView:(RATreeView *)treeView shouldItemBeExpandedAfterDataReload:(id)item treeDepthLevel:(NSInteger)treeDepthLevel
+{
+    return NO;
+}
+
+- (void)treeView:(RATreeView *)treeView willDisplayCell:(UITableViewCell *)cell forItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+{
+    if (treeNodeInfo.treeDepthLevel == 0) {
+        cell.backgroundColor = UIColorFromRGB(0xF7F7F7);
+    } else if (treeNodeInfo.treeDepthLevel == 1) {
+        cell.backgroundColor = UIColorFromRGB(0xD1EEFC);
+    }
+}
+
+- (BOOL)treeViewShouldBeSelectable:(RATreeView *)treeView
+{
+    return NO;
+}
+
+#pragma mark - Method to UserSetting
+
+- (void)switchDefaultIMSetting:(id)sender
+{
+    UISwitch *obj = (UISwitch *)sender;
+    RATreeView *treeView = (RATreeView *)[(REMenuItem *)[settingMenu.items objectAtIndex:0] customView];
+    if (obj.isOn) {
+        [treeView expandRowForItem:optionData[0] withRowAnimation:RATreeViewRowAnimationBottom];
+    } else {
+        [treeView collapseRowForItem:optionData[0] withRowAnimation:RATreeViewRowAnimationTop];
+    }
+    // Save setting to userinfo
+}
+
+- (void)switchAlbumSetting:(id)sender
+{
+    UISwitch *obj = (UISwitch *)sender;
+    // Save setting to userinfo
+}
 
 @end
