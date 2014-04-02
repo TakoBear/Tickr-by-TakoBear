@@ -28,9 +28,10 @@
         [_deleteImgView setImage:deleteImage];
         _deleteImgView.frame = CGRectMake(0, 0, self.bounds.size.width *1/3, self.bounds.size.width *1/3);
         _deleteImgView.hidden = YES;
-        [_imgView addSubview:_deleteImgView];
         
         [self.contentView addSubview:_imgView];
+        [self.contentView addSubview:_deleteImgView];
+
 //        [self.contentView addSubview:_progressView];
         [_deleteImgView release];
         [_imgView release];

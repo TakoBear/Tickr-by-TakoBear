@@ -29,14 +29,14 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 @interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate,JMDropMenuViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     DraggableCollectionViewFlowLayout *flowLayout;
+    JMDropMenuView *dropMenu;
     UICollectionView *imageCollectionView;
     NSMutableArray *imageDataArray;
     NSString *documentPath;
-//    NSOperationQueue *cellQueue;
-    BOOL isAddMode;
-    JMDropMenuView *dropMenu;
-    BOOL isAnimate;
     UIImagePickerController *imagePicker;
+    BOOL isAddMode;
+    BOOL isAnimate;
+    BOOL isDeleteMode;
 }
 
 @end
@@ -48,21 +48,22 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
     imageDataArray = [NSMutableArray new];
-
-//    cellQueue = [[NSOperationQueue alloc] init];
-//    cellQueue.maxConcurrentOperationCount = 1;
     isAddMode = NO;
     isAnimate = NO;
+    isDeleteMode = NO;
+    
     //Create navigation bar & items
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                              target:self
                                                              action:@selector(displayAddMenu)];
+    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(changeDeleteMode)];
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dropmenu_pressed.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView)];
     settingButton.tintColor = [UIColor whiteColor];
 
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:addButton,deleteButton, nil];
     self.navigationItem.leftBarButtonItem = settingButton;
     
     
@@ -83,8 +84,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES selector:@selector(compare:)];
     fileArray = [fileArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     imageDataArray = [[NSMutableArray arrayWithArray:fileArray] retain];
-    UIImage *addDataImage = [UIImage imageNamed:@"addData.png"];
-    [imageDataArray insertObject:addDataImage atIndex:0];
     SettingVariable *settingVariable = [SettingVariable sharedInstance];
     [settingVariable.variableDictionary setObject:imageDataArray forKey:kImageDataArrayKey];
 
@@ -167,6 +166,12 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [settingVC release];
 }
 
+- (void)changeDeleteMode
+{
+    isDeleteMode = !isDeleteMode;
+    [imageCollectionView reloadData];
+}
+
 #pragma mark - Drop menu Delegate for add photo
 
 - (void)didFinishedPopOutWithDropMenu:(JMDropMenuView *)menu
@@ -242,47 +247,34 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
     [cell.imgView setContentMode:UIViewContentModeScaleAspectFit];
     
-//    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-//        dispatch_async(dispatch_get_main_queue(), ^{
-            UIImage *image;
-        if (indexPath.item == 0) {
-            image = [imageDataArray objectAtIndex:0];
-        } else {
             NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
             NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
             NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
-            image = [UIImage imageWithData:imageData];
-            
-        }
-            [cell.imgView setImage:image];
-//        });
-//        
-//    }];
-//    
-//    operation.queuePriority = (indexPath.item == 0) ? NSOperationQueuePriorityVeryHigh :NSOperationQueuePriorityLow;
-//    [cellQueue addOperation:operation];
+            UIImage *image = [UIImage imageWithData:imageData];
+            if (isDeleteMode) {
+                cell.deleteImgView.hidden = NO;
+            } else {
+                cell.deleteImgView.hidden = YES;
+            }
 
+            [cell.imgView setImage:image];
     
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.item == 0) {
-        SourceViewController *sourceVC = [[SourceViewController alloc] init];
-        
-        [self.navigationController pushViewController:sourceVC animated:YES];
-    }
-    else {
-        
-            NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
-            NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
-            NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
-            ChatManager *chatManager = [ChatManager new];
-            ChatApp *chat = [chatManager currentChatAppWithType];
-            if ([chat isUserInstalledApp]) {
-                [chat shareWithImage:imageData];
-            }
+    if (isDeleteMode) {
+        [self deletePhoto:indexPath.item];
+    } else {
+        NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+        NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
+        NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
+        ChatManager *chatManager = [ChatManager new];
+        ChatApp *chat = [chatManager currentChatAppWithType];
+        if ([chat isUserInstalledApp]) {
+            [chat shareWithImage:imageData];
+        }
     }
 }
 
@@ -290,17 +282,11 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (BOOL)collectionView:(LSCollectionViewHelper *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.item == 0) {
-        return NO;
-    }
     return YES;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    if (indexPath.item == 0 || toIndexPath.item == 0) {
-        return NO;
-    }
     return YES;
 }
 
@@ -309,17 +295,17 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     UIImage *index = [imageDataArray objectAtIndex:fromIndexPath.item];
     [imageDataArray removeObjectAtIndex:fromIndexPath.item];
     [imageDataArray insertObject:index atIndex:toIndexPath.item];
-    NSLog(@"from : %d , to : %d",fromIndexPath.item,toIndexPath.item);
 }
 
-- (void)deletePhoto:(NSNumber *)number
+- (void)deletePhoto:(NSInteger)item
 {
     
-//    NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
-//    NSString *deletePath = [NSString stringWithFormat:@"%@/%@",stickerPath,imageDataArray[number.intValue]];
-//    BOOL isRemove = [[FileControl mainPath] removeFileAtPath:deletePath];
-//    NSLog(@" Remove : %@",isRemove ? @"Success" : @"Failed");
-//    [imageDataArray removeObjectAtIndex:number.intValue];
+    NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+    NSString *deletePath = [NSString stringWithFormat:@"%@/%@",stickerPath,imageDataArray[item]];
+    BOOL isRemove = [[FileControl mainPath] removeFileAtPath:deletePath];
+    NSLog(@" Remove : %@",isRemove ? @"Success" : @"Failed");
+    [imageDataArray removeObjectAtIndex:item];
+    isDeleteMode = NO;
     [imageCollectionView reloadData];
 
 }
