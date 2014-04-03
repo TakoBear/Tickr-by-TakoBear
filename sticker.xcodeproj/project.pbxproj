@@ -290,11 +290,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-				03CA3D8A18ED2C07001C7077 /* QuartzCore.framework in Frameworks */,
-=======
 				D6FBE0DE18ED048500188E58 /* QuartzCore.framework in Frameworks */,
->>>>>>> 6b42273174dd93c3a74802f09520a1dacd35b10f
 				D6507ED618C75A7500168E31 /* libz.dylib in Frameworks */,
 				D6507ED418C75A1F00168E31 /* MobileCoreServices.framework in Frameworks */,
 				D67D0F0B18E5523E00A62B34 /* libWeChatSDK.a in Frameworks */,
@@ -639,11 +635,7 @@
 		D6E4E77C18B3949B003E1B90 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				03CA3D8918ED2C07001C7077 /* QuartzCore.framework */,
-=======
 				D6FBE0DD18ED048500188E58 /* QuartzCore.framework */,
->>>>>>> 6b42273174dd93c3a74802f09520a1dacd35b10f
 				D65380CA18CB251E00DA6794 /* AssetsLibrary.framework */,
 				D6507ED518C75A7500168E31 /* libz.dylib */,
 				D6507ED318C75A1F00168E31 /* MobileCoreServices.framework */,
