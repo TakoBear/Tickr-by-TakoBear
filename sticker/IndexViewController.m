@@ -19,6 +19,7 @@
 #import "JMDropMenuView.h"
 #import "PhotoEditedViewController.h"
 #import "GoogleSearchViewController.h"
+#import <QuartzCore/QuartzCore.h>
 // For popout setting menus
 #import "External/REMenu/REMenu.h"
 #import "External/RATreeView/RADataObject.h"
@@ -425,14 +426,15 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 - (UITableViewCell *)treeView:(RATreeView *)treeView cellForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-
+    
     cell.textLabel.text = ((RADataObject *)item).name;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (treeNodeInfo.treeDepthLevel == 0) {
         
-        cell.textLabel.textColor = [UIColor blackColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
         UISwitch *switchBtn = [[[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 60, 40)] autorelease];
+        switchBtn.onTintColor = RGBA(247.0f, 166.0f, 0.0f, 1.0f);
         
         switch (treeNodeInfo.positionInSiblings) {
             case 0:
@@ -454,17 +456,19 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         NSLog(@"item %d", treeNodeInfo.positionInSiblings);
         
     } else {
+        
         int chatType = [[[NSUserDefaults standardUserDefaults] objectForKey:kChooseChatAppTypeKey] intValue];
         int row = treeNodeInfo.positionInSiblings;
         UIImage *selectedImg = [UIImage imageNamed:@"selected.png"];
         UIImageView *selectedImgView = [[[UIImageView alloc] initWithImage:selectedImg] autorelease];
         if ( chatType == row) {
             cell.accessoryView = selectedImgView;
+            cell.textLabel.textColor = RGBA(247.0f, 166.0f, 0.0f, 1.0f);
         } else {
             cell.accessoryView = nil;
+            cell.textLabel.textColor = [UIColor whiteColor];
         }
 
-        cell.textLabel.textColor = [UIColor redColor];
     }
     
     return cell;
@@ -548,10 +552,13 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (void)treeView:(RATreeView *)treeView willDisplayCell:(UITableViewCell *)cell forItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
 {
+    UIColor *blackOpaque = [UIColor grayColor];
+    blackOpaque = [blackOpaque colorWithAlphaComponent:1.0f];
+    
     if (treeNodeInfo.treeDepthLevel == 0) {
-        cell.backgroundColor = UIColorFromRGB(0xF7F7F7);
+        cell.backgroundColor = blackOpaque;
     } else if (treeNodeInfo.treeDepthLevel == 1) {
-        cell.backgroundColor = UIColorFromRGB(0xD1EEFC);
+        cell.backgroundColor = blackOpaque;
     }
 }
 

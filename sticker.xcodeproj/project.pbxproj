@@ -92,6 +92,7 @@
 		D6E9353918B8D0350086802C /* 1.PNG in Resources */ = {isa = PBXBuildFile; fileRef = D6E9352818B8D0350086802C /* 1.PNG */; };
 		D6E9354B18B9F8FA0086802C /* addData.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E9354A18B9F8FA0086802C /* addData.png */; };
 		D6E9354E18B9F9C70086802C /* SourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E9354D18B9F9C70086802C /* SourceViewController.m */; };
+		D6FBE0DE18ED048500188E58 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6FBE0DD18ED048500188E58 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -270,6 +271,7 @@
 		D6E9354A18B9F8FA0086802C /* addData.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addData.png; sourceTree = "<group>"; };
 		D6E9354C18B9F9C70086802C /* SourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceViewController.h; sourceTree = "<group>"; };
 		D6E9354D18B9F9C70086802C /* SourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SourceViewController.m; sourceTree = "<group>"; };
+		D6FBE0DD18ED048500188E58 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +279,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6FBE0DE18ED048500188E58 /* QuartzCore.framework in Frameworks */,
 				D6507ED618C75A7500168E31 /* libz.dylib in Frameworks */,
 				D6507ED418C75A1F00168E31 /* MobileCoreServices.framework in Frameworks */,
 				D67D0F0B18E5523E00A62B34 /* libWeChatSDK.a in Frameworks */,
@@ -607,6 +610,7 @@
 		D6E4E77C18B3949B003E1B90 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6FBE0DD18ED048500188E58 /* QuartzCore.framework */,
 				D65380CA18CB251E00DA6794 /* AssetsLibrary.framework */,
 				D6507ED518C75A7500168E31 /* libz.dylib */,
 				D6507ED318C75A1F00168E31 /* MobileCoreServices.framework */,

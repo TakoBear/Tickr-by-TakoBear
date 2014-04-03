@@ -21,7 +21,7 @@
 {
     [WXApi registerApp:WXAPI_KEY];
     
-    [[UINavigationBar appearance] setBarTintColor:RGBA(245.0f, 162.0f, 99.0f, 1.0f)];
+    [[UINavigationBar appearance] setBarTintColor:RGBA(247.0f, 166.0f, 0.0f, 1.0f)];
     
     // Override point for customization after application launch
     IndexViewController *indexVC = [[IndexViewController alloc] init];
