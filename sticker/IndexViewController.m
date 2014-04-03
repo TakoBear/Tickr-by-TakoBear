@@ -339,7 +339,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 - (void)handleSelectPhoto:(NSIndexPath *)indexPath collectionView:(UICollectionView *)collectionView
 {
     BOOL isOn = [[NSUserDefaults standardUserDefaults] boolForKey:kIMDefaultKey];
-    
     if (isOn) {
         // Pass photo to IM messenger
         NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
@@ -362,8 +361,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (void)touchPhoto:(PhotoViewCell *)cell andData:(NSData *)imageData indexPath:(NSIndexPath *)indexPath
 {
-    if (defaultIMPopOverViewController == nil) {
-        
         IMSelectViewController *vc = [[IMSelectViewController alloc] initWithImageData:imageData];
         
         defaultIMPopOverViewController = [[WYPopoverController alloc] initWithContentViewController:vc];
@@ -387,24 +384,19 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
                                  permittedArrowDirections:WYPopoverArrowDirectionAny
                                                  animated:YES
                                                   options:WYPopoverAnimationOptionFadeWithScale];
-        
-    } else {
-        [self dismissDefaultIMViewController];
+}
+
+- (void)popoverControllerDidDismissPopover:(WYPopoverController *)popoverController;
+{
+    if (defaultIMPopOverViewController) {
+        UIView *blockView = [self.view viewWithTag:kBLOCKVIEW_TAG];
+        [blockView removeFromSuperview];
+        [blockView release], blockView = nil;
+        [defaultIMPopOverViewController release];
+        defaultIMPopOverViewController = nil;
     }
 }
 
-- (void)dismissDefaultIMViewController
-{
-    UIView *blockView = [self.view viewWithTag:kBLOCKVIEW_TAG];
-    [blockView removeFromSuperview];
-    [blockView release], blockView = nil;
-    
-    [defaultIMPopOverViewController dismissPopoverAnimated:YES completion:^{
-        defaultIMPopOverViewController.delegate = nil;
-        [defaultIMPopOverViewController release];
-        defaultIMPopOverViewController = nil;
-    }];
-}
 
 #pragma mark - WYPopoverControllerDelegate
 
@@ -478,8 +470,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     
     NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
     NSString *deletePath = [NSString stringWithFormat:@"%@/%@",stickerPath,imageDataArray[item]];
-    BOOL isRemove = [[FileControl mainPath] removeFileAtPath:deletePath];
-    NSLog(@" Remove : %@",isRemove ? @"Success" : @"Failed");
+    [[FileControl mainPath] removeFileAtPath:deletePath];
     [imageDataArray removeObjectAtIndex:item];
     isDeleteMode = NO;
     [imageCollectionView reloadData];
