@@ -80,6 +80,11 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     optionData = @[defaultIM, destinationObj]; [optionData retain];
     [treeView reloadData];
     
+    BOOL isOn = [[NSUserDefaults standardUserDefaults] boolForKey:kIMDefaultKey];
+    if (isOn) {
+        [treeView expandRowForItem:optionData[0] withRowAnimation:RATreeViewRowAnimationBottom];
+    }
+    
     settingMenu = [[REMenu alloc] initWithItems:@[settingItem]];
     [settingMenu.backgroundView setBackgroundColor:[UIColor clearColor]];
     [settingMenu setBorderColor:[UIColor clearColor]];
@@ -435,11 +440,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
                 [switchBtn addTarget:self action:@selector(switchDefaultIMSetting:) forControlEvents:UIControlEventTouchUpInside];
                 BOOL isOn = [[NSUserDefaults standardUserDefaults] boolForKey:kIMDefaultKey];
                 [switchBtn setOn:isOn];
-                
-                if (isOn) {
-                    RATreeView *treeView = (RATreeView *)[(REMenuItem *)[settingMenu.items objectAtIndex:0] customView];
-                    [treeView expandRowForItem:optionData[0] withRowAnimation:RATreeViewRowAnimationBottom];
-                }
                 
             }
                 break;
