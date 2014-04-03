@@ -62,7 +62,7 @@
                             if (group==nil && albumWasFound==NO) {
                                 //photo albums are over, target album does not exist, thus create it
                                 
-                                __weak ALAssetsLibrary* weakSelf = self;
+                                ALAssetsLibrary* weakSelf = self;
 
                                 //create new assets album
                                 [self addAssetsGroupAlbumWithName:albumName 

@@ -11,6 +11,8 @@
 #import "WXApi.h"
 #import "SettingVariable.h"
 
+#import "External/WYPopoverController/WYPopoverController.h"
+
 @interface AppDelegate() <WXApiDelegate>
 
 @end
@@ -22,6 +24,25 @@
     [WXApi registerApp:WXAPI_KEY];
     
     [[UINavigationBar appearance] setBarTintColor:RGBA(245.0f, 162.0f, 99.0f, 1.0f)];
+    
+    
+    UINavigationBar *navBarInPopoverAppearance = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], [WYPopoverBackgroundView class], nil];
+    
+    NSShadow *shadow = [[NSShadow alloc] init];
+    [shadow setShadowColor:[UIColor clearColor]];
+    [shadow setShadowOffset:CGSizeZero];
+    
+    [navBarInPopoverAppearance setTitleTextAttributes:
+     @{
+       NSForegroundColorAttributeName : [UIColor purpleColor],
+       NSShadowAttributeName: shadow
+       }];
+    
+    WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+    [popoverAppearance setOuterCornerRadius:0.0f];
+    [popoverAppearance setInnerCornerRadius:0.0f];
+    [popoverAppearance setFillTopColor:RGBA(127, 127, 127, 0.8f)];
+    [popoverAppearance setViewContentInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
     
     // Override point for customization after application launch
     IndexViewController *indexVC = [[IndexViewController alloc] init];

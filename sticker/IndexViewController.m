@@ -23,6 +23,11 @@
 #import "External/REMenu/REMenu.h"
 #import "External/RATreeView/RADataObject.h"
 #import "External/RATreeView/RATreeView.h"
+// For popout IM menus
+#import "External/WYPopoverController/WYPopoverController.h"
+#import "IMSelectViewController.h"
+
+#define kBLOCKVIEW_TAG 1001
 
 typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     kAdd_Photo_From_Camera,
@@ -30,9 +35,10 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     kAdd_Photo_From_Search
 };
 
-@interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate,JMDropMenuViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, RATreeViewDataSource, RATreeViewDelegate>
+@interface IndexViewController ()<UICollectionViewDataSource_Draggable, UICollectionViewDataSource,UICollectionViewDelegate,JMDropMenuViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, RATreeViewDataSource, RATreeViewDelegate, WYPopoverControllerDelegate>
 {
     DraggableCollectionViewFlowLayout *flowLayout;
+    WYPopoverController *defaultIMPopOverViewController;
     JMDropMenuView *dropMenu;
     REMenu *settingMenu;
     UICollectionView *imageCollectionView;
@@ -321,6 +327,19 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     if (isDeleteMode) {
         [self deletePhoto:indexPath.item];
     } else {
+        [self handleSelectPhoto:indexPath collectionView:collectionView];
+    }
+
+}
+
+#pragma mark - Action when touching Photo
+
+- (void)handleSelectPhoto:(NSIndexPath *)indexPath collectionView:(UICollectionView *)collectionView
+{
+    BOOL isOn = [[NSUserDefaults standardUserDefaults] boolForKey:kIMDefaultKey];
+    
+    if (isOn) {
+        // Pass photo to IM messenger
         NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
         NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
         NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
@@ -329,9 +348,109 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         if ([chat isUserInstalledApp]) {
             [chat shareWithImage:imageData];
         }
+    } else {
+        // Pop out select IM messenger
+        PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
+        NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+        NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
+        NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
+        [self touchPhoto:cell andData:imageData indexPath:indexPath];
     }
-
 }
+
+- (void)touchPhoto:(PhotoViewCell *)cell andData:(NSData *)imageData indexPath:(NSIndexPath *)indexPath
+{
+    if (defaultIMPopOverViewController == nil) {
+        
+        IMSelectViewController *vc = [[IMSelectViewController alloc] initWithImageData:imageData];
+        
+        defaultIMPopOverViewController = [[WYPopoverController alloc] initWithContentViewController:vc];
+        defaultIMPopOverViewController.delegate = self;
+        defaultIMPopOverViewController.passthroughViews = @[cell];
+        defaultIMPopOverViewController.popoverLayoutMargins = UIEdgeInsetsMake(200, 0, 180, 0);
+        defaultIMPopOverViewController.wantsDefaultContentAppearance = NO;
+        
+        // Get current Cell position
+        UICollectionViewLayoutAttributes *attributes = [imageCollectionView layoutAttributesForItemAtIndexPath:indexPath];
+        
+        CGRect frame = CGRectMake(attributes.frame.origin.x, attributes.frame.origin.y + 20, attributes.frame.size.width, attributes.frame.size.height);
+        
+        UIView *blockView = [[UIView alloc] initWithFrame:frame];
+        blockView.backgroundColor = [UIColor clearColor];
+        blockView.tag = kBLOCKVIEW_TAG;
+        [self.view addSubview:blockView];
+        
+        [defaultIMPopOverViewController presentPopoverFromRect:blockView.bounds
+                                                   inView:blockView
+                                 permittedArrowDirections:WYPopoverArrowDirectionAny
+                                                 animated:YES
+                                                  options:WYPopoverAnimationOptionFadeWithScale];
+        
+    } else {
+        [self dismissDefaultIMViewController];
+    }
+}
+
+- (void)dismissDefaultIMViewController
+{
+    UIView *blockView = [self.view viewWithTag:kBLOCKVIEW_TAG];
+    [blockView removeFromSuperview];
+    [blockView release], blockView = nil;
+    
+    [defaultIMPopOverViewController dismissPopoverAnimated:YES completion:^{
+        defaultIMPopOverViewController.delegate = nil;
+        [defaultIMPopOverViewController release];
+        defaultIMPopOverViewController = nil;
+    }];
+}
+
+#pragma mark - WYPopoverControllerDelegate
+
+- (void)popoverControllerDidPresentPopover:(WYPopoverController *)controller
+{
+    NSLog(@"popoverControllerDidPresentPopover");
+}
+
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
+{
+    return YES;
+}
+
+- (BOOL)popoverControllerShouldIgnoreKeyboardBounds:(WYPopoverController *)popoverController
+{
+    return YES;
+}
+
+- (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(float *)value
+{
+    // keyboard is shown and the popover will be moved up by 163 pixels for example ( *value = 163 )
+    *value = 0; // set value to 0 if you want to avoid the popover to be moved
+}
+
+#pragma mark - UIViewControllerRotation
+
+// Applications should use supportedInterfaceOrientations and/or shouldAutorotate..
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
+}
+
+// New Autorotation support.
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationPortrait;
+}
+
 
 #pragma mark - Draggable delegate
 
@@ -494,7 +613,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (void)treeView:(RATreeView *)treeView didSelectRowForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
 {
-    ///TODO: Select item
     if (treeNodeInfo.treeDepthLevel == 1) {
         switch (treeNodeInfo.positionInSiblings) {
             case ChatAppType_Line:

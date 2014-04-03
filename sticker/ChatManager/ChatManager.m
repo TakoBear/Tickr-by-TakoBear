@@ -45,4 +45,34 @@
     return NULL;
 }
 
+- (ChatApp *)chatAppWithType:(NSInteger)type
+{
+    ChatApp *chat;
+    switch (type) {
+        case ChatAppType_Line:
+        {
+            chat = [LineChat new];
+            return chat;
+        }
+            break;
+        case ChatAppType_WhatsApp:
+        {
+            chat = [WhatsApp new];
+            return chat;
+        }
+            break;
+        case ChatAppType_WeChat:
+        {
+            chat = [WeChatApp new];
+            return chat;
+        }
+            break;
+        default:
+            break;
+    }
+    
+    
+    return NULL;
+}
+
 @end

@@ -17,7 +17,7 @@
     uint8_t *buffer = malloc(chunkSize * sizeof(uint8_t));
     
     ALAssetRepresentation *rep = [asset defaultRepresentation];
-    NSUInteger length = [rep size];
+    unsigned long long length = [rep size];
     
     NSString *localFilePath = [[self documentPath] stringByAppendingPathComponent:filePath];
     

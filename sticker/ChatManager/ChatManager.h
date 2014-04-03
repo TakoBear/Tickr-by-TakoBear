@@ -14,5 +14,6 @@
 @interface ChatManager : NSObject
 
 - (ChatApp *)currentChatAppWithType;
+- (ChatApp *)chatAppWithType:(NSInteger)type;
 
 @end

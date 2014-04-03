@@ -28,6 +28,10 @@
 		0337CDEF18D42AFB0083300C /* SHImageEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337CDEE18D42AFB0083300C /* SHImageEditorViewController.m */; };
 		0337CDF218D43AF50083300C /* PhotoEditedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337CDF118D43AF50083300C /* PhotoEditedViewController.m */; };
 		0337CDF518D4543A0083300C /* PaintingImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337CDF418D4543A0083300C /* PaintingImageViewController.m */; };
+		03CA3D8718ED1196001C7077 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CA3D8418ED1196001C7077 /* WYPopoverController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		03CA3D8818ED1196001C7077 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CA3D8618ED1196001C7077 /* WYStoryboardPopoverSegue.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		03CA3D8A18ED2C07001C7077 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CA3D8918ED2C07001C7077 /* QuartzCore.framework */; };
+		03CA3D8D18ED3904001C7077 /* IMSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CA3D8C18ED3904001C7077 /* IMSelectViewController.m */; };
 		D608DD0018DEDD71001A9DCA /* FileControl+Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = D608DCF918DEDD71001A9DCA /* FileControl+Camera.m */; };
 		D608DD0118DEDD71001A9DCA /* FileControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D608DCFB18DEDD71001A9DCA /* FileControl.m */; };
 		D608DD0818E26CB6001A9DCA /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D608DD0718E26CB6001A9DCA /* SettingViewController.m */; };
@@ -148,6 +152,13 @@
 		0337CDF118D43AF50083300C /* PhotoEditedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoEditedViewController.m; sourceTree = "<group>"; };
 		0337CDF318D4543A0083300C /* PaintingImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintingImageViewController.h; sourceTree = "<group>"; };
 		0337CDF418D4543A0083300C /* PaintingImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintingImageViewController.m; sourceTree = "<group>"; };
+		03CA3D8318ED1196001C7077 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
+		03CA3D8418ED1196001C7077 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
+		03CA3D8518ED1196001C7077 /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
+		03CA3D8618ED1196001C7077 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
+		03CA3D8918ED2C07001C7077 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		03CA3D8B18ED3904001C7077 /* IMSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMSelectViewController.h; sourceTree = "<group>"; };
+		03CA3D8C18ED3904001C7077 /* IMSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMSelectViewController.m; sourceTree = "<group>"; };
 		D608DCF818DEDD71001A9DCA /* FileControl+Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FileControl+Camera.h"; sourceTree = "<group>"; };
 		D608DCF918DEDD71001A9DCA /* FileControl+Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FileControl+Camera.m"; sourceTree = "<group>"; };
 		D608DCFA18DEDD71001A9DCA /* FileControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileControl.h; sourceTree = "<group>"; };
@@ -277,6 +288,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03CA3D8A18ED2C07001C7077 /* QuartzCore.framework in Frameworks */,
 				D6507ED618C75A7500168E31 /* libz.dylib in Frameworks */,
 				D6507ED418C75A1F00168E31 /* MobileCoreServices.framework in Frameworks */,
 				D67D0F0B18E5523E00A62B34 /* libWeChatSDK.a in Frameworks */,
@@ -366,6 +378,17 @@
 				0337CDEE18D42AFB0083300C /* SHImageEditorViewController.m */,
 			);
 			path = SHImageEditor;
+			sourceTree = "<group>";
+		};
+		03CA3D8218ED1196001C7077 /* WYPopoverController */ = {
+			isa = PBXGroup;
+			children = (
+				03CA3D8318ED1196001C7077 /* WYPopoverController.h */,
+				03CA3D8418ED1196001C7077 /* WYPopoverController.m */,
+				03CA3D8518ED1196001C7077 /* WYStoryboardPopoverSegue.h */,
+				03CA3D8618ED1196001C7077 /* WYStoryboardPopoverSegue.m */,
+			);
+			path = WYPopoverController;
 			sourceTree = "<group>";
 		};
 		D608DCF718DEDD71001A9DCA /* FileControl */ = {
@@ -478,6 +501,7 @@
 			children = (
 				D63558EF18E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.h */,
 				D63558F018E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.m */,
+				03CA3D8218ED1196001C7077 /* WYPopoverController */,
 				0316568C18EBF22A0019E7F3 /* REMenu */,
 				0316569718EBF22A0019E7F3 /* RATreeView */,
 				D608DCF718DEDD71001A9DCA /* FileControl */,
@@ -529,6 +553,8 @@
 				D6E4E7B618B39ADC003E1B90 /* GroupViewController.m */,
 				D6E4E79218B3949B003E1B90 /* IndexViewController.h */,
 				D6E4E79318B3949B003E1B90 /* IndexViewController.m */,
+				03CA3D8B18ED3904001C7077 /* IMSelectViewController.h */,
+				03CA3D8C18ED3904001C7077 /* IMSelectViewController.m */,
 				D608DD0618E26CB6001A9DCA /* SettingViewController.h */,
 				D608DD0718E26CB6001A9DCA /* SettingViewController.m */,
 				D6E9354C18B9F9C70086802C /* SourceViewController.h */,
@@ -607,6 +633,7 @@
 		D6E4E77C18B3949B003E1B90 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03CA3D8918ED2C07001C7077 /* QuartzCore.framework */,
 				D65380CA18CB251E00DA6794 /* AssetsLibrary.framework */,
 				D6507ED518C75A7500168E31 /* libz.dylib */,
 				D6507ED318C75A1F00168E31 /* MobileCoreServices.framework */,
@@ -815,17 +842,20 @@
 				D658055D18BF1C0D0002683F /* DraggableCollectionViewFlowLayout.m in Sources */,
 				D65380ED18CB5B7100DA6794 /* SDWebImageCompat.m in Sources */,
 				031656BA18EBF22A0019E7F3 /* RATreeView+TableViewDataSource.m in Sources */,
+				03CA3D8D18ED3904001C7077 /* IMSelectViewController.m in Sources */,
 				D67D0F0E18E5528500A62B34 /* WeChatApp.m in Sources */,
 				D65380EA18CB5B7100DA6794 /* MKAnnotationView+WebCache.m in Sources */,
 				D65380C918CB103900DA6794 /* GoogleSearchViewController.m in Sources */,
 				D608DD0018DEDD71001A9DCA /* FileControl+Camera.m in Sources */,
 				D658055B18BF1C0D0002683F /* LSCollectionViewHelper.m in Sources */,
+				03CA3D8718ED1196001C7077 /* WYPopoverController.m in Sources */,
 				D65380F218CB5B7100DA6794 /* SDWebImagePrefetcher.m in Sources */,
 				0337CDF218D43AF50083300C /* PhotoEditedViewController.m in Sources */,
 				031656B518EBF22A0019E7F3 /* RATreeNodeCollectionController.m in Sources */,
 				0325E7F118CCA0E8000D3F20 /* DACircularProgressView.m in Sources */,
 				031656B718EBF22A0019E7F3 /* RATreeNodeInfo.m in Sources */,
 				D6E4E78A18B3949B003E1B90 /* main.m in Sources */,
+				03CA3D8818ED1196001C7077 /* WYStoryboardPopoverSegue.m in Sources */,
 				D65380F018CB5B7100DA6794 /* SDWebImageDownloaderOperation.m in Sources */,
 				0337CDEF18D42AFB0083300C /* SHImageEditorViewController.m in Sources */,
 				D64F129118E99F5D006BA06E /* JMDropMenuView.m in Sources */,
