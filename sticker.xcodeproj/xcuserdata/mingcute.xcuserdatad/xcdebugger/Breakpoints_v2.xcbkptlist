@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sticker/IndexViewController.m"
-            timestampString = "418207283.689454"
+            timestampString = "418211023.89217"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "504"
-            endingLineNumber = "504"
-            landmarkName = "-treeView:didSelectRowForItem:treeNodeInfo:"
+            startingLineNumber = "498"
+            endingLineNumber = "498"
+            landmarkName = "-getLocalPhoto"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
