@@ -11,9 +11,11 @@
 #import "PhotoViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "PhotoEditedViewController.h"
+#import "MBProgressHUD.h"
 
 #define kGOOGLE_IMAGE_SEARCH_API @"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
 #define kSEARCH_BAR_TAG 101
+#define kSEARCH_HUD_TAG 102
 
 @interface GoogleSearchViewController ()<UISearchBarDelegate,UICollectionViewDataSource,UICollectionViewDelegate, ASIProgressDelegate>
 {
@@ -87,14 +89,13 @@
     
     self.toolbarItems = @[cancelBtn];
     
-    [self.navigationController setToolbarHidden:NO];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     isRequestFinished = YES;
+    [self.navigationController setToolbarHidden:NO];
 }
 
 - (void)dealloc
@@ -153,6 +154,13 @@
     
     [tbImageURLArray removeAllObjects];
     [originImageURLArray removeAllObjects];
+    
+    MBProgressHUD *searchHUD = [[MBProgressHUD alloc] init];
+    searchHUD.labelText = @"Searching...";
+    searchHUD.tag = kSEARCH_HUD_TAG;
+    [self.view addSubview:searchHUD];
+    [searchHUD show:YES];
+    
     inputString = [[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] retain];
     //retain to avoid crash!
     NSString *searchString = [NSString stringWithFormat:@"%@%@&rsz=8",kGOOGLE_IMAGE_SEARCH_API,inputString];
@@ -220,6 +228,10 @@
     if (searchCount < 64) {
         [self searchMoreImage];
     } else {
+        MBProgressHUD *searchHUD = (MBProgressHUD *)[self.view viewWithTag:kSEARCH_HUD_TAG];
+        [searchHUD hide:YES];
+        [searchHUD release];
+        
         [googleCollectionView reloadData];
         [googleCollectionView setContentOffset:CGPointZero animated:YES];
     }
@@ -229,8 +241,20 @@
 {
     isRequestFinished = YES;
     NSError *error = request.error;
-    searchCount -= 8;
     NSLog(@"error = %@",error);
+    
+    MBProgressHUD *searchHUD = (MBProgressHUD *)[self.view viewWithTag:kSEARCH_HUD_TAG];
+    [searchHUD hide:YES];
+    [searchHUD release];
+    
+    if (tbImageURLArray.count == 0) {
+        UILabel *failLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        failLabel.center = self.view.center;
+        failLabel.text = @"Search failed";
+        [self.view addSubview:failLabel];
+        [failLabel release];
+    }
+    
 }
 
 - (void)searchMoreImage

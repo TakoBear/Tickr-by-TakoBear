@@ -30,11 +30,11 @@
 		0337CDF518D4543A0083300C /* PaintingImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337CDF418D4543A0083300C /* PaintingImageViewController.m */; };
 		03CA3D8718ED1196001C7077 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CA3D8418ED1196001C7077 /* WYPopoverController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		03CA3D8818ED1196001C7077 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CA3D8618ED1196001C7077 /* WYStoryboardPopoverSegue.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		03CA3D8A18ED2C07001C7077 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CA3D8918ED2C07001C7077 /* QuartzCore.framework */; };
 		03CA3D8D18ED3904001C7077 /* IMSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CA3D8C18ED3904001C7077 /* IMSelectViewController.m */; };
 		D608DD0018DEDD71001A9DCA /* FileControl+Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = D608DCF918DEDD71001A9DCA /* FileControl+Camera.m */; };
 		D608DD0118DEDD71001A9DCA /* FileControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D608DCFB18DEDD71001A9DCA /* FileControl.m */; };
 		D608DD0818E26CB6001A9DCA /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D608DD0718E26CB6001A9DCA /* SettingViewController.m */; };
+		D61DF4C418F29C7C009A01C0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D61DF4C318F29C7C009A01C0 /* MBProgressHUD.m */; };
 		D63558E918E422300077D98B /* ChatApp.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558E418E422300077D98B /* ChatApp.m */; };
 		D63558EA18E422300077D98B /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558E618E422300077D98B /* ChatManager.m */; };
 		D63558EB18E422300077D98B /* LineChat.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558E818E422300077D98B /* LineChat.m */; };
@@ -157,7 +157,6 @@
 		03CA3D8418ED1196001C7077 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
 		03CA3D8518ED1196001C7077 /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
 		03CA3D8618ED1196001C7077 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
-		03CA3D8918ED2C07001C7077 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		03CA3D8B18ED3904001C7077 /* IMSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMSelectViewController.h; sourceTree = "<group>"; };
 		03CA3D8C18ED3904001C7077 /* IMSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMSelectViewController.m; sourceTree = "<group>"; };
 		D608DCF818DEDD71001A9DCA /* FileControl+Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FileControl+Camera.h"; sourceTree = "<group>"; };
@@ -166,6 +165,8 @@
 		D608DCFB18DEDD71001A9DCA /* FileControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileControl.m; sourceTree = "<group>"; };
 		D608DD0618E26CB6001A9DCA /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		D608DD0718E26CB6001A9DCA /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		D61DF4C218F29C7C009A01C0 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		D61DF4C318F29C7C009A01C0 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		D63558E318E422300077D98B /* ChatApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatApp.h; sourceTree = "<group>"; };
 		D63558E418E422300077D98B /* ChatApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatApp.m; sourceTree = "<group>"; };
 		D63558E518E422300077D98B /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManager.h; sourceTree = "<group>"; };
@@ -404,6 +405,15 @@
 			path = FileControl;
 			sourceTree = "<group>";
 		};
+		D61DF4C118F29C67009A01C0 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				D61DF4C218F29C7C009A01C0 /* MBProgressHUD.h */,
+				D61DF4C318F29C7C009A01C0 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		D63558E218E422300077D98B /* ChatManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -574,6 +584,7 @@
 		D658056318BF268F0002683F /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				D61DF4C118F29C67009A01C0 /* MBProgressHUD */,
 				D64F128E18E99F48006BA06E /* JMDropMenu */,
 				D658054D18BF1C0D0002683F /* External */,
 				0337CDE818D428D00083300C /* SHImageEditor */,
@@ -852,6 +863,7 @@
 				D658055B18BF1C0D0002683F /* LSCollectionViewHelper.m in Sources */,
 				03CA3D8718ED1196001C7077 /* WYPopoverController.m in Sources */,
 				D65380F218CB5B7100DA6794 /* SDWebImagePrefetcher.m in Sources */,
+				D61DF4C418F29C7C009A01C0 /* MBProgressHUD.m in Sources */,
 				0337CDF218D43AF50083300C /* PhotoEditedViewController.m in Sources */,
 				031656B518EBF22A0019E7F3 /* RATreeNodeCollectionController.m in Sources */,
 				0325E7F118CCA0E8000D3F20 /* DACircularProgressView.m in Sources */,

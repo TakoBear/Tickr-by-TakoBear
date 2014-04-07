@@ -10,6 +10,7 @@
 #import "PaintingImageViewController.h"
 #import "ASIHTTPRequest.h"
 #import "Categories/UIImage+ResizeImage.h"
+#import "MBProgressHUD.h"
 
 @interface PhotoEditedViewController()
 {
@@ -34,20 +35,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     // Set up To next UI
     UIBarButtonItem *nextBtn = [[[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)] autorelease];
     self.navigationItem.rightBarButtonItem = nextBtn;
-    
     // Set up ToolBar
-    UIBarButtonItem *squareBtn = [[[UIBarButtonItem alloc] initWithTitle:@"Square" style:UIBarButtonItemStyleBordered target:self action:@selector(setSquareAction:)] autorelease];
-    UIBarButtonItem *landscapeBtn = [[[UIBarButtonItem alloc] initWithTitle:@"LandScape" style:UIBarButtonItemStyleBordered target:self action:@selector(setLandscapeAction:)] autorelease];
-    UIBarButtonItem *lportraitBtn = [[[UIBarButtonItem alloc] initWithTitle:@"Portrait" style:UIBarButtonItemStyleBordered target:self action:@selector(setLPortraitAction:)] autorelease];
+//    UIBarButtonItem *squareBtn = [[[UIBarButtonItem alloc] initWithTitle:@"Square" style:UIBarButtonItemStyleBordered target:self action:@selector(setSquareAction:)] autorelease];
+//    UIBarButtonItem *landscapeBtn = [[[UIBarButtonItem alloc] initWithTitle:@"LandScape" style:UIBarButtonItemStyleBordered target:self action:@selector(setLandscapeAction:)] autorelease];
+//    UIBarButtonItem *lportraitBtn = [[[UIBarButtonItem alloc] initWithTitle:@"Portrait" style:UIBarButtonItemStyleBordered target:self action:@selector(setLPortraitAction:)] autorelease];
     
-    NSArray *btnItems = @[squareBtn, landscapeBtn, lportraitBtn];
-    self.toolbarItems = btnItems;
+//    NSArray *btnItems = @[squareBtn, landscapeBtn, lportraitBtn];
+//    self.toolbarItems = btnItems;
     
     if (_url != nil) {
+        MBProgressHUD *downloadHUD = [[MBProgressHUD alloc] init];
+        downloadHUD.labelText = NSLocalizedString(@"loading...", @"");
+        downloadHUD.color = [UIColor clearColor];
+        [self.view addSubview:downloadHUD];
+        [downloadHUD show:YES];
         // Send Request to background 
         __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:_url];
         [request setRequestMethod:@"GET"];
@@ -55,6 +60,10 @@
         [request setDelegate:self];
         [request setDownloadProgressDelegate:self];
         [request setCompletionBlock:^{
+            
+            [downloadHUD hide:YES];
+            [downloadHUD release];
+            
             if ((request.responseStatusCode == 200) || (request.responseStatusCode == 201) ) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     UIImage *reqImg = [UIImage imageWithData:request.responseData];
@@ -65,7 +74,14 @@
                     [self reset:NO];
                     [self viewWillAppear:NO];
                 });
+            } else {
+                UILabel *failLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+                failLabel.center = self.view.center;
+                failLabel.text = @"Fail to download";
+                [self.view addSubview:failLabel];
+                [failLabel release];
             }
+    
         }];
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
         [request startAsynchronous];
@@ -75,9 +91,8 @@
     self.cropRect = CGRectMake(0, 120, self.view.frame.size.width, self.view.frame.size.width);
     self.maximumScale = 10;
     
-    [self.view setBackgroundColor:[UIColor blackColor]];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    [self.navigationController setToolbarHidden:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -89,6 +104,7 @@
             [view setHidden:YES];
         }
     }
+    [self.navigationController setToolbarHidden:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
