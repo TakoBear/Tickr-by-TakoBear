@@ -28,7 +28,8 @@
 #import "External/WYPopoverController/WYPopoverController.h"
 #import "IMSelectViewController.h"
 
-#define kBLOCKVIEW_TAG 1001
+#define kBLOCKVIEW_TAG      1001
+#define kDEFAULT_VIEW_TAG   1002
 
 typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     kAdd_Photo_From_Camera,
@@ -552,6 +553,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
                 [switchBtn addTarget:self action:@selector(switchDefaultIMSetting:) forControlEvents:UIControlEventTouchUpInside];
                 BOOL isOn = [[NSUserDefaults standardUserDefaults] boolForKey:kIMDefaultKey];
                 [switchBtn setOn:isOn];
+                cell.tag = kDEFAULT_VIEW_TAG;
                 
             }
                 break;
@@ -649,14 +651,35 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     return 3 * treeNodeInfo.treeDepthLevel;
 }
 
-- (BOOL)treeView:(RATreeView *)treeView shouldExpandItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+- (BOOL)treeView:(RATreeView *)treeView shouldItemBeExpandedAfterDataReload:(id)item treeDepthLevel:(NSInteger)treeDepthLevel
 {
     return NO;
 }
 
-- (BOOL)treeView:(RATreeView *)treeView shouldItemBeExpandedAfterDataReload:(id)item treeDepthLevel:(NSInteger)treeDepthLevel
+- (BOOL)treeView:(RATreeView *)treeView shouldExpandRowForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
 {
-    return NO;
+    if (treeNodeInfo.treeDepthLevel == 0 && treeNodeInfo.positionInSiblings == 0) {
+        // Save setting to userinfo
+        [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithBool:YES] forKey:kIMDefaultKey];
+        UITableViewCell *cell = (UITableViewCell *)[treeView viewWithTag:kDEFAULT_VIEW_TAG];
+        UISwitch *btn = (UISwitch *)cell.accessoryView;
+        [btn setOn:YES];
+    }
+    
+    return YES;
+}
+
+- (BOOL)treeView:(RATreeView *)treeView shouldCollapaseRowForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+{
+    if (treeNodeInfo.treeDepthLevel == 0 && treeNodeInfo.positionInSiblings == 0) {
+        // Save setting to userinfo
+        [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithBool:NO] forKey:kIMDefaultKey];
+        UITableViewCell *cell = (UITableViewCell *)[treeView viewWithTag:kDEFAULT_VIEW_TAG];
+        UISwitch *btn = (UISwitch *)cell.accessoryView;
+        [btn setOn:NO];
+    }
+    
+    return YES;
 }
 
 - (void)treeView:(RATreeView *)treeView willDisplayCell:(UITableViewCell *)cell forItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
@@ -669,11 +692,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     } else if (treeNodeInfo.treeDepthLevel == 1) {
         cell.backgroundColor = blackOpaque;
     }
-}
-
-- (BOOL)treeViewShouldBeSelectable:(RATreeView *)treeView
-{
-    return NO;
 }
 
 #pragma mark - Method to UserSetting
