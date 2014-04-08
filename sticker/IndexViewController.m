@@ -266,7 +266,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (void)dropMenu:(JMDropMenuView *)menu didSelectAtIndex:(NSInteger)index;
 {
-//    [dropMenu dismiss];
     [dropMenu resetPosition];
     isAddMode = NO;
     imageCollectionView.userInteractionEnabled = YES;

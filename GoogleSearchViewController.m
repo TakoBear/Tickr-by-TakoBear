@@ -70,6 +70,12 @@
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont systemFontOfSize:16]];
     [searchBar release];
     
+    //Create progress HUD
+    MBProgressHUD *searchHUD = [[MBProgressHUD alloc] init];
+    searchHUD.labelText = @"Searching...";
+    searchHUD.tag = kSEARCH_HUD_TAG;
+    [self.view addSubview:searchHUD];
+    [searchHUD release];
     //Create Collection View
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(100,100)];
@@ -154,11 +160,9 @@
     
     [tbImageURLArray removeAllObjects];
     [originImageURLArray removeAllObjects];
+    [googleCollectionView reloadData];
     
-    MBProgressHUD *searchHUD = [[MBProgressHUD alloc] init];
-    searchHUD.labelText = @"Searching...";
-    searchHUD.tag = kSEARCH_HUD_TAG;
-    [self.view addSubview:searchHUD];
+    MBProgressHUD *searchHUD = [(MBProgressHUD *)[self.view viewWithTag:kSEARCH_HUD_TAG] retain];
     [searchHUD show:YES];
     
     inputString = [[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] retain];

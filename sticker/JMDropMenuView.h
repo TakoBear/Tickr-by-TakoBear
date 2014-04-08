@@ -17,11 +17,19 @@
 - (void)didFinishedDismissWithDropMenu:(JMDropMenuView *)menu;
 @end
 
+typedef NS_ENUM(NSInteger,Animate_Drop_To ) {
+    Animate_Drop_To_Top,
+    Animate_Drop_To_Bottom,
+    Animate_Drop_To_Right,
+    Animate_Drop_To_Left
+};
+
 @interface JMDropMenuView : UIView
 
 @property (nonatomic, assign) id<JMDropMenuViewDelegate>delegate;
 @property (readonly, retain) NSArray *imgViews;
-@property (nonatomic) float animateInterval;
+@property (nonatomic)float animateInterval;
+@property (nonatomic)NSInteger animateDirect;
 
 - (id)initWithViews:(NSArray *)imgViews;
 - (void)setUpViews;
