@@ -35,6 +35,7 @@
 		D608DD0118DEDD71001A9DCA /* FileControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D608DCFB18DEDD71001A9DCA /* FileControl.m */; };
 		D608DD0818E26CB6001A9DCA /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D608DD0718E26CB6001A9DCA /* SettingViewController.m */; };
 		D61DF4C418F29C7C009A01C0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D61DF4C318F29C7C009A01C0 /* MBProgressHUD.m */; };
+		D62A6FE718F536420008C1B1 /* JMSpringMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = D62A6FE618F536420008C1B1 /* JMSpringMenuView.m */; };
 		D63558E918E422300077D98B /* ChatApp.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558E418E422300077D98B /* ChatApp.m */; };
 		D63558EA18E422300077D98B /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558E618E422300077D98B /* ChatManager.m */; };
 		D63558EB18E422300077D98B /* LineChat.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558E818E422300077D98B /* LineChat.m */; };
@@ -95,7 +96,6 @@
 		D6E4E7B718B39ADC003E1B90 /* GroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E4E7B618B39ADC003E1B90 /* GroupViewController.m */; };
 		D6E9353918B8D0350086802C /* 1.PNG in Resources */ = {isa = PBXBuildFile; fileRef = D6E9352818B8D0350086802C /* 1.PNG */; };
 		D6E9354B18B9F8FA0086802C /* addData.png in Resources */ = {isa = PBXBuildFile; fileRef = D6E9354A18B9F8FA0086802C /* addData.png */; };
-		D6E9354E18B9F9C70086802C /* SourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E9354D18B9F9C70086802C /* SourceViewController.m */; };
 		D6FBE0DE18ED048500188E58 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6FBE0DD18ED048500188E58 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -167,6 +167,8 @@
 		D608DD0718E26CB6001A9DCA /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		D61DF4C218F29C7C009A01C0 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		D61DF4C318F29C7C009A01C0 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		D62A6FE518F536420008C1B1 /* JMSpringMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSpringMenuView.h; sourceTree = "<group>"; };
+		D62A6FE618F536420008C1B1 /* JMSpringMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSpringMenuView.m; sourceTree = "<group>"; };
 		D63558E318E422300077D98B /* ChatApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatApp.h; sourceTree = "<group>"; };
 		D63558E418E422300077D98B /* ChatApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatApp.m; sourceTree = "<group>"; };
 		D63558E518E422300077D98B /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManager.h; sourceTree = "<group>"; };
@@ -281,8 +283,6 @@
 		D6E4E7B618B39ADC003E1B90 /* GroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupViewController.m; sourceTree = "<group>"; };
 		D6E9352818B8D0350086802C /* 1.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.PNG; sourceTree = "<group>"; };
 		D6E9354A18B9F8FA0086802C /* addData.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addData.png; sourceTree = "<group>"; };
-		D6E9354C18B9F9C70086802C /* SourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceViewController.h; sourceTree = "<group>"; };
-		D6E9354D18B9F9C70086802C /* SourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SourceViewController.m; sourceTree = "<group>"; };
 		D6FBE0DD18ED048500188E58 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -435,6 +435,8 @@
 		D64F128E18E99F48006BA06E /* JMDropMenu */ = {
 			isa = PBXGroup;
 			children = (
+				D62A6FE518F536420008C1B1 /* JMSpringMenuView.h */,
+				D62A6FE618F536420008C1B1 /* JMSpringMenuView.m */,
 				D64F128F18E99F5D006BA06E /* JMDropMenuView.h */,
 				D64F129018E99F5D006BA06E /* JMDropMenuView.m */,
 			);
@@ -569,8 +571,6 @@
 				03CA3D8C18ED3904001C7077 /* IMSelectViewController.m */,
 				D608DD0618E26CB6001A9DCA /* SettingViewController.h */,
 				D608DD0718E26CB6001A9DCA /* SettingViewController.m */,
-				D6E9354C18B9F9C70086802C /* SourceViewController.h */,
-				D6E9354D18B9F9C70086802C /* SourceViewController.m */,
 				D65380C718CB103900DA6794 /* GoogleSearchViewController.h */,
 				D65380C818CB103900DA6794 /* GoogleSearchViewController.m */,
 				0337CDF018D43AF50083300C /* PhotoEditedViewController.h */,
@@ -823,7 +823,7 @@
 				D6507EA818C7576900168E31 /* ASIDataCompressor.m in Sources */,
 				031656B818EBF22A0019E7F3 /* RATreeView+Enums.m in Sources */,
 				0337CDF518D4543A0083300C /* PaintingImageViewController.m in Sources */,
-				D6E9354E18B9F9C70086802C /* SourceViewController.m in Sources */,
+				D62A6FE718F536420008C1B1 /* JMSpringMenuView.m in Sources */,
 				D6507EAE18C7576900168E31 /* ASINetworkQueue.m in Sources */,
 				D608DD0118DEDD71001A9DCA /* FileControl.m in Sources */,
 				031656BC18EBF22A0019E7F3 /* RATreeView+UIScrollView.m in Sources */,

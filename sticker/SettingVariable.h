@@ -13,6 +13,7 @@
 #define RGBA(R,G,B,A) [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define kAddMenuIconSize    80
+#define kColorButtonSize    50
 
 // Register
 #define WXAPI_KEY               @"wxa4216b78b4ef4a3c"

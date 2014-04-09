@@ -10,13 +10,15 @@
 #import "SettingVariable.h"
 #import "FileControl.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
+#import "JMSpringMenuView.h"
 
 #define kMAIN_IMGVIEW_TAG       1001
 #define kTMP_DRAWIMGVIEW_TAG    1002
 
 #define kIMG_VIEW_STATUS_HEIGHT 120
+#define kColorInterval 70
 
-@interface PaintingImageViewController ()
+@interface PaintingImageViewController () <JMSpringMenuViewDelegate>
 {
     UIImage *_srcImage;
     UIColor *_drawColor;
@@ -32,6 +34,7 @@
     BOOL mouseSwiped;
     BOOL isErasing;
     BOOL isGoogleSearchNavController;
+    BOOL isAnimate;
 }
 
 @end
@@ -79,6 +82,59 @@
     UIBarButtonItem *eraseBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Erase", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(setEraseMode:)] autorelease];
     self.toolbarItems = @[writeBtn, eraseBtn];
     
+    //Create color menu
+    UIImageView *colorDarkBlue = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
+    colorDarkBlue.backgroundColor = [UIColor clearColor];
+    [colorDarkBlue setImage:[UIImage imageNamed:@"color_dark_blue.png"]];
+    
+    UIImageView *colorDarkGray = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
+    colorDarkGray.backgroundColor = [UIColor clearColor];
+    [colorDarkGray setImage:[UIImage imageNamed:@"color_dark_gray.png"]];
+    
+    UIImageView *colorDarkYellow = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
+    colorDarkYellow.backgroundColor = [UIColor clearColor];
+    [colorDarkYellow setImage:[UIImage imageNamed:@"color_dark_yellow.png"]];
+    
+    UIImageView *colorLightBlue = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
+    colorLightBlue.backgroundColor = [UIColor clearColor];
+    [colorLightBlue setImage:[UIImage imageNamed:@"color_light_blue.png"]];
+    
+    UIImageView *colorLightGreen = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
+    colorLightGreen.backgroundColor = [UIColor clearColor];
+    [colorLightGreen setImage:[UIImage imageNamed:@"color_light_green.png"]];
+    
+    UIImageView *colorLightYellow = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
+    colorLightYellow.backgroundColor = [UIColor clearColor];
+    [colorLightYellow setImage:[UIImage imageNamed:@"color_light_yellow.png"]];
+    
+    UIImageView *colorRed = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
+    colorRed.backgroundColor = [UIColor clearColor];
+    [colorRed setImage:[UIImage imageNamed:@"color_red.png"]];
+    isAnimate = NO;
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(100, 450, 100, 100)];
+    button.backgroundColor = [UIColor blueColor];
+    [button addTarget:self action:@selector(colorMenuAnimate) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    
+    JMSpringMenuView *colorMenu= [[JMSpringMenuView alloc] initWithViews:@[colorDarkBlue,colorDarkGray,colorDarkYellow,colorLightBlue,colorLightGreen,colorLightYellow,colorRed]];
+    colorMenu.frame = CGRectMake(20,self.view.frame.size.height - 60, kColorButtonSize, kColorButtonSize*8);
+    colorMenu.animateInterval = 0.5;
+    colorMenu.animateDirect = Animate_Drop_To_Top;
+    colorMenu.viewsInterval = 15;
+    colorMenu.tag = 201;
+    colorMenu.delegate = self;
+    [self.view addSubview:colorMenu];
+
+    [colorMenu release];
+    [colorDarkBlue release];
+    [colorDarkGray release];
+    [colorDarkYellow release];
+    [colorLightBlue release];
+    [colorLightGreen release];
+    [colorLightYellow release];
+    [button release];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -92,6 +148,21 @@
         }
     }
 }
+
+#pragma mark - Spring menu Delegate 
+
+- (void)colorMenuAnimate
+{
+    JMSpringMenuView *colorMenu = (JMSpringMenuView *)[self.view viewWithTag:201];
+    if (!isAnimate) {
+        [colorMenu popOut];
+    } else {
+        [colorMenu dismiss];
+    }
+    isAnimate = !isAnimate;
+}
+
+
 
 #pragma mark - Touch Action
 

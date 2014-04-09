@@ -283,7 +283,7 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
             imgViewsCount = 0;
             
             for (id subView in self.subviews) {
-                [subView setUserInteractionEnabled:YES];
+                [subView setUserInteractionEnabled:NO];
             }
         }
     };

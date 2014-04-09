@@ -7,7 +7,6 @@
 //
 
 #import "IndexViewController.h"
-#import "SourceViewController.h"
 #import "PhotoViewCell.h"
 #import "DraggableCollectionViewFlowLayout.h"
 #import "UICollectionView+Draggable.h"
@@ -27,6 +26,7 @@
 // For popout IM menus
 #import "External/WYPopoverController/WYPopoverController.h"
 #import "IMSelectViewController.h"
+#import "UIImage+ResizeImage.h"
 
 #define kBLOCKVIEW_TAG      1001
 #define kDEFAULT_VIEW_TAG   1002
@@ -45,8 +45,10 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     REMenu *settingMenu;
     UICollectionView *imageCollectionView;
     NSMutableArray *imageDataArray;
+    NSMutableArray *imageURLArray;
     NSArray *optionData;
     NSString *documentPath;
+    NSString *lastImageURL;
     UIImagePickerController *imagePicker;
     BOOL isAddMode;
     BOOL isSettingOpen;
@@ -64,6 +66,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     self.view.backgroundColor = [UIColor whiteColor];
     
     imageDataArray = [NSMutableArray new];
+    imageURLArray = [NSMutableArray new];
     isAddMode = NO;
     isAnimate = NO;
     isDeleteMode = NO;
@@ -131,10 +134,11 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     NSArray *fileArray = [[NSArray arrayWithArray:[fileManager contentsOfDirectoryAtPath:stickerPath error:&error]] retain];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES selector:@selector(compare:)];
     fileArray = [fileArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    lastImageURL = [[fileArray lastObject]retain];
     imageDataArray = [[NSMutableArray arrayWithArray:fileArray] retain];
+    imageURLArray = [[NSMutableArray arrayWithArray:fileArray] retain];
     SettingVariable *settingVariable = [SettingVariable sharedInstance];
     [settingVariable.variableDictionary setObject:imageDataArray forKey:kImageDataArrayKey];
-
     
     
     //Create CollectionView
@@ -180,8 +184,14 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 {
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.toolbarHidden = YES;
-    if (imageCollectionView) {
-        imageDataArray = [[SettingVariable sharedInstance].variableDictionary objectForKey:kImageDataArrayKey];
+    
+    id newLastImageURL = [imageDataArray lastObject];
+    if ([newLastImageURL isKindOfClass:[UIImage class]]) {
+        return;
+    }
+    if (![newLastImageURL isEqualToString:lastImageURL] && imageDataArray.count != 0) {
+        [imageURLArray addObject:newLastImageURL];
+        lastImageURL = newLastImageURL;
         [imageCollectionView reloadData];
     }
 }
@@ -191,6 +201,8 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [flowLayout release];
     [imageCollectionView release];
     [imageDataArray release];
+    [imageURLArray release];
+    [lastImageURL release];
     [documentPath release];
     [dropMenu release];
     [settingMenu release];
@@ -298,7 +310,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    
     return imageDataArray.count;
 }
 
@@ -307,18 +318,25 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     
     PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
     [cell.imgView setContentMode:UIViewContentModeScaleAspectFit];
+    UIImage *image;
+    NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+    if ([[imageDataArray objectAtIndex:indexPath.item] isKindOfClass:[NSString class]]) {
+        NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
+        NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
+        image = [UIImage imageWithData:imageData];
+        image = [UIImage resizeImageWithSize:image resize:CGSizeMake(150, 150)];
+        [imageDataArray replaceObjectAtIndex:indexPath.item withObject:image];
+    } else {
+        image = [imageDataArray objectAtIndex:indexPath.item];
+    }
     
-            NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
-            NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
-            NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
-            UIImage *image = [UIImage imageWithData:imageData];
-            if (isDeleteMode) {
-                cell.deleteImgView.hidden = NO;
-            } else {
-                cell.deleteImgView.hidden = YES;
-            }
-
-            [cell.imgView setImage:image];
+    if (isDeleteMode) {
+        cell.deleteImgView.hidden = NO;
+    } else {
+        cell.deleteImgView.hidden = YES;
+    }
+    
+    [cell.imgView setImage:image];
     
     return cell;
 }
@@ -341,7 +359,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     if (isOn) {
         // Pass photo to IM messenger
         NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
-        NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
+        NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageURLArray objectAtIndex:indexPath.item]];
         NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
         ChatManager *chatManager = [ChatManager new];
         ChatApp *chat = [chatManager currentChatAppWithType];
@@ -352,7 +370,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         // Pop out select IM messenger
         PhotoViewCell *cell = (PhotoViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
         NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
-        NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageDataArray objectAtIndex:indexPath.item]];
+        NSString *imagePath = [stickerPath stringByAppendingPathComponent:[imageURLArray objectAtIndex:indexPath.item]];
         NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
         [self touchPhoto:cell andData:imageData indexPath:indexPath];
     }
@@ -468,9 +486,10 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 {
     
     NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
-    NSString *deletePath = [NSString stringWithFormat:@"%@/%@",stickerPath,imageDataArray[item]];
+    NSString *deletePath = [NSString stringWithFormat:@"%@/%@",stickerPath,imageURLArray[item]];
     [[FileControl mainPath] removeFileAtPath:deletePath];
     [imageDataArray removeObjectAtIndex:item];
+    [imageURLArray removeObjectAtIndex:item];
     isDeleteMode = NO;
     [imageCollectionView reloadData];
 
@@ -511,6 +530,8 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     UIImage *pickImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     [imagePicker dismissViewControllerAnimated:YES completion:nil];
     [imagePicker release];
+    float ratio = pickImage.size.height/pickImage.size.width;
+    pickImage = [UIImage resizeImageWithSize:pickImage resize:CGSizeMake(600 / ratio, 600)];
     [self sendImageToEditViewControllWith:pickImage];
 }
 
