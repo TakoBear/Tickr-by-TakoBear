@@ -231,13 +231,20 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (void)pushToSettingView
 {
+    if (settingMenu.isAnimating) {
+        return;
+    }
+    
     if (isSettingOpen) {
+        NSLog(@"close");
+
         [settingMenu close];
         for (UIBarButtonItem *btn in self.navigationItem.rightBarButtonItems) {
             btn.enabled = YES;
         }
         imageCollectionView.userInteractionEnabled = YES;
     } else {
+        NSLog(@"open");
         if (isAddMode) {
             [dropMenu dismiss];
             isAddMode = NO;
@@ -248,6 +255,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         imageCollectionView.userInteractionEnabled = NO;
         [settingMenu showFromNavigationController:self.navigationController];
     }
+    
     isSettingOpen = !isSettingOpen;
 }
 
@@ -291,6 +299,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 - (void)dropMenu:(JMDropMenuView *)menu didSelectAtIndex:(NSInteger)index;
 {
     [dropMenu resetPosition];
+    dropMenu.userInteractionEnabled = NO;
     isAddMode = NO;
     imageCollectionView.userInteractionEnabled = YES;
     switch (index) {
