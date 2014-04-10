@@ -288,14 +288,15 @@
     UIGraphicsEndImageContext();
     
 //    UIImageWriteToSavedPhotosAlbum(imgView.image, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library saveImage:imgView.image toAlbum:kPhotoAlbumName withCompletionBlock:^(NSError *error) {
-        if (error!= nil) {
-            NSLog(@"Big error : %@",[error description]);
-        }
-    }];
-    
+    BOOL isSaveToAlbum = [[NSUserDefaults standardUserDefaults] boolForKey:kSaveAlbumKey];
+    if (isSaveToAlbum) {
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library saveImage:imgView.image toAlbum:kPhotoAlbumName withCompletionBlock:^(NSError *error) {
+            if (error!= nil) {
+                NSLog(@"Big error : %@",[error description]);
+            }
+        }];
+    }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
@@ -309,9 +310,6 @@
     
     if (isGoogleSearchNavController) {
         [self.navigationController.viewControllers[0] dismissViewControllerAnimated:YES completion:^{
-            UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"Message" message:@"Succeed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alerView show];
-            [alerView release];
         }];
     } else {
         [self.navigationController popToRootViewControllerAnimated:YES];

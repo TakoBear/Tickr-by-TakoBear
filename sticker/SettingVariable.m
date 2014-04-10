@@ -37,6 +37,12 @@
         } else {
             [_variableDictionary setValue:[userDefault objectForKey:kIMDefaultKey] forKey:kIMDefaultKey];
         }
+        
+        if ([userDefault objectForKey:kSaveAlbumKey] == nil) {
+            [userDefault setObject:[NSNumber numberWithBool:YES] forKey:kSaveAlbumKey];
+        } else {
+            [_variableDictionary setValue:[userDefault objectForKey:kSaveAlbumKey] forKey:kSaveAlbumKey];
+        }
     
     }
     return self;

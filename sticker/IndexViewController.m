@@ -28,8 +28,9 @@
 #import "IMSelectViewController.h"
 #import "UIImage+ResizeImage.h"
 
-#define kBLOCKVIEW_TAG      1001
-#define kDEFAULT_VIEW_TAG   1002
+#define kBLOCKVIEW_TAG           1001
+#define kDEFAULT_VIEW_CELL_TAG   1002
+#define kSAVE_ALBUM_CELL_TAG     1003
 
 typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     kAdd_Photo_From_Camera,
@@ -573,12 +574,15 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
                 [switchBtn addTarget:self action:@selector(switchDefaultIMSetting:) forControlEvents:UIControlEventTouchUpInside];
                 BOOL isOn = [[NSUserDefaults standardUserDefaults] boolForKey:kIMDefaultKey];
                 [switchBtn setOn:isOn];
-                cell.tag = kDEFAULT_VIEW_TAG;
-                
+                cell.tag = kDEFAULT_VIEW_CELL_TAG;
             }
                 break;
             case 1:
             {
+                [switchBtn addTarget:self action:@selector(switchAlbumSetting:) forControlEvents:UIControlEventTouchUpInside];
+                BOOL isOn = [[NSUserDefaults standardUserDefaults] boolForKey:kSaveAlbumKey];
+                [switchBtn setOn:isOn];
+                cell.tag = kSAVE_ALBUM_CELL_TAG;
             }
                 break;
         }
@@ -655,10 +659,16 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
                 break;
         }
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
         [treeView reloadRows];
-
+        
+    } else if (treeNodeInfo.treeDepthLevel == 0 && treeNodeInfo.positionInSiblings == 1) {
+        UITableViewCell *cell = (UITableViewCell *)[treeView viewWithTag:kSAVE_ALBUM_CELL_TAG];
+        UISwitch *btn = (UISwitch *)cell.accessoryView;
+        [btn setOn:!btn.isOn animated:YES];
+        [self switchAlbumSetting:btn];
     }
+    
+    
 }
 
 - (CGFloat)treeView:(RATreeView *)treeView heightForRowForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
@@ -681,9 +691,12 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     if (treeNodeInfo.treeDepthLevel == 0 && treeNodeInfo.positionInSiblings == 0) {
         // Save setting to userinfo
         [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithBool:YES] forKey:kIMDefaultKey];
-        UITableViewCell *cell = (UITableViewCell *)[treeView viewWithTag:kDEFAULT_VIEW_TAG];
+        UITableViewCell *cell = (UITableViewCell *)[treeView viewWithTag:kDEFAULT_VIEW_CELL_TAG];
         UISwitch *btn = (UISwitch *)cell.accessoryView;
-        [btn setOn:YES];
+        [btn setOn:YES animated:YES];
+        [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithBool:btn.isOn] forKey:kIMDefaultKey];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:btn.isOn] forKey:kIMDefaultKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     return YES;
@@ -694,9 +707,12 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     if (treeNodeInfo.treeDepthLevel == 0 && treeNodeInfo.positionInSiblings == 0) {
         // Save setting to userinfo
         [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithBool:NO] forKey:kIMDefaultKey];
-        UITableViewCell *cell = (UITableViewCell *)[treeView viewWithTag:kDEFAULT_VIEW_TAG];
+        UITableViewCell *cell = (UITableViewCell *)[treeView viewWithTag:kDEFAULT_VIEW_CELL_TAG];
         UISwitch *btn = (UISwitch *)cell.accessoryView;
-        [btn setOn:NO];
+        [btn setOn:NO animated:YES];
+        [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithBool:btn.isOn] forKey:kIMDefaultKey];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:btn.isOn] forKey:kIMDefaultKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     return YES;
@@ -734,6 +750,9 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 - (void)switchAlbumSetting:(id)sender
 {
     UISwitch *obj = (UISwitch *)sender;
+    [[SettingVariable sharedInstance].variableDictionary setValue:[NSNumber numberWithBool:obj.isOn] forKey:kSaveAlbumKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:obj.isOn] forKey:kSaveAlbumKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     // Save setting to userinfo
 }
 
