@@ -30,6 +30,16 @@ typedef NS_ENUM(int, ChatAppType) {
     ChatAppType_WeChat
 };
 
+typedef NS_ENUM(int, PaintingColor) {
+    PaintingColorBlue,
+    PaintingColorBlack,
+    PaintingColorOrange,
+    PaintingColorLightBlue,
+    PaintingColorLightGreen,
+    PaintingColorYellow,
+    PaintingColorRed
+};
+
 @interface SettingVariable : NSObject
 
 + (SettingVariable *)sharedInstance;

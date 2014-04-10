@@ -14,6 +14,7 @@
 
 #define kMAIN_IMGVIEW_TAG       1001
 #define kTMP_DRAWIMGVIEW_TAG    1002
+#define kCOLOR_VIEW_TAG         1003
 
 #define kIMG_VIEW_STATUS_HEIGHT 120
 #define kColorInterval 70
@@ -122,7 +123,7 @@
     colorMenu.animateInterval = 0.5;
     colorMenu.animateDirect = Animate_Drop_To_Top;
     colorMenu.viewsInterval = 15;
-    colorMenu.tag = 201;
+    colorMenu.tag = kCOLOR_VIEW_TAG;
     colorMenu.delegate = self;
     [self.view addSubview:colorMenu];
 
@@ -162,7 +163,7 @@
 
 - (void)colorMenuAnimate
 {
-    JMSpringMenuView *colorMenu = (JMSpringMenuView *)[self.view viewWithTag:201];
+    JMSpringMenuView *colorMenu = (JMSpringMenuView *)[self.view viewWithTag:kCOLOR_VIEW_TAG];
     if (!isAnimate) {
         [colorMenu popOut];
     } else {
@@ -171,7 +172,87 @@
     isAnimate = !isAnimate;
 }
 
+- (void)springMenu:(JMSpringMenuView *)menu didSelectAtIndex:(NSInteger)index
+{
+    NSLog(@"Select index : %d", index);
+    
+    if (menu.tag == kCOLOR_VIEW_TAG) {
+        [self setUpColorWithIndex:index];
+        [self colorMenuAnimate];
+    }
+    
+}
 
+- (void)setUpColorWithIndex:(NSInteger)index
+{
+    [_drawColor release], _drawColor = nil;
+    
+    switch (index) {
+        case PaintingColorBlue:
+        {
+            red = 75.0f;
+            green = 99.0f;
+            blue = 139.0f;
+            opacity = 1.0f;
+            _drawColor = [RGBA(red, green, blue, opacity) retain];
+        }
+            break;
+        case PaintingColorBlack:
+        {
+            red = 0.0f;
+            green = 0.0f;
+            blue = 0.0f;
+            opacity = 1.0f;
+            _drawColor = [RGBA(red, green, blue, opacity) retain];
+        }
+            break;
+        case PaintingColorOrange:
+        {
+            red = 230.0f;
+            green = 157.0f;
+            blue = 60.0f;
+            opacity = 1.0f;
+            _drawColor = [RGBA(red, green, blue, opacity) retain];
+        }
+            break;
+        case PaintingColorLightBlue:
+        {
+            red = 111.0f;
+            green = 198.0f;
+            blue = 242.0f;
+            opacity = 1.0f;
+            _drawColor = [RGBA(red, green, blue, opacity) retain];
+        }
+            break;
+        case PaintingColorLightGreen:
+        {
+            red = 129.0f;
+            green = 203.0f;
+            blue = 60.0f;
+            opacity = 1.0f;
+            _drawColor = [RGBA(red, green, blue, opacity) retain];
+        }
+            break;
+        case PaintingColorYellow:
+        {
+            red = 232.0f;
+            green = 220.0f;
+            blue = 56.0f;
+            opacity = 1.0f;
+            _drawColor = [RGBA(red, green, blue, opacity) retain];
+        }
+            break;
+        case PaintingColorRed:
+        {
+            red = 184.0f;
+            green = 6.0f;
+            blue = 25.0f;
+            opacity = 1.0f;
+            _drawColor = [RGBA(red, green, blue, opacity) retain];
+        }
+            break;
+    }
+}
 
 #pragma mark - Touch Action
 
