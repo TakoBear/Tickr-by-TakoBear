@@ -149,6 +149,15 @@
     }
 }
 
+- (void)dealloc
+{
+    [_srcImage release];
+    _srcImage = nil;
+    [_drawColor release];
+    _drawColor = nil;
+    [super dealloc];
+}
+
 #pragma mark - Spring menu Delegate 
 
 - (void)colorMenuAnimate
@@ -295,13 +304,16 @@
             if (error!= nil) {
                 NSLog(@"Big error : %@",[error description]);
             }
+            [library release];
         }];
     }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
     NSString *imageName = [NSString stringWithFormat:@"Sticker%@.png",[dateFormatter stringFromDate:[NSDate date]]];
     [dateFormatter release];
+    
     NSString *stickerPath = [[[FileControl mainPath] documentPath] stringByAppendingPathComponent:kFileStoreDirectory];
     NSData *imageData = UIImagePNGRepresentation(imgView.image);
     [imageData writeToFile:[stickerPath stringByAppendingPathComponent:imageName] atomically:YES];
@@ -314,6 +326,11 @@
     } else {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
+    
+//    [imgView release];
+    imgView = nil;
+    [tempDrawImage release];
+    tempDrawImage = nil;
 }
 
 #pragma mark - Helper Method

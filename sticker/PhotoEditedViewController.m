@@ -48,7 +48,7 @@
 //    self.toolbarItems = btnItems;
     
     if (_url != nil) {
-        MBProgressHUD *downloadHUD = [[MBProgressHUD alloc] init];
+        MBProgressHUD *downloadHUD = [[[MBProgressHUD alloc] init] autorelease];
         downloadHUD.labelText = NSLocalizedString(@"loading...", @"");
         downloadHUD.color = [UIColor clearColor];
         [self.view addSubview:downloadHUD];
@@ -62,7 +62,6 @@
         [request setCompletionBlock:^{
             
             [downloadHUD hide:YES];
-            [downloadHUD release];
             
             if ((request.responseStatusCode == 200) || (request.responseStatusCode == 201) ) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -116,6 +115,13 @@
             [view setHidden:NO];
         }
     }
+}
+
+- (void)dealloc
+{
+    self.sourceImage = nil;
+    self.previewImage = nil;
+    [super dealloc];
 }
 
 #pragma mark - Button Action

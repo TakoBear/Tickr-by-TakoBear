@@ -55,6 +55,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     BOOL isSettingOpen;
     BOOL isAnimate;
     BOOL isDeleteMode;
+    CABasicAnimation *shakeAnimate;
 }
 
 @end
@@ -71,6 +72,15 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isAddMode = NO;
     isAnimate = NO;
     isDeleteMode = NO;
+    
+    
+    //Create Shake Animate
+    shakeAnimate = [[CABasicAnimation animationWithKeyPath:@"transform.rotation.z"] retain];
+    shakeAnimate.fromValue = [NSNumber numberWithFloat:-0.03];
+    shakeAnimate.toValue = [NSNumber numberWithFloat:+0.03];
+    shakeAnimate.duration = 0.1;
+    shakeAnimate.autoreverses = YES;
+    shakeAnimate.repeatCount = 100000;
     
     // Configure Setting icon
     // Customise TreeView
@@ -144,10 +154,10 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     
     //Create CollectionView
     flowLayout = [[DraggableCollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(90,90)];
+    [flowLayout setItemSize:CGSizeMake(100,100)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
-    imageCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(5, 10, self.view.frame.size.width-10, self.view.frame.size.height) collectionViewLayout:flowLayout];
+    imageCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, self.view.frame.size.height) collectionViewLayout:flowLayout];
     [imageCollectionView setDelegate:self];
     [imageCollectionView setDataSource:self];
     [imageCollectionView setDraggable:YES];
@@ -207,6 +217,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [documentPath release];
     [dropMenu release];
     [settingMenu release];
+    [shakeAnimate release];
 //    [cellQueue release];
     [super dealloc];
 }
@@ -332,6 +343,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     }
     
     if (isDeleteMode) {
+        [cell.layer addAnimation:shakeAnimate forKey:@"delete_cell"];
         cell.deleteImgView.hidden = NO;
     } else {
         cell.deleteImgView.hidden = YES;
@@ -530,6 +542,8 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 {
     UIImage *pickImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    imagePicker.delegate = nil;
+    imagePicker = nil;
     [imagePicker release];
     float ratio = pickImage.size.height/pickImage.size.width;
     pickImage = [UIImage resizeImageWithSize:pickImage resize:CGSizeMake(600 / ratio, 600)];
@@ -539,6 +553,9 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker;
 {
     [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    imagePicker.delegate = nil;
+    imagePicker = nil;
+    [imagePicker release];
 }
 
 - (void)sendImageToEditViewControllWith:(UIImage *)image

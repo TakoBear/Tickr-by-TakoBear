@@ -17,16 +17,17 @@
         // Initialization code
 //        [self setIsProgress:NO];
         
-        _imgView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90 , 90)];
+        _imgView.center = self.contentView.center;
         _imgView.backgroundColor = [UIColor clearColor];
         _imgView.userInteractionEnabled = YES;
         
-        _deleteImgView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _deleteImgView = [[UIImageView alloc] init];
         _deleteImgView.backgroundColor = [UIColor clearColor];
         _deleteImgView.userInteractionEnabled = YES;
         UIImage *deleteImage = [UIImage imageNamed:@"Delete.png"];
         [_deleteImgView setImage:deleteImage];
-        _deleteImgView.frame = CGRectMake(0, 0, self.bounds.size.width *1/3, self.bounds.size.width *1/3);
+        _deleteImgView.frame = CGRectMake(-5,-5, self.bounds.size.width *1/3, self.bounds.size.width *1/3);
         _deleteImgView.hidden = YES;
         
         [self.contentView addSubview:_imgView];

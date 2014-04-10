@@ -14,8 +14,9 @@
 #import "MBProgressHUD.h"
 
 #define kGOOGLE_IMAGE_SEARCH_API @"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
-#define kSEARCH_BAR_TAG 101
-#define kSEARCH_HUD_TAG 102
+#define kSEARCH_BAR_TAG     101
+#define kSEARCH_HUD_TAG     102
+#define kFAILED_LABEL_TAG   103
 
 @interface GoogleSearchViewController ()<UISearchBarDelegate,UICollectionViewDataSource,UICollectionViewDelegate, ASIProgressDelegate>
 {
@@ -68,14 +69,13 @@
     [self.navigationController.navigationBar addSubview:searchBar];
     [searchBar becomeFirstResponder];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont systemFontOfSize:16]];
-    [searchBar release];
     
     //Create progress HUD
-    MBProgressHUD *searchHUD = [[MBProgressHUD alloc] init];
+    MBProgressHUD *searchHUD = [[[MBProgressHUD alloc] init] autorelease];
     searchHUD.labelText = @"Searching...";
     searchHUD.tag = kSEARCH_HUD_TAG;
     [self.view addSubview:searchHUD];
-    [searchHUD release];
+    
     //Create Collection View
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(100,100)];
@@ -89,11 +89,12 @@
     [googleCollectionView registerClass:[PhotoViewCell class] forCellWithReuseIdentifier:@"googleImageCell"];
     
     [self.view addSubview:googleCollectionView];
-    [googleCollectionView release];
     
-    UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissGoogleSearch)];
-    
+    UIBarButtonItem *cancelBtn = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissGoogleSearch)] autorelease];
     self.toolbarItems = @[cancelBtn];
+    
+    [flowLayout release];
+
     
 }
 
@@ -108,11 +109,17 @@
 {
     [tbImageURLArray removeAllObjects];
     [originImageURLArray removeAllObjects];
-    
     [tbImageURLArray release];
     [originImageURLArray release];
     [inputString release];
     [gestureTextField release];
+    googleCollectionView.dataSource = nil;
+    googleCollectionView.delegate = nil;
+    [googleCollectionView release];
+    
+    UISearchBar *searchBar = (UISearchBar *)[self.view viewWithTag:kSEARCH_BAR_TAG];
+    searchBar = nil;
+    [searchBar release];
     
     [super dealloc];
 }
@@ -162,7 +169,12 @@
     [originImageURLArray removeAllObjects];
     [googleCollectionView reloadData];
     
-    MBProgressHUD *searchHUD = [(MBProgressHUD *)[self.view viewWithTag:kSEARCH_HUD_TAG] retain];
+    UILabel *failedLabel = (UILabel *)[self.view viewWithTag:kFAILED_LABEL_TAG];
+    if (failedLabel) {
+        [failedLabel removeFromSuperview];
+    }
+    
+    MBProgressHUD *searchHUD = (MBProgressHUD *)[self.view viewWithTag:kSEARCH_HUD_TAG] ;
     [searchHUD show:YES];
     
     inputString = [[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] retain];
@@ -234,7 +246,6 @@
     } else {
         MBProgressHUD *searchHUD = (MBProgressHUD *)[self.view viewWithTag:kSEARCH_HUD_TAG];
         [searchHUD hide:YES];
-        [searchHUD release];
         
         [googleCollectionView reloadData];
         [googleCollectionView setContentOffset:CGPointZero animated:YES];
@@ -249,12 +260,12 @@
     
     MBProgressHUD *searchHUD = (MBProgressHUD *)[self.view viewWithTag:kSEARCH_HUD_TAG];
     [searchHUD hide:YES];
-    [searchHUD release];
     
     if (tbImageURLArray.count == 0) {
         UILabel *failLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         failLabel.center = self.view.center;
         failLabel.text = @"Search failed";
+        failLabel.tag = kFAILED_LABEL_TAG;
         [self.view addSubview:failLabel];
         [failLabel release];
     }
