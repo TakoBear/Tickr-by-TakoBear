@@ -51,7 +51,7 @@
 - (void)addImagetoImageDataArray:(NSString *)imageName
 {
     if ([_variableDictionary objectForKey:kImageDataArrayKey]) {
-        [[_variableDictionary objectForKey:kImageDataArrayKey] addObject:imageName];
+        [[_variableDictionary objectForKey:kImageDataArrayKey] insertObject:imageName atIndex:0];
     }
 }
 

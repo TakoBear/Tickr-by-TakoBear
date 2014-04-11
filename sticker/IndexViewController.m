@@ -143,7 +143,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     }
     //Get only "image name" from  path : var/.../Document/StickerDocument/* and sort ascending by name
     NSArray *fileArray = [[NSArray arrayWithArray:[fileManager contentsOfDirectoryAtPath:stickerPath error:&error]] retain];
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES selector:@selector(compare:)];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO selector:@selector(compare:)];
     fileArray = [fileArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     lastImageURL = [[fileArray lastObject]retain];
     imageDataArray = [[NSMutableArray arrayWithArray:fileArray] retain];
@@ -196,12 +196,12 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.toolbarHidden = YES;
     
-    id newLastImageURL = [imageDataArray lastObject];
+    id newLastImageURL = [imageDataArray objectAtIndex:0];
     if ([newLastImageURL isKindOfClass:[UIImage class]]) {
         return;
     }
     if (![newLastImageURL isEqualToString:lastImageURL] && imageDataArray.count != 0) {
-        [imageURLArray addObject:newLastImageURL];
+        [imageURLArray insertObject:newLastImageURL atIndex:0];
         lastImageURL = newLastImageURL;
         [imageCollectionView reloadData];
     }
