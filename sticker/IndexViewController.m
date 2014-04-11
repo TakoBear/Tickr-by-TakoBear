@@ -80,7 +80,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     shakeAnimate.toValue = [NSNumber numberWithFloat:+0.03];
     shakeAnimate.duration = 0.1;
     shakeAnimate.autoreverses = YES;
-    shakeAnimate.repeatCount = 100000;
+    shakeAnimate.repeatCount = FLT_MAX;
     
     // Configure Setting icon
     // Customise TreeView

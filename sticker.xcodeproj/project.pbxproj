@@ -41,6 +41,9 @@
 		D63558EB18E422300077D98B /* LineChat.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558E818E422300077D98B /* LineChat.m */; };
 		D63558EE18E423440077D98B /* WhatsApp.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558EC18E423440077D98B /* WhatsApp.m */; };
 		D63558F118E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = D63558F018E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.m */; };
+		D63AA3F018F7D70D00980318 /* GmailLikeLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = D63AA3EF18F7D70D00980318 /* GmailLikeLoadingView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		D63AA3F218F7DA7C00980318 /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = D63AA3F118F7DA7C00980318 /* white.png */; };
+		D63AA3FA18F7DEAD00980318 /* PendulumView.m in Sources */ = {isa = PBXBuildFile; fileRef = D63AA3F918F7DEAD00980318 /* PendulumView.m */; };
 		D64C01AA18E400970058EDCE /* SettingVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = D64C01A918E400970058EDCE /* SettingVariable.m */; };
 		D64F129118E99F5D006BA06E /* JMDropMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = D64F129018E99F5D006BA06E /* JMDropMenuView.m */; };
 		D6507EA718C7576900168E31 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D6507E5618C7576900168E31 /* ASIAuthenticationDialog.m */; };
@@ -179,6 +182,11 @@
 		D63558ED18E423440077D98B /* WhatsApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatsApp.h; sourceTree = "<group>"; };
 		D63558EF18E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsLibrary+CustomPhotoAlbum.h"; sourceTree = "<group>"; };
 		D63558F018E428510077D98B /* ALAssetsLibrary+CustomPhotoAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsLibrary+CustomPhotoAlbum.m"; sourceTree = "<group>"; };
+		D63AA3EE18F7D70D00980318 /* GmailLikeLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmailLikeLoadingView.h; sourceTree = "<group>"; };
+		D63AA3EF18F7D70D00980318 /* GmailLikeLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmailLikeLoadingView.m; sourceTree = "<group>"; };
+		D63AA3F118F7DA7C00980318 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white.png; path = ../sticker/white.png; sourceTree = "<group>"; };
+		D63AA3F818F7DEAD00980318 /* PendulumView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendulumView.h; sourceTree = "<group>"; };
+		D63AA3F918F7DEAD00980318 /* PendulumView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendulumView.m; sourceTree = "<group>"; };
 		D64C01A818E400970058EDCE /* SettingVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingVariable.h; sourceTree = "<group>"; };
 		D64C01A918E400970058EDCE /* SettingVariable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingVariable.m; sourceTree = "<group>"; };
 		D64F128F18E99F5D006BA06E /* JMDropMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDropMenuView.h; sourceTree = "<group>"; };
@@ -432,6 +440,24 @@
 			path = ChatManager;
 			sourceTree = "<group>";
 		};
+		D63AA3ED18F7D6F200980318 /* GmailLoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				D63AA3EE18F7D70D00980318 /* GmailLikeLoadingView.h */,
+				D63AA3EF18F7D70D00980318 /* GmailLikeLoadingView.m */,
+			);
+			name = GmailLoadingView;
+			sourceTree = "<group>";
+		};
+		D63AA3F718F7DE9600980318 /* PendulumView */ = {
+			isa = PBXGroup;
+			children = (
+				D63AA3F818F7DEAD00980318 /* PendulumView.h */,
+				D63AA3F918F7DEAD00980318 /* PendulumView.m */,
+			);
+			name = PendulumView;
+			sourceTree = "<group>";
+		};
 		D64F128E18E99F48006BA06E /* JMDropMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -584,6 +610,8 @@
 		D658056318BF268F0002683F /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				D63AA3F718F7DE9600980318 /* PendulumView */,
+				D63AA3ED18F7D6F200980318 /* GmailLoadingView */,
 				D61DF4C118F29C67009A01C0 /* MBProgressHUD */,
 				D64F128E18E99F48006BA06E /* JMDropMenu */,
 				D658054D18BF1C0D0002683F /* External */,
@@ -708,6 +736,7 @@
 		D6E9352718B8D0350086802C /* imageData */ = {
 			isa = PBXGroup;
 			children = (
+				D63AA3F118F7DA7C00980318 /* white.png */,
 				D6E9354A18B9F8FA0086802C /* addData.png */,
 				D6E9352818B8D0350086802C /* 1.PNG */,
 			);
@@ -799,6 +828,7 @@
 				D6E4E78818B3949B003E1B90 /* InfoPlist.strings in Resources */,
 				D6E9354B18B9F8FA0086802C /* addData.png in Resources */,
 				D6E4E79118B3949B003E1B90 /* Main.storyboard in Resources */,
+				D63AA3F218F7DA7C00980318 /* white.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -818,6 +848,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D64C01AA18E400970058EDCE /* SettingVariable.m in Sources */,
+				D63AA3F018F7D70D00980318 /* GmailLikeLoadingView.m in Sources */,
 				D65380F418CB5B7100DA6794 /* UIImage+GIF.m in Sources */,
 				D6E4E7B718B39ADC003E1B90 /* GroupViewController.m in Sources */,
 				D6507EA818C7576900168E31 /* ASIDataCompressor.m in Sources */,
@@ -873,6 +904,7 @@
 				D65380F018CB5B7100DA6794 /* SDWebImageDownloaderOperation.m in Sources */,
 				0337CDEF18D42AFB0083300C /* SHImageEditorViewController.m in Sources */,
 				D64F129118E99F5D006BA06E /* JMDropMenuView.m in Sources */,
+				D63AA3FA18F7DEAD00980318 /* PendulumView.m in Sources */,
 				031656B018EBF22A0019E7F3 /* REMenuContainerView.m in Sources */,
 				D6507EAB18C7576900168E31 /* ASIFormDataRequest.m in Sources */,
 				031656BD18EBF22A0019E7F3 /* RATreeView.m in Sources */,

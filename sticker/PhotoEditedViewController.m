@@ -10,7 +10,7 @@
 #import "PaintingImageViewController.h"
 #import "ASIHTTPRequest.h"
 #import "Categories/UIImage+ResizeImage.h"
-#import "MBProgressHUD.h"
+#import "PendulumView.h"
 
 @interface PhotoEditedViewController()
 {
@@ -27,7 +27,7 @@
     if (self) {
         _url = url;
         // Put a Default Image Here
-        self.sourceImage = [UIImage imageNamed:@"1.PNG"];
+        self.sourceImage = [UIImage imageNamed:@"white.png"];
     }
     return self;
 }
@@ -48,11 +48,10 @@
 //    self.toolbarItems = btnItems;
     
     if (_url != nil) {
-        MBProgressHUD *downloadHUD = [[[MBProgressHUD alloc] init] autorelease];
-        downloadHUD.labelText = NSLocalizedString(@"loading...", @"");
-        downloadHUD.color = [UIColor clearColor];
-        [self.view addSubview:downloadHUD];
-        [downloadHUD show:YES];
+        UIColor *ballColor = [UIColor colorWithRed:0.47 green:0.60 blue:0.89 alpha:1];
+        PendulumView *waitingView = [[PendulumView alloc] initWithFrame:self.view.bounds ballColor:ballColor];
+        [self.view addSubview:waitingView];
+        
         // Send Request to background 
         __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:_url];
         [request setRequestMethod:@"GET"];
@@ -60,9 +59,9 @@
         [request setDelegate:self];
         [request setDownloadProgressDelegate:self];
         [request setCompletionBlock:^{
-            
-            [downloadHUD hide:YES];
-            
+            [waitingView stopAnimating];
+            [waitingView removeFromSuperview];
+            [waitingView release];
             if ((request.responseStatusCode == 200) || (request.responseStatusCode == 201) ) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     UIImage *reqImg = [UIImage imageWithData:request.responseData];

@@ -70,7 +70,7 @@
     [self.view addSubview:mainImgView];
     [self.view setBackgroundColor:[UIColor blackColor]];
     
-    UIImageView *tmpDrawImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kIMG_VIEW_STATUS_HEIGHT, self.view.frame.size.width, self.view.frame.size.width)];
+    UIImageView *tmpDrawImgView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, kIMG_VIEW_STATUS_HEIGHT, self.view.frame.size.width, self.view.frame.size.width)] autorelease];
     tmpDrawImgView.tag = kTMP_DRAWIMGVIEW_TAG;
     tmpDrawImgView.backgroundColor = [UIColor clearColor];
     mainImgView.userInteractionEnabled = YES;
@@ -410,7 +410,6 @@
     
 //    [imgView release];
     imgView = nil;
-    [tempDrawImage release];
     tempDrawImage = nil;
 }
 

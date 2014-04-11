@@ -11,7 +11,7 @@
 #import "PhotoViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "PhotoEditedViewController.h"
-#import "MBProgressHUD.h"
+#import "GmailLikeLoadingView.h"
 
 #define kGOOGLE_IMAGE_SEARCH_API @"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
 #define kSEARCH_BAR_TAG     101
@@ -26,7 +26,7 @@
     int searchCount;
     NSString *inputString;
     UITapGestureRecognizer *gestureTextField;
-    
+    GmailLikeLoadingView *gmailAnimateView;
     BOOL isRequestFinished;
 }
 
@@ -71,10 +71,9 @@
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont systemFontOfSize:16]];
     
     //Create progress HUD
-    MBProgressHUD *searchHUD = [[[MBProgressHUD alloc] init] autorelease];
-    searchHUD.labelText = @"Searching...";
-    searchHUD.tag = kSEARCH_HUD_TAG;
-    [self.view addSubview:searchHUD];
+    gmailAnimateView = [[GmailLikeLoadingView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    gmailAnimateView.center = self.view.center;
+    [self.view addSubview:gmailAnimateView];
     
     //Create Collection View
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -116,6 +115,7 @@
     googleCollectionView.dataSource = nil;
     googleCollectionView.delegate = nil;
     [googleCollectionView release];
+    [gmailAnimateView release];
     
     UISearchBar *searchBar = (UISearchBar *)[self.view viewWithTag:kSEARCH_BAR_TAG];
     searchBar = nil;
@@ -174,9 +174,8 @@
         [failedLabel removeFromSuperview];
     }
     
-    MBProgressHUD *searchHUD = (MBProgressHUD *)[self.view viewWithTag:kSEARCH_HUD_TAG] ;
-    [searchHUD show:YES];
-    
+    [gmailAnimateView startAnimating];
+
     inputString = [[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] retain];
     //retain to avoid crash!
     NSString *searchString = [NSString stringWithFormat:@"%@%@&rsz=8",kGOOGLE_IMAGE_SEARCH_API,inputString];
@@ -244,8 +243,8 @@
     if (searchCount < 64) {
         [self searchMoreImage];
     } else {
-        MBProgressHUD *searchHUD = (MBProgressHUD *)[self.view viewWithTag:kSEARCH_HUD_TAG];
-        [searchHUD hide:YES];
+        
+        [gmailAnimateView stopAnimating];
         
         [googleCollectionView reloadData];
         [googleCollectionView setContentOffset:CGPointZero animated:YES];
@@ -258,8 +257,7 @@
     NSError *error = request.error;
     NSLog(@"error = %@",error);
     
-    MBProgressHUD *searchHUD = (MBProgressHUD *)[self.view viewWithTag:kSEARCH_HUD_TAG];
-    [searchHUD hide:YES];
+    [gmailAnimateView stopAnimating];
     
     if (tbImageURLArray.count == 0) {
         UILabel *failLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
