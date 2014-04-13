@@ -400,29 +400,30 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 - (void)touchPhoto:(PhotoViewCell *)cell andData:(NSData *)imageData indexPath:(NSIndexPath *)indexPath
 {
-        IMSelectViewController *vc = [[IMSelectViewController alloc] initWithImageData:imageData];
-        
-        defaultIMPopOverViewController = [[WYPopoverController alloc] initWithContentViewController:vc];
-        defaultIMPopOverViewController.delegate = self;
-        defaultIMPopOverViewController.passthroughViews = @[cell];
-        defaultIMPopOverViewController.popoverLayoutMargins = UIEdgeInsetsMake(200, 0, 180, 0);
-        defaultIMPopOverViewController.wantsDefaultContentAppearance = NO;
-        
-        // Get current Cell position
-        UICollectionViewLayoutAttributes *attributes = [imageCollectionView layoutAttributesForItemAtIndexPath:indexPath];
-        
-        CGRect frame = CGRectMake(attributes.frame.origin.x, attributes.frame.origin.y + 20, attributes.frame.size.width, attributes.frame.size.height);
-        
-        UIView *blockView = [[UIView alloc] initWithFrame:frame];
-        blockView.backgroundColor = [UIColor clearColor];
-        blockView.tag = kBLOCKVIEW_TAG;
-        [self.view addSubview:blockView];
-        
-        [defaultIMPopOverViewController presentPopoverFromRect:blockView.bounds
-                                                   inView:blockView
+    IMSelectViewController *vc = [[IMSelectViewController alloc] initWithImageData:imageData];
+    
+    defaultIMPopOverViewController = [[WYPopoverController alloc] initWithContentViewController:vc];
+    defaultIMPopOverViewController.delegate = self;
+    defaultIMPopOverViewController.passthroughViews = @[cell];
+    defaultIMPopOverViewController.popoverLayoutMargins = UIEdgeInsetsMake(200, 0, 180, 0);
+    defaultIMPopOverViewController.wantsDefaultContentAppearance = NO;
+    
+    // Get current Cell position
+    UICollectionViewLayoutAttributes *attributes = [imageCollectionView layoutAttributesForItemAtIndexPath:indexPath];
+    CGRect cellRect = attributes.frame;
+    CGRect cellFrameInSuperview = [imageCollectionView convertRect:cellRect toView:[imageCollectionView superview]];
+    
+    UIView *blockView = [[UIView alloc] initWithFrame:cellFrameInSuperview];
+    blockView.backgroundColor = [UIColor clearColor];
+    blockView.tag = kBLOCKVIEW_TAG;
+    [self.view addSubview:blockView];
+    
+    [defaultIMPopOverViewController presentPopoverFromRect:blockView.frame
+                                                   inView:self.view
                                  permittedArrowDirections:WYPopoverArrowDirectionAny
                                                  animated:YES
                                                   options:WYPopoverAnimationOptionFadeWithScale];
+    
 }
 
 - (void)popoverControllerDidDismissPopover:(WYPopoverController *)popoverController;
