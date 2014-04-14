@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D6E4E77918B3949B003E1B90"
                BuildableName = "sticker.app"
-               BlueprintName = "sticker"
+               BlueprintName = "Ticker"
                ReferencedContainer = "container:sticker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,7 +44,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D6E4E77918B3949B003E1B90"
             BuildableName = "sticker.app"
-            BlueprintName = "sticker"
+            BlueprintName = "Ticker"
             ReferencedContainer = "container:sticker.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,7 +63,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D6E4E77918B3949B003E1B90"
             BuildableName = "sticker.app"
-            BlueprintName = "sticker"
+            BlueprintName = "Ticker"
             ReferencedContainer = "container:sticker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -86,7 +86,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D6E4E77918B3949B003E1B90"
             BuildableName = "sticker.app"
-            BlueprintName = "sticker"
+            BlueprintName = "Ticker"
             ReferencedContainer = "container:sticker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

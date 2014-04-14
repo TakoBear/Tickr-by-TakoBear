@@ -747,9 +747,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D6E4E77918B3949B003E1B90 /* sticker */ = {
+		D6E4E77918B3949B003E1B90 /* Ticker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D6E4E7AC18B3949B003E1B90 /* Build configuration list for PBXNativeTarget "sticker" */;
+			buildConfigurationList = D6E4E7AC18B3949B003E1B90 /* Build configuration list for PBXNativeTarget "Ticker" */;
 			buildPhases = (
 				D6E4E77618B3949B003E1B90 /* Sources */,
 				D6E4E77718B3949B003E1B90 /* Frameworks */,
@@ -759,7 +759,7 @@
 			);
 			dependencies = (
 			);
-			name = sticker;
+			name = Ticker;
 			productName = sticker;
 			productReference = D6E4E77A18B3949B003E1B90 /* sticker.app */;
 			productType = "com.apple.product-type.application";
@@ -812,7 +812,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D6E4E77918B3949B003E1B90 /* sticker */,
+				D6E4E77918B3949B003E1B90 /* Ticker */,
 				D6E4E79A18B3949B003E1B90 /* stickerTests */,
 			);
 		};
@@ -936,7 +936,7 @@
 /* Begin PBXTargetDependency section */
 		D6E4E7A118B3949B003E1B90 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D6E4E77918B3949B003E1B90 /* sticker */;
+			target = D6E4E77918B3949B003E1B90 /* Ticker */;
 			targetProxy = D6E4E7A018B3949B003E1B90 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1141,7 +1141,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D6E4E7AC18B3949B003E1B90 /* Build configuration list for PBXNativeTarget "sticker" */ = {
+		D6E4E7AC18B3949B003E1B90 /* Build configuration list for PBXNativeTarget "Ticker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D6E4E7AD18B3949B003E1B90 /* Debug */,
