@@ -94,8 +94,8 @@
     self.toolbarItems = @[writeBtn, eraseBtn];
     
     //Create color & brush menu
-    colorArray = [NSArray arrayWithObjects:@"Red",@"Orange",@"Yellow",@"Gray",@"Blue",@"Cyne",@"Green", nil];
-    brushArray = [NSArray arrayWithObjects:@"Brush1",@"Brush2",@"Brush3",@"Brush4",@"Brush5", nil];
+    colorArray = [[NSArray arrayWithObjects:@"Red",@"Orange",@"Yellow",@"Gray",@"Blue",@"Cyne",@"Green", nil] retain];
+    brushArray = [[NSArray arrayWithObjects:@"Brush1",@"Brush2",@"Brush3",@"Brush4",@"Brush5", nil] retain];
     NSMutableArray *colorIconArray = [[NSMutableArray alloc] init];
     NSMutableArray *brushIconArray = [[NSMutableArray alloc] init];
     for (NSString *colorName in colorArray) {
@@ -118,7 +118,7 @@
     
     UIButton *drawButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
     drawButton.center = CGPointMake(self.view.center.x, self.view.frame.size.height - 45);
-    [drawButton setImage:[UIImage imageNamed:@"Brush1_Blue.png"] forState:UIControlStateNormal];
+    [drawButton setImage:[UIImage imageNamed:@"Brush1_Red.png"] forState:UIControlStateNormal];
     [drawButton addTarget:self action:@selector(springMenuAnimate) forControlEvents:UIControlEventTouchUpInside];
     drawButton.tag = kDRAW_BUTTON_TAG;
     [self.view addSubview:drawButton];
@@ -209,6 +209,10 @@
         [self springMenuAnimate];
         brushIndex = index;
     }
+    
+    UIButton *drawButton = (UIButton *)[self.view viewWithTag:kDRAW_BUTTON_TAG];
+    NSString *imageName = [NSString stringWithFormat:@"%@_%@.png",brushArray[brushIndex],colorArray[colorIndex]];
+    [drawButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     
 }
 
