@@ -74,7 +74,7 @@
     gmailAnimateView = [[GmailLikeLoadingView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     gmailAnimateView.center = self.view.center;
     [self.view addSubview:gmailAnimateView];
-    
+    [gmailAnimateView release];
     //Create Collection View
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(100,100)];
@@ -115,7 +115,6 @@
     googleCollectionView.dataSource = nil;
     googleCollectionView.delegate = nil;
     [googleCollectionView release];
-    [gmailAnimateView release];
     
     UISearchBar *searchBar = (UISearchBar *)[self.view viewWithTag:kSEARCH_BAR_TAG];
     searchBar = nil;
@@ -169,12 +168,18 @@
     [originImageURLArray removeAllObjects];
     [googleCollectionView reloadData];
     
-    UILabel *failedLabel = (UILabel *)[self.view viewWithTag:kFAILED_LABEL_TAG];
-    if (failedLabel) {
-        [failedLabel removeFromSuperview];
+    for (UILabel *failedLabel in self.view.subviews) {
+        if ( failedLabel == (UILabel *)[self.view viewWithTag:kFAILED_LABEL_TAG])
+        {
+            [failedLabel removeFromSuperview];
+        }
     }
-    
-    [gmailAnimateView startAnimating];
+    if (gmailAnimateView.isAnimating) {
+        [gmailAnimateView stopAnimating];
+        [self performSelector:@selector(startGmailAnimate) withObject:nil afterDelay:0.5f];
+    } else {
+        [gmailAnimateView startAnimating];
+    }
 
     inputString = [[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] retain];
     //retain to avoid crash!
@@ -197,6 +202,11 @@
     UISearchBar *searchBar = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:kSEARCH_BAR_TAG];
     [searchBar resignFirstResponder];
     [self.view removeGestureRecognizer:gestureTextField];
+}
+
+- (void)startGmailAnimate
+{
+    [gmailAnimateView startAnimating];
 }
 
 #pragma mark - ASIHTTPRequest
