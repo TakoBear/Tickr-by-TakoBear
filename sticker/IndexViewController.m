@@ -195,6 +195,9 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 {
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.toolbarHidden = YES;
+    if (imageDataArray.count == 0) {
+        return;
+    }
     
     id newLastImageURL = [imageDataArray objectAtIndex:0];
     if ([newLastImageURL isKindOfClass:[UIImage class]]) {

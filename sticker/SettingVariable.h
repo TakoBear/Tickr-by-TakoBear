@@ -31,13 +31,21 @@ typedef NS_ENUM(int, ChatAppType) {
 };
 
 typedef NS_ENUM(int, PaintingColor) {
-    PaintingColorBlue,
-    PaintingColorBlack,
+    PaintingColorRed,
     PaintingColorOrange,
-    PaintingColorLightBlue,
-    PaintingColorLightGreen,
     PaintingColorYellow,
-    PaintingColorRed
+    PaintingColorGray,
+    PaintingColorBlue,
+    PaintingColorCyne,
+    PaintingColorGreen,
+};
+
+typedef NS_ENUM(int, PaintingBrush) {
+    PaintingBrush1,
+    PaintingBrush2,
+    PaintingBrush3,
+    PaintingBrush4,
+    PaintingBrush5
 };
 
 @interface SettingVariable : NSObject

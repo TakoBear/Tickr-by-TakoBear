@@ -15,6 +15,9 @@
 #define kMAIN_IMGVIEW_TAG       1001
 #define kTMP_DRAWIMGVIEW_TAG    1002
 #define kCOLOR_VIEW_TAG         1003
+#define kBRUSH_VIEW_TAG         1004
+
+#define kDRAW_BUTTON_TAG        201
 
 #define kIMG_VIEW_STATUS_HEIGHT 120
 #define kColorInterval 70
@@ -36,6 +39,13 @@
     BOOL isErasing;
     BOOL isGoogleSearchNavController;
     BOOL isAnimate;
+    
+    int brushIndex;
+    int colorIndex;
+    
+    NSArray *colorArray;
+    NSArray *brushArray;
+
 }
 
 @end
@@ -83,58 +93,68 @@
     UIBarButtonItem *eraseBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Erase", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(setEraseMode:)] autorelease];
     self.toolbarItems = @[writeBtn, eraseBtn];
     
-    //Create color menu
-    UIImageView *colorDarkBlue = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
-    colorDarkBlue.backgroundColor = [UIColor clearColor];
-    [colorDarkBlue setImage:[UIImage imageNamed:@"color_dark_blue.png"]];
+    //Create color & brush menu
+    colorArray = [NSArray arrayWithObjects:@"Red",@"Orange",@"Yellow",@"Gray",@"Blue",@"Cyne",@"Green", nil];
+    brushArray = [NSArray arrayWithObjects:@"Brush1",@"Brush2",@"Brush3",@"Brush4",@"Brush5", nil];
+    NSMutableArray *colorIconArray = [[NSMutableArray alloc] init];
+    NSMutableArray *brushIconArray = [[NSMutableArray alloc] init];
+    for (NSString *colorName in colorArray) {
+        UIImageView *colorImgView = [[UIImageView alloc] initWithFrame:CGRectMake(20, self.view.frame.size.height-200,kColorButtonSize, kColorButtonSize)];
+        colorImgView.backgroundColor = [UIColor clearColor];
+        [colorImgView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png",colorName]]];
+        [colorIconArray addObject:colorImgView];
+        [colorImgView release]; colorImgView = nil;
+    }
     
-    UIImageView *colorDarkGray = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
-    colorDarkGray.backgroundColor = [UIColor clearColor];
-    [colorDarkGray setImage:[UIImage imageNamed:@"color_dark_gray.png"]];
+    for (NSString *brushName in brushArray) {
+        UIImageView *brushImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width - kColorButtonSize - 20, self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
+        brushImgView.backgroundColor = [UIColor clearColor];
+        [brushImgView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png",brushName]]];
+        [brushIconArray addObject:brushImgView];
+        [brushImgView release]; brushImgView = nil;
+    }
     
-    UIImageView *colorDarkYellow = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
-    colorDarkYellow.backgroundColor = [UIColor clearColor];
-    [colorDarkYellow setImage:[UIImage imageNamed:@"color_dark_yellow.png"]];
-    
-    UIImageView *colorLightBlue = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
-    colorLightBlue.backgroundColor = [UIColor clearColor];
-    [colorLightBlue setImage:[UIImage imageNamed:@"color_light_blue.png"]];
-    
-    UIImageView *colorLightGreen = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
-    colorLightGreen.backgroundColor = [UIColor clearColor];
-    [colorLightGreen setImage:[UIImage imageNamed:@"color_light_green.png"]];
-    
-    UIImageView *colorLightYellow = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
-    colorLightYellow.backgroundColor = [UIColor clearColor];
-    [colorLightYellow setImage:[UIImage imageNamed:@"color_light_yellow.png"]];
-    
-    UIImageView *colorRed = [[UIImageView alloc] initWithFrame:CGRectMake(20,self.view.frame.size.height-100, kColorButtonSize, kColorButtonSize)];
-    colorRed.backgroundColor = [UIColor clearColor];
-    [colorRed setImage:[UIImage imageNamed:@"color_red.png"]];
     isAnimate = NO;
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(100, 450, 100, 100)];
-    button.backgroundColor = [UIColor blueColor];
-    [button addTarget:self action:@selector(colorMenuAnimate) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+    UIButton *drawButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+    drawButton.center = CGPointMake(self.view.center.x, self.view.frame.size.height - 45);
+    [drawButton setImage:[UIImage imageNamed:@"Brush1_Blue.png"] forState:UIControlStateNormal];
+    [drawButton addTarget:self action:@selector(springMenuAnimate) forControlEvents:UIControlEventTouchUpInside];
+    drawButton.tag = kDRAW_BUTTON_TAG;
+    [self.view addSubview:drawButton];
     
-    JMSpringMenuView *colorMenu= [[JMSpringMenuView alloc] initWithViews:@[colorDarkBlue,colorDarkGray,colorDarkYellow,colorLightBlue,colorLightGreen,colorLightYellow,colorRed]];
-    colorMenu.frame = CGRectMake(20,self.view.frame.size.height - 60, kColorButtonSize, kColorButtonSize*8);
+    UIButton *eraseButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+    eraseButton.center = CGPointMake(self.view.center.x, self.view.frame.size.height - 120);
+    [eraseButton setImage:[UIImage imageNamed:@"Eraser.png"] forState:UIControlStateNormal];
+    [eraseButton addTarget:self action:@selector(setEraseMode:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:eraseButton];
+    
+    
+    JMSpringMenuView *colorMenu= [[JMSpringMenuView alloc] initWithViews:colorIconArray];
+    colorMenu.frame = CGRectMake(20,self.view.frame.size.height - 40, kColorButtonSize, kColorButtonSize * 8);
     colorMenu.animateInterval = 0.5;
     colorMenu.animateDirect = Animate_Drop_To_Top;
-    colorMenu.viewsInterval = 15;
+    colorMenu.viewsInterval = 10;
     colorMenu.tag = kCOLOR_VIEW_TAG;
     colorMenu.delegate = self;
     [self.view addSubview:colorMenu];
+    
+    JMSpringMenuView *brushMenu= [[JMSpringMenuView alloc] initWithViews:brushIconArray];
+    brushMenu.frame = CGRectMake(self.view.frame.size.width - kColorButtonSize - 20,self.view.frame.size.height - 40, kColorButtonSize, kColorButtonSize * 6);
+    brushMenu.animateInterval = 0.5;
+    brushMenu.animateDirect = Animate_Drop_To_Top;
+    brushMenu.viewsInterval = 10;
+    brushMenu.tag = kBRUSH_VIEW_TAG;
+    brushMenu.delegate = self;
+    [self.view addSubview:brushMenu];
+    
 
+    [colorIconArray release];
+    [brushIconArray release];
+    [drawButton release];
+    [eraseButton release];
     [colorMenu release];
-    [colorDarkBlue release];
-    [colorDarkGray release];
-    [colorDarkYellow release];
-    [colorLightBlue release];
-    [colorLightGreen release];
-    [colorLightYellow release];
-    [button release];
+    [brushMenu release];
 
 }
 
@@ -161,13 +181,17 @@
 
 #pragma mark - Spring menu Delegate 
 
-- (void)colorMenuAnimate
+- (void)springMenuAnimate
 {
+    [self setWritingMode:nil];
     JMSpringMenuView *colorMenu = (JMSpringMenuView *)[self.view viewWithTag:kCOLOR_VIEW_TAG];
+    JMSpringMenuView *brushMenu = (JMSpringMenuView *)[self.view viewWithTag:kBRUSH_VIEW_TAG];
     if (!isAnimate) {
         [colorMenu popOut];
+        [brushMenu popOut];
     } else {
         [colorMenu dismiss];
+        [brushMenu dismiss];
     }
     isAnimate = !isAnimate;
 }
@@ -178,9 +202,48 @@
     
     if (menu.tag == kCOLOR_VIEW_TAG) {
         [self setUpColorWithIndex:index];
-        [self colorMenuAnimate];
+        [self springMenuAnimate];
+        colorIndex = index;
+    } else if (menu.tag == kBRUSH_VIEW_TAG) {
+        [self setUpBrushWithIndex:index];
+        [self springMenuAnimate];
+        brushIndex = index;
     }
     
+}
+
+- (void)setUpBrushWithIndex:(NSInteger)index
+{
+    switch (index) {
+        case PaintingBrush1:
+        {
+            brushWidth = 5.0f;
+        }
+            break;
+        case PaintingBrush2:
+        {
+            brushWidth = 10.0f;
+        }
+            break;
+        case PaintingBrush3:
+        {
+            brushWidth = 15.0f;
+        }
+            break;
+        case PaintingBrush4:
+        {
+            brushWidth = 20.0f;
+        }
+            break;
+        case PaintingBrush5:
+        {
+            brushWidth = 25.0f;
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)setUpColorWithIndex:(NSInteger)index
@@ -190,63 +253,63 @@
     switch (index) {
         case PaintingColorBlue:
         {
-            red = 75.0f;
-            green = 99.0f;
-            blue = 139.0f;
+            red = 51.0f;
+            green = 85.0f;
+            blue = 134.0f;
             opacity = 1.0f;
             _drawColor = [RGBA(red, green, blue, opacity) retain];
         }
             break;
-        case PaintingColorBlack:
+        case PaintingColorGray:
         {
-            red = 0.0f;
-            green = 0.0f;
-            blue = 0.0f;
+            red = 68.0f;
+            green = 68.0f;
+            blue = 68.0f;
             opacity = 1.0f;
             _drawColor = [RGBA(red, green, blue, opacity) retain];
         }
             break;
         case PaintingColorOrange:
         {
-            red = 230.0f;
-            green = 157.0f;
-            blue = 60.0f;
+            red = 224.0f;
+            green = 152.0f;
+            blue = 2.0f;
             opacity = 1.0f;
             _drawColor = [RGBA(red, green, blue, opacity) retain];
         }
             break;
-        case PaintingColorLightBlue:
+        case PaintingColorCyne:
         {
-            red = 111.0f;
-            green = 198.0f;
-            blue = 242.0f;
+            red = 88.0f;
+            green = 189.0f;
+            blue = 234.0f;
             opacity = 1.0f;
             _drawColor = [RGBA(red, green, blue, opacity) retain];
         }
             break;
-        case PaintingColorLightGreen:
+        case PaintingColorGreen:
         {
-            red = 129.0f;
-            green = 203.0f;
-            blue = 60.0f;
+            red = 113.0f;
+            green = 193.0f;
+            blue = 7.0f;
             opacity = 1.0f;
             _drawColor = [RGBA(red, green, blue, opacity) retain];
         }
             break;
         case PaintingColorYellow:
         {
-            red = 232.0f;
-            green = 220.0f;
-            blue = 56.0f;
+            red = 225.0f;
+            green = 214.0f;
+            blue = 4.0f;
             opacity = 1.0f;
             _drawColor = [RGBA(red, green, blue, opacity) retain];
         }
             break;
         case PaintingColorRed:
         {
-            red = 184.0f;
-            green = 6.0f;
-            blue = 25.0f;
+            red = 191.0f;
+            green = 27.0f;
+            blue = 11.0f;
             opacity = 1.0f;
             _drawColor = [RGBA(red, green, blue, opacity) retain];
         }
