@@ -64,12 +64,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    red = 255.0f;
-    green = 0.0f;
-    blue = 0.0f;
+    red = 191.0f;
+    green = 27.0f;
+    blue = 11.0f;
     opacity = 1.0f;
     _drawColor = [RGBA(red, green, blue, opacity) retain];
-    brushWidth = 10.0f;
+    brushWidth = 5.0f;
     isGoogleSearchNavController = NO;
     isErasing = NO;
     
@@ -377,7 +377,7 @@
     CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
     CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), _drawColor.CGColor);
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 10);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brushWidth);
     CGContextBeginPath(UIGraphicsGetCurrentContext());
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y - kIMG_VIEW_STATUS_HEIGHT);
     CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y - kIMG_VIEW_STATUS_HEIGHT);
@@ -402,7 +402,7 @@
     CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeClear);
     
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 10);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brushWidth);
     
     CGContextBeginPath(UIGraphicsGetCurrentContext());
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y - kIMG_VIEW_STATUS_HEIGHT);
