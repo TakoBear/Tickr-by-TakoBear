@@ -82,6 +82,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         [userDefault setObject:[NSNumber numberWithBool:YES] forKey:KTakoBearKey];
     }
     
+    self.navigationItem.title = @"Ticker";
     
     //Create Shake Animate
     shakeAnimate = [[CABasicAnimation animationWithKeyPath:@"transform.rotation.z"] retain];
@@ -128,7 +129,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                              target:self
                                                              action:@selector(displayAddMenu)];
-    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(changeDeleteMode)];
+    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(changeDeleteMode:)];
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dropmenu_pressed.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView:)];
     settingButton.tintColor = [UIColor whiteColor];
 
@@ -273,9 +274,15 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isSettingOpen = !isSettingOpen;
 }
 
-- (void)changeDeleteMode
+- (void)changeDeleteMode:(id)sender
 {
     isDeleteMode = !isDeleteMode;
+    UIBarButtonItem *btn = (UIBarButtonItem *)sender;
+    if (isDeleteMode) {
+        btn.tintColor = DARK_ORAGE_COLOR;
+    } else {
+        btn.tintColor = [UIColor whiteColor];
+    }
     [imageCollectionView reloadData];
 }
 

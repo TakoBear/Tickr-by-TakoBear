@@ -24,7 +24,8 @@
     [WXApi registerApp:WXAPI_KEY];
     
     [[UINavigationBar appearance] setBarTintColor:RGBA(247.0f, 166.0f, 0.0f, 1.0f)];
-    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
     
     UINavigationBar *navBarInPopoverAppearance = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], [WYPopoverBackgroundView class], nil];
     

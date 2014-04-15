@@ -85,6 +85,8 @@
         [request startAsynchronous];
     }
     
+    self.navigationItem.title = NSLocalizedString(@"Crop", nil);
+    
     // Original Setting
     self.cropRect = CGRectMake(0, 120, self.view.frame.size.width, self.view.frame.size.width);
     self.maximumScale = 10;
