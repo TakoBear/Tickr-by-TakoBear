@@ -410,7 +410,11 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     defaultIMPopOverViewController = [[WYPopoverController alloc] initWithContentViewController:vc];
     defaultIMPopOverViewController.delegate = self;
     defaultIMPopOverViewController.passthroughViews = @[cell];
-    defaultIMPopOverViewController.popoverLayoutMargins = UIEdgeInsetsMake(200, 0, 180, 0);
+    if ([[UIScreen mainScreen] bounds].size.height == 480.0f) {
+        defaultIMPopOverViewController.popoverLayoutMargins = UIEdgeInsetsMake(-10, 0, 180, 0);
+    } else if ([[UIScreen mainScreen] bounds].size.height == 568.0f) {
+        defaultIMPopOverViewController.popoverLayoutMargins = UIEdgeInsetsMake(200, 0, 180, 0);
+    }
     defaultIMPopOverViewController.wantsDefaultContentAppearance = NO;
     
     // Get current Cell position
