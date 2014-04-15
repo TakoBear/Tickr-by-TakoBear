@@ -195,7 +195,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     
     dropMenu= [[JMDropMenuView alloc] initWithViews:@[cameraDrop, albumDrop, searchDrop]];
     dropMenu.frame = CGRectMake(self.view.bounds.size.width - kAddMenuIconSize, 70, kAddMenuIconSize, kAddMenuIconSize *3);
-    dropMenu.animateInterval = 0.3;
+    dropMenu.animateInterval = 0.15;
     dropMenu.delegate = self;
     dropMenu.userInteractionEnabled = NO;
     [self.view addSubview:dropMenu];
