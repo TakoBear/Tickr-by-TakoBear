@@ -24,6 +24,9 @@
 #define kIMDefaultKey         @"IM_Default_Key"
 #define kSaveAlbumKey         @"Save_Album_Key"
 
+#define KTakoBearKey          @"Load_TakoBear"
+
+
 typedef NS_ENUM(int, ChatAppType) {
     ChatAppType_Line,
     ChatAppType_WhatsApp,

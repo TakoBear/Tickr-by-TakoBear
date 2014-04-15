@@ -73,6 +73,15 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isAnimate = NO;
     isDeleteMode = NO;
     
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    if ([userDefault objectForKey:KTakoBearKey] == nil) {
+        UIImage *takoBear = [UIImage imageNamed:@"takobear.jpg"];
+        NSString *stickerPath = [[[FileControl mainPath] documentPath] stringByAppendingPathComponent:kFileStoreDirectory];
+        NSData *imageData = UIImagePNGRepresentation(takoBear);
+        [imageData writeToFile:[stickerPath stringByAppendingPathComponent:@"takobear.jpg"] atomically:YES];
+        [userDefault setObject:[NSNumber numberWithBool:YES] forKey:KTakoBearKey];
+    }
+    
     
     //Create Shake Animate
     shakeAnimate = [[CABasicAnimation animationWithKeyPath:@"transform.rotation.z"] retain];
