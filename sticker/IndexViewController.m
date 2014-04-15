@@ -129,7 +129,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
                                                              target:self
                                                              action:@selector(displayAddMenu)];
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(changeDeleteMode)];
-    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dropmenu_pressed.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView)];
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dropmenu_pressed.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView:)];
     settingButton.tintColor = [UIColor whiteColor];
 
     self.navigationItem.rightBarButtonItem = addButton;
@@ -243,22 +243,22 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 }
 
 
-- (void)pushToSettingView
+- (void)pushToSettingView:(id)sender
 {
+    UIBarButtonItem *btn = (UIBarButtonItem *)sender;
     if (settingMenu.isAnimating) {
         return;
     }
     
     if (isSettingOpen) {
-        NSLog(@"close");
-
+        btn.tintColor = [UIColor whiteColor];
         [settingMenu close];
         for (UIBarButtonItem *btn in self.navigationItem.rightBarButtonItems) {
             btn.enabled = YES;
         }
         imageCollectionView.userInteractionEnabled = YES;
     } else {
-        NSLog(@"open");
+        btn.tintColor = DARK_ORAGE_COLOR;
         if (isAddMode) {
             [dropMenu dismiss];
             isAddMode = NO;
