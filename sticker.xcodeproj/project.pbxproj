@@ -268,7 +268,7 @@
 		D67D0F0D18E5528500A62B34 /* WeChatApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatApp.m; sourceTree = "<group>"; };
 		D67D0F1018E5550700A62B34 /* UIImage+ResizeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeImage.h"; sourceTree = "<group>"; };
 		D67D0F1118E5550700A62B34 /* UIImage+ResizeImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeImage.m"; sourceTree = "<group>"; };
-		D6E4E77A18B3949B003E1B90 /* sticker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sticker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6E4E77A18B3949B003E1B90 /* Ticker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ticker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E4E77D18B3949B003E1B90 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D6E4E78118B3949B003E1B90 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -665,7 +665,7 @@
 		D6E4E77B18B3949B003E1B90 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D6E4E77A18B3949B003E1B90 /* sticker.app */,
+				D6E4E77A18B3949B003E1B90 /* Ticker.app */,
 				D6E4E79B18B3949B003E1B90 /* stickerTests.xctest */,
 			);
 			name = Products;
@@ -761,7 +761,7 @@
 			);
 			name = Ticker;
 			productName = sticker;
-			productReference = D6E4E77A18B3949B003E1B90 /* sticker.app */;
+			productReference = D6E4E77A18B3949B003E1B90 /* Ticker.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D6E4E79A18B3949B003E1B90 /* stickerTests */ = {
