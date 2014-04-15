@@ -586,6 +586,10 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 }
 
 #pragma mark TreeView Data Source
+- (BOOL)treeView:(RATreeView *)treeView canEditRowForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+{
+    return NO;
+}
 
 - (UITableViewCell *)treeView:(RATreeView *)treeView cellForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
 {
