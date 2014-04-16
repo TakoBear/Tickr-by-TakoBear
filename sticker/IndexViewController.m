@@ -782,7 +782,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 - (void)treeView:(RATreeView *)treeView willDisplayCell:(UITableViewCell *)cell forItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
 {
     UIColor *blackOpaque = [UIColor grayColor];
-    blackOpaque = [blackOpaque colorWithAlphaComponent:1.0f];
+    blackOpaque = [blackOpaque colorWithAlphaComponent:0.75f];
     
     if (treeNodeInfo.treeDepthLevel == 0) {
         cell.backgroundColor = blackOpaque;
