@@ -73,15 +73,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isAnimate = NO;
     isDeleteMode = NO;
     
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    if ([userDefault objectForKey:KTakoBearKey] == nil) {
-        UIImage *takoBear = [UIImage imageNamed:@"takobear.jpg"];
-        NSString *stickerPath = [[[FileControl mainPath] documentPath] stringByAppendingPathComponent:kFileStoreDirectory];
-        NSData *imageData = UIImagePNGRepresentation(takoBear);
-        [imageData writeToFile:[stickerPath stringByAppendingPathComponent:@"takobear.jpg"] atomically:YES];
-        [userDefault setObject:[NSNumber numberWithBool:YES] forKey:KTakoBearKey];
-    }
-    
     self.navigationItem.title = @"Ticker";
     
     //Create Shake Animate
@@ -138,11 +129,11 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:addButton,deleteButton, nil];
     self.navigationItem.leftBarButtonItem = settingButton;
     
-    
     //Create a StickerDocument folder in path : var/.../Document/
     NSArray *docDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     documentPath = [[docDirectory objectAtIndex:0] retain];
     NSString *stickerPath = [documentPath stringByAppendingPathComponent:kFileStoreDirectory];
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     if (![fileManager fileExistsAtPath:stickerPath]) {
@@ -151,6 +142,17 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
                                 attributes:nil
                                      error:&error];
     }
+    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    if ([userDefault objectForKey:KTakoBearKey] == nil) {
+        UIImage *takoBear = [UIImage imageNamed:@"takobear.jpg"];
+        NSString *stickerPath = [[[FileControl mainPath] documentPath] stringByAppendingPathComponent:kFileStoreDirectory];
+        NSData *imageData = UIImagePNGRepresentation(takoBear);
+        BOOL isWrite = [imageData writeToFile:[stickerPath stringByAppendingPathComponent:@"takobear.jpg"] atomically:YES];
+        [userDefault setObject:[NSNumber numberWithBool:isWrite] forKey:KTakoBearKey];
+    }
+    
+    
     //Get only "image name" from  path : var/.../Document/StickerDocument/* and sort ascending by name
     NSArray *fileArray = [[NSArray arrayWithArray:[fileManager contentsOfDirectoryAtPath:stickerPath error:&error]] retain];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO selector:@selector(compare:)];
