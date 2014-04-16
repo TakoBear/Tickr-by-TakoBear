@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sticker/PaintingImageViewController.m"
-            timestampString = "419164750.91693"
+            timestampString = "419344170.550161"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "-springMenu:didSelectAtIndex:"
             landmarkType = "5">
          </BreakpointContent>

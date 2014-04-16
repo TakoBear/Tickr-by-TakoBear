@@ -100,8 +100,16 @@
     brushArray = [[NSArray arrayWithObjects:@"Brush1",@"Brush2",@"Brush3",@"Brush4",@"Brush5", nil] retain];
     NSMutableArray *colorIconArray = [[NSMutableArray alloc] init];
     NSMutableArray *brushIconArray = [[NSMutableArray alloc] init];
+    
+    int kColorButtonSize;
+    if ([[UIScreen mainScreen] bounds].size.height == 480.0f) {
+        kColorButtonSize = 40;
+    } else {
+        kColorButtonSize = 50;
+    }
     for (NSString *colorName in colorArray) {
         UIImageView *colorImgView = [[UIImageView alloc] initWithFrame:CGRectMake(20, self.view.frame.size.height-200,kColorButtonSize, kColorButtonSize)];
+        
         colorImgView.backgroundColor = [UIColor clearColor];
         [colorImgView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png",colorName]]];
         [colorIconArray addObject:colorImgView];

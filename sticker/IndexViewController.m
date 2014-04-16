@@ -117,15 +117,12 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isSettingOpen = NO;
     
     //Create navigation bar & items
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                             target:self
-                                                             action:@selector(displayAddMenu)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add_photo.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(displayAddMenu:)];
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(changeDeleteMode:)];
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dropmenu_pressed.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView:)];
     settingButton.tintColor = [UIColor whiteColor];
 
     self.navigationItem.rightBarButtonItem = addButton;
-    
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:addButton,deleteButton, nil];
     self.navigationItem.leftBarButtonItem = settingButton;
     
@@ -303,16 +300,22 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isAnimate = NO;
 }
 
-- (void)displayAddMenu
+- (void)displayAddMenu:(id)sender
 {
+    UIBarButtonItem *btn = (UIBarButtonItem *)sender;
     if (isAnimate) {
         return;
     }
     isAnimate = YES;
     dropMenu.userInteractionEnabled = NO;
     if (isAddMode) {
+        btn.image = [UIImage imageNamed:@"add_photo.png"];
+        btn.tintColor = [UIColor whiteColor];
         [dropMenu dismiss];
     } else {
+        btn.image = [UIImage imageNamed:@"add_cancel.png"];
+        btn.tintColor = DARK_ORAGE_COLOR;
+
         imageCollectionView.userInteractionEnabled = NO;
         [dropMenu popOut];
     }
