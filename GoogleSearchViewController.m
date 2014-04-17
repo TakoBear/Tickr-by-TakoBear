@@ -12,6 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "PhotoEditedViewController.h"
 #import "GmailLikeLoadingView.h"
+#import "SettingVariable.h"
 
 #define kGOOGLE_IMAGE_SEARCH_API @"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
 #define kSEARCH_BAR_TAG     101
@@ -66,6 +67,7 @@
     searchBar.delegate = self;
     searchBar.placeholder = @"start to search";
     searchBar.tag = kSEARCH_BAR_TAG;
+    searchBar.tintColor = RGBA(127.0f, 127.0f, 127.0f, 1.0f);
     [self.navigationController.navigationBar addSubview:searchBar];
     [searchBar becomeFirstResponder];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont systemFontOfSize:16]];
