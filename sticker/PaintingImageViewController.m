@@ -89,6 +89,9 @@
     mainImgView.userInteractionEnabled = YES;
     [self.view addSubview:tmpDrawImgView];
     
+    UIBarButtonItem *saveBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Save", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(savePhotos:)] autorelease];
+    self.navigationItem.rightBarButtonItem = saveBtn;
+    
     //Create color & brush menu
     colorArray = [[NSArray arrayWithObjects:@"Red",@"Orange",@"Yellow",@"Gray",@"Blue",@"Cyne",@"Green", nil] retain];
     brushArray = [[NSArray arrayWithObjects:@"Brush1",@"Brush2",@"Brush3",@"Brush4",@"Brush5", nil] retain];
