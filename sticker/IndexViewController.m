@@ -73,7 +73,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isAnimate = NO;
     isDeleteMode = NO;
     
-    self.navigationItem.title = @"Ticker";
+    self.navigationItem.title = @"Tickr";
     
     //Create Shake Animate
     shakeAnimate = [[CABasicAnimation animationWithKeyPath:@"transform.rotation.z"] retain];
