@@ -122,7 +122,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dropmenu_pressed.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushToSettingView:)];
     settingButton.tintColor = [UIColor whiteColor];
 
-    self.navigationItem.rightBarButtonItem = addButton;
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:addButton,deleteButton, nil];
     self.navigationItem.leftBarButtonItem = settingButton;
     
@@ -258,6 +257,9 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         }
         imageCollectionView.userInteractionEnabled = YES;
     } else {
+        [self cancelAddMode];
+        [self cancelDeleteMode];
+        
         btn.tintColor = DARK_ORAGE_COLOR;
         if (isAddMode) {
             [dropMenu dismiss];
@@ -273,11 +275,22 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isSettingOpen = !isSettingOpen;
 }
 
+#pragma mark - Delete mode
+
+- (void)cancelDeleteMode
+{
+    if (isDeleteMode) {
+        UIBarButtonItem *btn = [self.navigationItem.rightBarButtonItems objectAtIndex:1];
+        [self changeDeleteMode:btn];
+    }
+}
+
 - (void)changeDeleteMode:(id)sender
 {
     isDeleteMode = !isDeleteMode;
     UIBarButtonItem *btn = (UIBarButtonItem *)sender;
     if (isDeleteMode) {
+        [self cancelAddMode];
         btn.tintColor = DARK_ORAGE_COLOR;
     } else {
         btn.tintColor = [UIColor whiteColor];
@@ -300,6 +313,14 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isAnimate = NO;
 }
 
+- (void)cancelAddMode
+{
+    if (isAddMode) {
+        UIBarButtonItem *btn = [self.navigationItem.rightBarButtonItems objectAtIndex:0 ];
+        [self displayAddMenu:btn];
+    }
+}
+
 - (void)displayAddMenu:(id)sender
 {
     UIBarButtonItem *btn = (UIBarButtonItem *)sender;
@@ -313,9 +334,9 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         btn.tintColor = [UIColor whiteColor];
         [dropMenu dismiss];
     } else {
+        [self cancelDeleteMode];
         btn.image = [UIImage imageNamed:@"add_cancel.png"];
         btn.tintColor = DARK_ORAGE_COLOR;
-
         imageCollectionView.userInteractionEnabled = NO;
         [dropMenu popOut];
     }

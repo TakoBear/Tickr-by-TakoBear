@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D6E4E77918B3949B003E1B90"
-               BuildableName = "Ticker.app"
+               BuildableName = "Tickr.app"
                BlueprintName = "Ticker"
                ReferencedContainer = "container:sticker.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D6E4E77918B3949B003E1B90"
-            BuildableName = "Ticker.app"
+            BuildableName = "Tickr.app"
             BlueprintName = "Ticker"
             ReferencedContainer = "container:sticker.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D6E4E77918B3949B003E1B90"
-            BuildableName = "Ticker.app"
+            BuildableName = "Tickr.app"
             BlueprintName = "Ticker"
             ReferencedContainer = "container:sticker.xcodeproj">
          </BuildableReference>
@@ -85,7 +85,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D6E4E77918B3949B003E1B90"
-            BuildableName = "Ticker.app"
+            BuildableName = "Tickr.app"
             BlueprintName = "Ticker"
             ReferencedContainer = "container:sticker.xcodeproj">
          </BuildableReference>
