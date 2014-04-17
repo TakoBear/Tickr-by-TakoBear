@@ -17,7 +17,8 @@
 #define kCOLOR_VIEW_TAG         1003
 #define kBRUSH_VIEW_TAG         1004
 
-#define kDRAW_BUTTON_TAG        201
+#define kDRAW_WRITE_BUTTON_TAG   201
+#define kDRAW_ERASE_BUTTON_TAG   202
 
 #define kIMG_VIEW_STATUS_HEIGHT 120
 #define kColorInterval 70
@@ -88,13 +89,6 @@
     mainImgView.userInteractionEnabled = YES;
     [self.view addSubview:tmpDrawImgView];
     
-    UIBarButtonItem *saveBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Save", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(savePhotos:)] autorelease];
-    self.navigationItem.rightBarButtonItem = saveBtn;
-    
-    UIBarButtonItem *writeBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Write", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(setWritingMode:)] autorelease];
-    UIBarButtonItem *eraseBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Erase", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(setEraseMode:)] autorelease];
-    self.toolbarItems = @[writeBtn, eraseBtn];
-    
     //Create color & brush menu
     colorArray = [[NSArray arrayWithObjects:@"Red",@"Orange",@"Yellow",@"Gray",@"Blue",@"Cyne",@"Green", nil] retain];
     brushArray = [[NSArray arrayWithObjects:@"Brush1",@"Brush2",@"Brush3",@"Brush4",@"Brush5", nil] retain];
@@ -126,17 +120,19 @@
     
     isAnimate = NO;
     
-    UIButton *drawButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
-    drawButton.center = CGPointMake(self.view.center.x, self.view.frame.size.height - 45);
-    [drawButton setImage:[UIImage imageNamed:@"Brush1_Red.png"] forState:UIControlStateNormal];
-    [drawButton addTarget:self action:@selector(springMenuAnimate) forControlEvents:UIControlEventTouchUpInside];
-    drawButton.tag = kDRAW_BUTTON_TAG;
-    [self.view addSubview:drawButton];
+    UIButton *writeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+    writeButton.center = CGPointMake(self.view.center.x, self.view.frame.size.height - 45);
+    [writeButton setImage:[UIImage imageNamed:@"Brush1_Red.png"] forState:UIControlStateNormal];
+    [writeButton addTarget:self action:@selector(springMenuAnimate:) forControlEvents:UIControlEventTouchUpInside];
+    writeButton.tag = kDRAW_WRITE_BUTTON_TAG;
+    [self.view addSubview:writeButton];
     
     UIButton *eraseButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
-    eraseButton.center = CGPointMake(self.view.center.x, self.view.frame.size.height - 120);
+    eraseButton.center = CGPointMake(self.view.center.x, self.view.frame.size.height - 45);
     [eraseButton setImage:[UIImage imageNamed:@"Eraser.png"] forState:UIControlStateNormal];
-    [eraseButton addTarget:self action:@selector(setEraseMode:) forControlEvents:UIControlEventTouchUpInside];
+    [eraseButton addTarget:self action:@selector(springMenuAnimate:) forControlEvents:UIControlEventTouchUpInside];
+    eraseButton.tag = kDRAW_ERASE_BUTTON_TAG;
+    eraseButton.alpha = 0;
     [self.view addSubview:eraseButton];
     
     
@@ -161,7 +157,7 @@
 
     [colorIconArray release];
     [brushIconArray release];
-    [drawButton release];
+    [writeButton release];
     [eraseButton release];
     [colorMenu release];
     [brushMenu release];
@@ -189,19 +185,75 @@
     [super dealloc];
 }
 
+#pragma mark - Draw button action
+
+- (void)openDrawButton {
+    UIButton *writeBtn = (UIButton *)[self.view viewWithTag:kDRAW_WRITE_BUTTON_TAG];
+    UIButton *eraseBtn = (UIButton *)[self.view viewWithTag:kDRAW_ERASE_BUTTON_TAG];
+    if (isErasing) {
+        //write roll to up
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            writeBtn.alpha = 1;
+            writeBtn.transform = CGAffineTransformTranslate(writeBtn.transform, 0, -80);
+            
+        }completion:nil];
+        
+    } else {
+        //erase roll to up
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            eraseBtn.alpha = 1;
+            eraseBtn.transform = CGAffineTransformTranslate(eraseBtn.transform, 0, -80);
+            
+        }completion:nil];
+    }
+}
+
+- (void)dismissDrawButton {
+    UIButton *writeBtn = (UIButton *)[self.view viewWithTag:kDRAW_WRITE_BUTTON_TAG];
+    UIButton *eraseBtn = (UIButton *)[self.view viewWithTag:kDRAW_ERASE_BUTTON_TAG];
+    NSInteger yOriginWrite = writeBtn.frame.origin.y;
+    NSInteger yOriginErase = eraseBtn.frame.origin.y;
+    
+    if (yOriginWrite < yOriginErase) {
+        //dismiss write
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            writeBtn.transform = CGAffineTransformTranslate(writeBtn.transform, 0, 80);
+            if (isErasing) {
+                writeBtn.alpha = 0;
+            } else {
+                eraseBtn.alpha = 0;
+            }
+        }completion:nil];
+        
+    } else {
+        //dismiss erase
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            eraseBtn.transform = CGAffineTransformTranslate(eraseBtn.transform, 0, 80);
+            if (isErasing) {
+                writeBtn.alpha = 0;
+            } else {
+                eraseBtn.alpha = 0;
+            }
+            
+        }completion:nil];
+    }
+}
+
 #pragma mark - Spring menu Delegate 
 
-- (void)springMenuAnimate
+- (void)springMenuAnimate:(UIButton *)sender
 {
-    [self setWritingMode:nil];
+    [self setWritingMode:sender];
     JMSpringMenuView *colorMenu = (JMSpringMenuView *)[self.view viewWithTag:kCOLOR_VIEW_TAG];
     JMSpringMenuView *brushMenu = (JMSpringMenuView *)[self.view viewWithTag:kBRUSH_VIEW_TAG];
     if (!isAnimate) {
         [colorMenu popOut];
         [brushMenu popOut];
+        [self openDrawButton];
     } else {
         [colorMenu dismiss];
         [brushMenu dismiss];
+        [self dismissDrawButton];
     }
     isAnimate = !isAnimate;
 }
@@ -212,15 +264,14 @@
     
     if (menu.tag == kCOLOR_VIEW_TAG) {
         [self setUpColorWithIndex:index];
-        [self springMenuAnimate];
+        [self springMenuAnimate:nil];
         colorIndex = index;
     } else if (menu.tag == kBRUSH_VIEW_TAG) {
         [self setUpBrushWithIndex:index];
-        [self springMenuAnimate];
+        [self springMenuAnimate:nil];
         brushIndex = index;
     }
-    
-    UIButton *drawButton = (UIButton *)[self.view viewWithTag:kDRAW_BUTTON_TAG];
+    UIButton *drawButton = (UIButton *)[self.view viewWithTag:kDRAW_WRITE_BUTTON_TAG];
     NSString *imageName = [NSString stringWithFormat:@"%@_%@.png",brushArray[brushIndex],colorArray[colorIndex]];
     [drawButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     
@@ -432,14 +483,13 @@
 
 #pragma mark - Action
 
-- (void)setWritingMode:(id)sender
+- (void)setWritingMode:(UIButton *)sender
 {
-    isErasing = NO;
-}
-
-- (void)setEraseMode:(id)sender
-{
-    isErasing = YES;
+    if (sender.tag == kDRAW_WRITE_BUTTON_TAG) {
+        isErasing = NO;
+    } else if (sender.tag == kDRAW_ERASE_BUTTON_TAG){
+        isErasing = YES;
+    }
 }
 
 - (void)savePhotos:(id)sender
