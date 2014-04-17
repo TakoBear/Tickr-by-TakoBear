@@ -345,7 +345,9 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         default:
             break;
     }
-    
+    UIBarButtonItem *btn = self.navigationItem.rightBarButtonItems[0];
+    btn.image = [UIImage imageNamed:@"add_photo.png"];
+    btn.tintColor = [UIColor whiteColor];
 }
 
 #pragma mark - CollectionView dataSource & Delegate
