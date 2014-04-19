@@ -257,8 +257,8 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         }
         imageCollectionView.userInteractionEnabled = YES;
     } else {
-        [self cancelAddMode];
-        [self cancelDeleteMode];
+        [self cancelAddModeWithOtherButton];
+        [self cancelDeleteModeWithOtherButton];
         
         btn.tintColor = DARK_ORAGE_COLOR;
         if (isAddMode) {
@@ -277,12 +277,15 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 
 #pragma mark - Delete mode
 
-- (void)cancelDeleteMode
+- (void)cancelDeleteModeWithOtherButton
 {
     if (isDeleteMode) {
         UIBarButtonItem *btn = [self.navigationItem.rightBarButtonItems objectAtIndex:1];
-        [self changeDeleteMode:btn];
+        btn.tintColor = [UIColor whiteColor];
+        isDeleteMode = NO;
+        [imageCollectionView reloadData];
     }
+
 }
 
 - (void)changeDeleteMode:(id)sender
@@ -290,8 +293,8 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isDeleteMode = !isDeleteMode;
     UIBarButtonItem *btn = (UIBarButtonItem *)sender;
     if (isDeleteMode) {
-        [self cancelAddMode];
         btn.tintColor = DARK_ORAGE_COLOR;
+        [self cancelAddModeWithOtherButton];
     } else {
         btn.tintColor = [UIColor whiteColor];
     }
@@ -313,11 +316,13 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isAnimate = NO;
 }
 
-- (void)cancelAddMode
+- (void)cancelAddModeWithOtherButton
 {
     if (isAddMode) {
-        UIBarButtonItem *btn = [self.navigationItem.rightBarButtonItems objectAtIndex:0 ];
-        [self displayAddMenu:btn];
+        UIBarButtonItem *btn = [self.navigationItem.rightBarButtonItems objectAtIndex:0];
+        btn.image = [UIImage imageNamed:@"add_photo.png"];
+        btn.tintColor = [UIColor whiteColor];
+        [dropMenu dismiss];
     }
 }
 
@@ -334,7 +339,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         btn.tintColor = [UIColor whiteColor];
         [dropMenu dismiss];
     } else {
-        [self cancelDeleteMode];
+        [self cancelDeleteModeWithOtherButton];
         btn.image = [UIImage imageNamed:@"add_cancel.png"];
         btn.tintColor = DARK_ORAGE_COLOR;
         imageCollectionView.userInteractionEnabled = NO;
@@ -416,6 +421,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
 {
     if (isDeleteMode) {
         [self deletePhoto:indexPath.item];
+        [self cancelDeleteModeWithOtherButton];
     } else {
         [self handleSelectPhoto:indexPath collectionView:collectionView];
     }
@@ -566,8 +572,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [[FileControl mainPath] removeFileAtPath:deletePath];
     [imageDataArray removeObjectAtIndex:item];
     [imageURLArray removeObjectAtIndex:item];
-    isDeleteMode = NO;
-    [imageCollectionView reloadData];
 
 }
 
