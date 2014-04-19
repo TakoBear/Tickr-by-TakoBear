@@ -91,6 +91,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     RADataObject *defaultIM = [RADataObject dataObjectWithName:NSLocalizedString(@"Default IM", nil) children:@[appLINE, appWhatsApp, appWeChat]];
     
     RADataObject *destinationObj = [RADataObject dataObjectWithName:@"Save to Group Album" children:nil];
+    RADataObject *takobearDestWeb = [RADataObject dataObjectWithName:@"Go to TakoBear" children:nil];
     
     RATreeView *treeView = [[RATreeView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:RATreeViewStylePlain];
     [treeView setBackgroundColor:[UIColor clearColor]];
@@ -100,7 +101,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     
     // Compose the MenuItem
     REMenuItem *settingItem = [[REMenuItem alloc] initWithCustomView:treeView];
-    optionData = @[defaultIM, destinationObj]; [optionData retain];
+    optionData = @[defaultIM, destinationObj, takobearDestWeb]; [optionData retain];
     [treeView reloadData];
     
     BOOL isOn = [[NSUserDefaults standardUserDefaults] boolForKey:kIMDefaultKey];
@@ -675,7 +676,9 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
                 break;
         }
         
-        cell.accessoryView = switchBtn;
+        if (treeNodeInfo.positionInSiblings != 2) {
+            cell.accessoryView = switchBtn;
+        }
         
         NSLog(@"item %d", treeNodeInfo.positionInSiblings);
         
@@ -754,8 +757,10 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         UISwitch *btn = (UISwitch *)cell.accessoryView;
         [btn setOn:!btn.isOn animated:YES];
         [self switchAlbumSetting:btn];
+    } else if (treeNodeInfo.treeDepthLevel == 0 && treeNodeInfo.positionInSiblings == 2) {
+        // Direct to Takobear websit
+        [[UIApplication sharedApplication] openURL:TAKOBEAR_WEBSITE];
     }
-    
     
 }
 
