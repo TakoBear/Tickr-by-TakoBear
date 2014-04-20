@@ -74,6 +74,7 @@
 		D65380F518CB5B7100DA6794 /* UIImage+MultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = D65380E518CB5B7100DA6794 /* UIImage+MultiFormat.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D65380F618CB5B7100DA6794 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = D65380E718CB5B7100DA6794 /* UIImage+WebP.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D65380F718CB5B7100DA6794 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D65380E918CB5B7100DA6794 /* UIImageView+WebCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		D6554FB81903E5BD00F86D9B /* takobear_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D6554FB71903E5BD00F86D9B /* takobear_logo.png */; };
 		D658054C18BEF8DD0002683F /* PhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D658054B18BEF8DD0002683F /* PhotoViewCell.m */; };
 		D658055B18BF1C0D0002683F /* LSCollectionViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055118BF1C0D0002683F /* LSCollectionViewHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D658055C18BF1C0D0002683F /* LSCollectionViewLayoutHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D658055318BF1C0D0002683F /* LSCollectionViewLayoutHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -82,7 +83,6 @@
 		D67D0F0B18E5523E00A62B34 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D0F0818E5523E00A62B34 /* libWeChatSDK.a */; };
 		D67D0F0E18E5528500A62B34 /* WeChatApp.m in Sources */ = {isa = PBXBuildFile; fileRef = D67D0F0D18E5528500A62B34 /* WeChatApp.m */; };
 		D67D0F1218E5550700A62B34 /* UIImage+ResizeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D67D0F1118E5550700A62B34 /* UIImage+ResizeImage.m */; };
-		D6B060D518FD659F0072788D /* takobear.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D6B060D418FD659F0072788D /* takobear.jpg */; };
 		D6E4E77E18B3949B003E1B90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77D18B3949B003E1B90 /* Foundation.framework */; };
 		D6E4E78018B3949B003E1B90 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */; };
 		D6E4E78218B3949B003E1B90 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E78118B3949B003E1B90 /* UIKit.framework */; };
@@ -250,6 +250,7 @@
 		D65380E718CB5B7100DA6794 /* UIImage+WebP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WebP.m"; sourceTree = "<group>"; };
 		D65380E818CB5B7100DA6794 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		D65380E918CB5B7100DA6794 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
+		D6554FB71903E5BD00F86D9B /* takobear_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = takobear_logo.png; sourceTree = "<group>"; };
 		D658054A18BEF8DD0002683F /* PhotoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewCell.h; sourceTree = "<group>"; };
 		D658054B18BEF8DD0002683F /* PhotoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewCell.m; sourceTree = "<group>"; };
 		D658055018BF1C0D0002683F /* LSCollectionViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSCollectionViewHelper.h; sourceTree = "<group>"; };
@@ -269,7 +270,6 @@
 		D67D0F0D18E5528500A62B34 /* WeChatApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatApp.m; sourceTree = "<group>"; };
 		D67D0F1018E5550700A62B34 /* UIImage+ResizeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeImage.h"; sourceTree = "<group>"; };
 		D67D0F1118E5550700A62B34 /* UIImage+ResizeImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeImage.m"; sourceTree = "<group>"; };
-		D6B060D418FD659F0072788D /* takobear.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = takobear.jpg; sourceTree = "<group>"; };
 		D6E4E77A18B3949B003E1B90 /* Tickr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tickr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E4E77D18B3949B003E1B90 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -630,7 +630,7 @@
 		D658056418BF26A50002683F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				D6B060D418FD659F0072788D /* takobear.jpg */,
+				D6554FB71903E5BD00F86D9B /* takobear_logo.png */,
 				D6E9352718B8D0350086802C /* imageData */,
 			);
 			name = Resource;
@@ -830,7 +830,7 @@
 				D6E9353918B8D0350086802C /* 1.PNG in Resources */,
 				D6E4E78818B3949B003E1B90 /* InfoPlist.strings in Resources */,
 				D6E9354B18B9F8FA0086802C /* addData.png in Resources */,
-				D6B060D518FD659F0072788D /* takobear.jpg in Resources */,
+				D6554FB81903E5BD00F86D9B /* takobear_logo.png in Resources */,
 				D6E4E79118B3949B003E1B90 /* Main.storyboard in Resources */,
 				D63AA3F218F7DA7C00980318 /* white.png in Resources */,
 			);
