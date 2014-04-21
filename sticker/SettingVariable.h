@@ -27,6 +27,8 @@
 #define kSaveAlbumKey         @"Save_Album_Key"
 
 #define KTakoBearKey          @"Load_TakoBear"
+#define KAddNewPhotoKey       @"Load_Add_New_Photo"
+
 
 
 typedef NS_ENUM(int, ChatAppType) {

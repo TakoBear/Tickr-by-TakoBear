@@ -37,7 +37,7 @@
     [super viewDidLoad];
 
     // Set up To next UI
-    UIBarButtonItem *nextBtn = [[[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)] autorelease];
+    UIBarButtonItem *nextBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)] autorelease];
     self.navigationItem.rightBarButtonItem = nextBtn;
     // Set up ToolBar
 //    UIBarButtonItem *squareBtn = [[[UIBarButtonItem alloc] initWithTitle:@"Square" style:UIBarButtonItemStyleBordered target:self action:@selector(setSquareAction:)] autorelease];
@@ -75,7 +75,7 @@
             } else {
                 UILabel *failLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
                 failLabel.center = self.view.center;
-                failLabel.text = @"Fail to download";
+                failLabel.text = NSLocalizedString(@"Fail to download", @"");
                 [self.view addSubview:failLabel];
                 [failLabel release];
             }

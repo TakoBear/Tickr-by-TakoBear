@@ -65,7 +65,7 @@
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width-40, 40)];
     searchBar.center = CGPointMake(self.view.center.x,searchBar.center.y);
     searchBar.delegate = self;
-    searchBar.placeholder = @"start to search";
+    searchBar.placeholder = NSLocalizedString(@"start to search", @"");
     searchBar.tag = kSEARCH_BAR_TAG;
     searchBar.tintColor = RGBA(127.0f, 127.0f, 127.0f, 1.0f);
     [self.navigationController.navigationBar addSubview:searchBar];
@@ -91,7 +91,7 @@
     
     [self.view addSubview:googleCollectionView];
     
-    UIBarButtonItem *cancelBtn = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissGoogleSearch)] autorelease];
+    UIBarButtonItem *cancelBtn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(dismissGoogleSearch)] autorelease];
     self.toolbarItems = @[cancelBtn];
     
     [flowLayout release];
@@ -274,7 +274,7 @@
     if (tbImageURLArray.count == 0) {
         UILabel *failLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         failLabel.center = self.view.center;
-        failLabel.text = @"Search failed";
+        failLabel.text = NSLocalizedString(@"Search failed", @"");
         failLabel.tag = kFAILED_LABEL_TAG;
         [self.view addSubview:failLabel];
         [failLabel release];

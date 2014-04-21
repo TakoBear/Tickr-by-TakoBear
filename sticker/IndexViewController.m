@@ -31,6 +31,7 @@
 #define kBLOCKVIEW_TAG           1001
 #define kDEFAULT_VIEW_CELL_TAG   1002
 #define kSAVE_ALBUM_CELL_TAG     1003
+#define kADD_NEW_PHOTO_TAG       1004
 
 typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     kAdd_Photo_From_Camera,
@@ -73,7 +74,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     isAnimate = NO;
     isDeleteMode = NO;
     
-    self.navigationItem.title = @"Tickr";
+    self.navigationItem.title = NSLocalizedString(@"Tickr", @"");
     
     //Create Shake Animate
     shakeAnimate = [[CABasicAnimation animationWithKeyPath:@"transform.rotation.z"] retain];
@@ -90,8 +91,8 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     RADataObject *appWeChat = [RADataObject dataObjectWithName:@"WeChat" children:nil];
     RADataObject *defaultIM = [RADataObject dataObjectWithName:NSLocalizedString(@"Default IM", nil) children:@[appLINE, appWhatsApp, appWeChat]];
     
-    RADataObject *destinationObj = [RADataObject dataObjectWithName:@"Save to Group Album" children:nil];
-    RADataObject *takobearDestWeb = [RADataObject dataObjectWithName:@"Go to TakoBear" children:nil];
+    RADataObject *destinationObj = [RADataObject dataObjectWithName:NSLocalizedString(@"Save to Group Album", @"") children:nil];
+    RADataObject *takobearDestWeb = [RADataObject dataObjectWithName:NSLocalizedString(@"Go to TakoBear", @"") children:nil];
     
     RATreeView *treeView = [[RATreeView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:RATreeViewStylePlain];
     [treeView setBackgroundColor:[UIColor clearColor]];
@@ -193,6 +194,21 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [searchDrop setImage:[UIImage imageNamed:@"search.png"]];
     [self.view addSubview:searchDrop];
     
+    if ([userDefault objectForKey:KAddNewPhotoKey] == nil) {
+        UIImage *addNewPhoto = [UIImage imageNamed:@"AddNewPhoto.png"];
+        UIImageView *addNewView = [[UIImageView alloc] init];
+        if ([[UIScreen mainScreen] bounds].size.height == 480.0f) {
+            addNewView.frame = CGRectMake(0, 34, self.view.frame.size.width, self.view.frame.size.height+40);
+        } else {
+            addNewView.frame = CGRectMake(0, 54, self.view.frame.size.width, self.view.frame.size.height-44);
+        }
+        addNewView.contentMode = UIViewContentModeScaleAspectFit;
+        addNewView.image = addNewPhoto;
+        addNewView.tag = kADD_NEW_PHOTO_TAG;
+        [self.view addSubview:addNewView];
+        [addNewView release];
+    }
+    
     dropMenu= [[JMDropMenuView alloc] initWithViews:@[cameraDrop, albumDrop, searchDrop]];
     dropMenu.frame = CGRectMake(self.view.bounds.size.width - kAddMenuIconSize, 70, kAddMenuIconSize, kAddMenuIconSize *3);
     dropMenu.animateInterval = 0.15;
@@ -241,7 +257,6 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 - (void)pushToSettingView:(id)sender
 {
@@ -347,6 +362,19 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
         [dropMenu popOut];
     }
     isAddMode = !isAddMode;
+    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    if ([userDefault objectForKey:KAddNewPhotoKey] == nil) {
+        [userDefault setValue:[NSNumber numberWithBool:YES] forKey:KAddNewPhotoKey];
+        UIImageView *addNewImgView = (UIImageView *)[self.view viewWithTag:kADD_NEW_PHOTO_TAG];
+        [UIView animateWithDuration:0.5 animations:^{
+            addNewImgView.alpha = 0;
+        }completion:^(BOOL finished){
+            if (finished)
+            [addNewImgView removeFromSuperview];
+        }];
+    }
+
 }
 
 - (void)dropMenu:(JMDropMenuView *)menu didSelectAtIndex:(NSInteger)index;

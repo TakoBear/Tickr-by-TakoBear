@@ -1,2 +1,13 @@
 /* Localized versions of Info.plist keys */
-"Default IM"="預設通訊App";
+"Default IM"="快速傳送";
+"Save to Group Album"="儲存於相簿";
+"Go to TakoBear"="造訪 TakoBear";
+"Crop"="裁切";
+"Painting"="繪畫";
+"Tickr"="Tickr貼客";
+"Next"="繼續";
+"Save"="儲存";
+"start to search"="Google 圖片";
+"Cancel"="取消";
+"Search failed"="搜尋失敗";
+"Fail to download"="下載失敗";
