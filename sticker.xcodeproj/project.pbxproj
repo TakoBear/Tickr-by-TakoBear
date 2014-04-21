@@ -86,7 +86,7 @@
 		D6E4E77E18B3949B003E1B90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77D18B3949B003E1B90 /* Foundation.framework */; };
 		D6E4E78018B3949B003E1B90 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */; };
 		D6E4E78218B3949B003E1B90 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E78118B3949B003E1B90 /* UIKit.framework */; };
-		D6E4E78818B3949B003E1B90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E4E78618B3949B003E1B90 /* InfoPlist.strings */; };
+		D6E4E78818B3949B003E1B90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E4E78618B3949B003E1B90 /* Localizable.strings */; };
 		D6E4E78A18B3949B003E1B90 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E4E78918B3949B003E1B90 /* main.m */; };
 		D6E4E78E18B3949B003E1B90 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E4E78D18B3949B003E1B90 /* AppDelegate.m */; };
 		D6E4E79118B3949B003E1B90 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6E4E78F18B3949B003E1B90 /* Main.storyboard */; };
@@ -95,7 +95,7 @@
 		D6E4E79D18B3949B003E1B90 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E79C18B3949B003E1B90 /* XCTest.framework */; };
 		D6E4E79E18B3949B003E1B90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E77D18B3949B003E1B90 /* Foundation.framework */; };
 		D6E4E79F18B3949B003E1B90 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4E78118B3949B003E1B90 /* UIKit.framework */; };
-		D6E4E7A718B3949B003E1B90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E4E7A518B3949B003E1B90 /* InfoPlist.strings */; };
+		D6E4E7A718B3949B003E1B90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6E4E7A518B3949B003E1B90 /* Localizable.strings */; };
 		D6E4E7A918B3949B003E1B90 /* stickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E4E7A818B3949B003E1B90 /* stickerTests.m */; };
 		D6E4E7B718B39ADC003E1B90 /* GroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E4E7B618B39ADC003E1B90 /* GroupViewController.m */; };
 		D6E9353918B8D0350086802C /* 1.PNG in Resources */ = {isa = PBXBuildFile; fileRef = D6E9352818B8D0350086802C /* 1.PNG */; };
@@ -163,6 +163,9 @@
 		03CA3D8618ED1196001C7077 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
 		03CA3D8B18ED3904001C7077 /* IMSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMSelectViewController.h; sourceTree = "<group>"; };
 		03CA3D8C18ED3904001C7077 /* IMSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMSelectViewController.m; sourceTree = "<group>"; };
+		03CB5B99190502B500AE80D0 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
+		03CB5B9A190502B500AE80D0 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		03CB5B9B190502B500AE80D0 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D608DCF818DEDD71001A9DCA /* FileControl+Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FileControl+Camera.h"; sourceTree = "<group>"; };
 		D608DCF918DEDD71001A9DCA /* FileControl+Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FileControl+Camera.m"; sourceTree = "<group>"; };
 		D608DCFA18DEDD71001A9DCA /* FileControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileControl.h; sourceTree = "<group>"; };
@@ -275,7 +278,7 @@
 		D6E4E77F18B3949B003E1B90 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D6E4E78118B3949B003E1B90 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D6E4E78518B3949B003E1B90 /* sticker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "sticker-Info.plist"; sourceTree = "<group>"; };
-		D6E4E78718B3949B003E1B90 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D6E4E78718B3949B003E1B90 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D6E4E78918B3949B003E1B90 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D6E4E78B18B3949B003E1B90 /* sticker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sticker-Prefix.pch"; sourceTree = "<group>"; };
 		D6E4E78C18B3949B003E1B90 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -287,7 +290,7 @@
 		D6E4E79B18B3949B003E1B90 /* stickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = stickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E4E79C18B3949B003E1B90 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D6E4E7A418B3949B003E1B90 /* stickerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "stickerTests-Info.plist"; sourceTree = "<group>"; };
-		D6E4E7A618B3949B003E1B90 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D6E4E7A618B3949B003E1B90 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D6E4E7A818B3949B003E1B90 /* stickerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = stickerTests.m; sourceTree = "<group>"; };
 		D6E4E7B518B39ADC003E1B90 /* GroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupViewController.h; sourceTree = "<group>"; };
 		D6E4E7B618B39ADC003E1B90 /* GroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupViewController.m; sourceTree = "<group>"; };
@@ -711,7 +714,7 @@
 			isa = PBXGroup;
 			children = (
 				D6E4E78518B3949B003E1B90 /* sticker-Info.plist */,
-				D6E4E78618B3949B003E1B90 /* InfoPlist.strings */,
+				D6E4E78618B3949B003E1B90 /* Localizable.strings */,
 				D6E4E78918B3949B003E1B90 /* main.m */,
 				D6E4E78B18B3949B003E1B90 /* sticker-Prefix.pch */,
 			);
@@ -731,7 +734,7 @@
 			isa = PBXGroup;
 			children = (
 				D6E4E7A418B3949B003E1B90 /* stickerTests-Info.plist */,
-				D6E4E7A518B3949B003E1B90 /* InfoPlist.strings */,
+				D6E4E7A518B3949B003E1B90 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -809,6 +812,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hant",
 			);
 			mainGroup = D6E4E77118B3949B003E1B90;
 			productRefGroup = D6E4E77B18B3949B003E1B90 /* Products */;
@@ -828,7 +832,7 @@
 			files = (
 				D6E4E79618B3949B003E1B90 /* Images.xcassets in Resources */,
 				D6E9353918B8D0350086802C /* 1.PNG in Resources */,
-				D6E4E78818B3949B003E1B90 /* InfoPlist.strings in Resources */,
+				D6E4E78818B3949B003E1B90 /* Localizable.strings in Resources */,
 				D6E9354B18B9F8FA0086802C /* addData.png in Resources */,
 				D6B060D518FD659F0072788D /* takobear.jpg in Resources */,
 				D6E4E79118B3949B003E1B90 /* Main.storyboard in Resources */,
@@ -840,7 +844,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6E4E7A718B3949B003E1B90 /* InfoPlist.strings in Resources */,
+				D6E4E7A718B3949B003E1B90 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,28 +950,31 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D6E4E78618B3949B003E1B90 /* InfoPlist.strings */ = {
+		D6E4E78618B3949B003E1B90 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D6E4E78718B3949B003E1B90 /* en */,
+				03CB5B9A190502B500AE80D0 /* zh-Hant */,
 			);
-			name = InfoPlist.strings;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		D6E4E78F18B3949B003E1B90 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D6E4E79018B3949B003E1B90 /* Base */,
+				03CB5B99190502B500AE80D0 /* zh-Hant */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		D6E4E7A518B3949B003E1B90 /* InfoPlist.strings */ = {
+		D6E4E7A518B3949B003E1B90 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D6E4E7A618B3949B003E1B90 /* en */,
+				03CB5B9B190502B500AE80D0 /* zh-Hant */,
 			);
-			name = InfoPlist.strings;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
