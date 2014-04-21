@@ -142,7 +142,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     if ([userDefault objectForKey:KTakoBearKey] == nil) {
-        UIImage *takoBear = [UIImage imageNamed:@"takobear.jpg"];
+        UIImage *takoBear = [UIImage imageNamed:@"takobear_logo.png"];
         NSString *stickerPath = [[[FileControl mainPath] documentPath] stringByAppendingPathComponent:kFileStoreDirectory];
         NSData *imageData = UIImagePNGRepresentation(takoBear);
         BOOL isWrite = [imageData writeToFile:[stickerPath stringByAppendingPathComponent:@"takobear.jpg"] atomically:YES];
