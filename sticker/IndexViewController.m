@@ -490,7 +490,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     defaultIMPopOverViewController.delegate = self;
     defaultIMPopOverViewController.passthroughViews = @[cell];
     if ([[UIScreen mainScreen] bounds].size.height == 480.0f) {
-        defaultIMPopOverViewController.popoverLayoutMargins = UIEdgeInsetsMake(-10, 0, 180, 0);
+        defaultIMPopOverViewController.popoverLayoutMargins = UIEdgeInsetsMake(100, 0, 180, 0);
     } else if ([[UIScreen mainScreen] bounds].size.height == 568.0f) {
         defaultIMPopOverViewController.popoverLayoutMargins = UIEdgeInsetsMake(200, 0, 180, 0);
     }
