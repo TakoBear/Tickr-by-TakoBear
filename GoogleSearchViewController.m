@@ -15,14 +15,18 @@
 #import "SettingVariable.h"
 
 #define kGOOGLE_IMAGE_SEARCH_API @"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
-#define kSEARCH_BAR_TAG     101
-#define kSEARCH_HUD_TAG     102
-#define kFAILED_LABEL_TAG   103
+#define kSEARCH_BAR_TAG     1001
+#define kSEARCH_HUD_TAG     1002
+#define kFAILED_LABEL_TAG   1003
+#define kTABLEVIEW_TAG      1004
 
-@interface GoogleSearchViewController ()<UISearchBarDelegate,UICollectionViewDataSource,UICollectionViewDelegate, ASIProgressDelegate>
+#define kGOOGLE_SUGGEST_COUNT 18
+
+@interface GoogleSearchViewController ()<UISearchBarDelegate,UICollectionViewDataSource,UICollectionViewDelegate, ASIProgressDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     NSMutableArray *tbImageURLArray;
     NSMutableArray *originImageURLArray;
+    NSArray *suggestionWords;
     UICollectionView *googleCollectionView;
     int searchCount;
     NSString *inputString;
@@ -95,7 +99,34 @@
     self.toolbarItems = @[cancelBtn];
     
     [flowLayout release];
-
+    
+    UITableView *tableView = [[UITableView alloc] initWithFrame:googleCollectionView.frame style:UITableViewStylePlain];
+    tableView.tag = kTABLEVIEW_TAG;
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.hidden = NO;
+    [self.view addSubview:tableView];
+    
+    // Create default suggest string
+    suggestionWords = @[NSLocalizedString(@"I need money", nil),
+                        NSLocalizedString(@"cheers", nil),
+                        NSLocalizedString(@"nice hug", nil),
+                        NSLocalizedString(@"miss you", nil),
+                        NSLocalizedString(@"good bye hug", nil),
+                        NSLocalizedString(@"be happy", nil),
+                        NSLocalizedString(@"sweet kiss", nil),
+                        NSLocalizedString(@"kiss me", nil),
+                        NSLocalizedString(@"good morning kiss", nil),
+                        NSLocalizedString(@"listen to me", nil),
+                        NSLocalizedString(@"funny dog", nil),
+                        NSLocalizedString(@"cute cat", nil),
+                        NSLocalizedString(@"really happy", nil),
+                        NSLocalizedString(@"friendship", nil),
+                        NSLocalizedString(@"tony Chopper", nil),
+                        NSLocalizedString(@"captain america", nil),
+                        NSLocalizedString(@"up", nil),
+                        NSLocalizedString(@"marry me", nil)];
+    [suggestionWords retain];
     
 }
 
@@ -114,13 +145,18 @@
     [originImageURLArray release];
     [inputString release];
     [gestureTextField release];
+    [suggestionWords release];
     googleCollectionView.dataSource = nil;
     googleCollectionView.delegate = nil;
     [googleCollectionView release];
     
-    UISearchBar *searchBar = (UISearchBar *)[self.view viewWithTag:kSEARCH_BAR_TAG];
+    UISearchBar *searchBar = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:kSEARCH_BAR_TAG];
     searchBar = nil;
     [searchBar release];
+    
+    UITableView *tableView = (UITableView *)[self.view viewWithTag:kTABLEVIEW_TAG];
+    [tableView release];
+    tableView = nil;
     
     [super dealloc];
 }
@@ -145,6 +181,8 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
+    UITableView *tableView = (UITableView *)[self.view viewWithTag:kTABLEVIEW_TAG];
+    tableView.hidden = NO;
     [self.view addGestureRecognizer:gestureTextField];
     [searchBar setShowsCancelButton:YES animated:YES];
     return YES;
@@ -159,6 +197,9 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    UITableView *tableView = (UITableView *)[self.view viewWithTag:kTABLEVIEW_TAG];
+    tableView.hidden = YES;
+    
     NSString *text = searchBar.text;
     
     if (text.length == 0 ) {
@@ -196,13 +237,19 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
 {
+    UITableView *tableView = (UITableView *)[self.view viewWithTag:kTABLEVIEW_TAG];
+    tableView.hidden = YES;
+    
     [searchBar resignFirstResponder];
 }
 
 - (void)dismissKeyboadOfSearchBar
 {
-    UISearchBar *searchBar = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:kSEARCH_BAR_TAG];
-    [searchBar resignFirstResponder];
+//    UITableView *tableView = (UITableView *)[self.view viewWithTag:kTABLEVIEW_TAG];
+//    tableView.hidden = YES;
+//    
+//    UISearchBar *searchBar = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:kSEARCH_BAR_TAG];
+//    [searchBar resignFirstResponder];
     [self.view removeGestureRecognizer:gestureTextField];
 }
 
@@ -326,5 +373,36 @@
     [editViewController release];
 }
 
+#pragma mark - UITableView DataSource & Delegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return kGOOGLE_SUGGEST_COUNT;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"CellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+    }
+    cell.textLabel.text = suggestionWords[indexPath.row];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UISearchBar *searchBar = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:kSEARCH_BAR_TAG];
+    searchBar.text = suggestionWords[indexPath.row];
+    
+    [self searchBarSearchButtonClicked:searchBar];
+    
+}
 
 @end

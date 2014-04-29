@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+// Macros
 #define TAKOBEAR_WEBSITE         [NSURL URLWithString:@"http://www.takobear.tw/"]
 
 #define kFileStoreDirectory      @"StickerDocument"
