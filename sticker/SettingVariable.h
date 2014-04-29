@@ -11,7 +11,7 @@
 #define TAKOBEAR_WEBSITE         [NSURL URLWithString:@"http://www.takobear.tw/"]
 
 #define kFileStoreDirectory      @"StickerDocument"
-#define kPhotoAlbumName          @"StickerAlbum"
+#define kPhotoAlbumName          @"Tickr"
 #define RGBA(R,G,B,A)       [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
 #define DARK_ORAGE_COLOR    RGBA(227.0f, 122.0f, 43.0f, 1.0f)
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]

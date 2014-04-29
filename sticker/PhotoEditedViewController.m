@@ -10,7 +10,8 @@
 #import "PaintingImageViewController.h"
 #import "ASIHTTPRequest.h"
 #import "Categories/UIImage+ResizeImage.h"
-#import "PendulumView.h"
+#import "GmailLikeLoadingView.h"
+
 
 @interface PhotoEditedViewController()
 {
@@ -48,9 +49,10 @@
 //    self.toolbarItems = btnItems;
     
     if (_url != nil) {
-        UIColor *ballColor = [UIColor colorWithRed:0.47 green:0.60 blue:0.89 alpha:1];
-        PendulumView *waitingView = [[PendulumView alloc] initWithFrame:self.view.bounds ballColor:ballColor];
-        [self.view addSubview:waitingView];
+        GmailLikeLoadingView *gmailAnimateView = [[GmailLikeLoadingView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        gmailAnimateView.center = self.view.center;
+        [self.view addSubview:gmailAnimateView];
+        [gmailAnimateView startAnimating];
         
         // Send Request to background 
         __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:_url];
@@ -59,9 +61,9 @@
         [request setDelegate:self];
         [request setDownloadProgressDelegate:self];
         [request setCompletionBlock:^{
-            [waitingView stopAnimating];
-            [waitingView removeFromSuperview];
-            [waitingView release];
+            [gmailAnimateView stopAnimating];
+            [gmailAnimateView removeFromSuperview];
+            [gmailAnimateView release];
             if ((request.responseStatusCode == 200) || (request.responseStatusCode == 201) ) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     UIImage *reqImg = [UIImage imageWithData:request.responseData];
