@@ -591,6 +591,9 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     UIImage *index = [imageDataArray objectAtIndex:fromIndexPath.item];
     [imageDataArray removeObjectAtIndex:fromIndexPath.item];
     [imageDataArray insertObject:index atIndex:toIndexPath.item];
+    NSString *string = [imageURLArray objectAtIndex:fromIndexPath.item];
+    [imageURLArray removeObjectAtIndex:fromIndexPath.item];
+    [imageURLArray insertObject:string atIndex:toIndexPath.item];
 }
 
 - (void)deletePhoto:(NSInteger)item
@@ -612,6 +615,7 @@ typedef NS_ENUM(NSInteger, kAdd_Photo_From) {
     imagePicker.delegate = self;
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.allowsEditing = YES;
+    imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
