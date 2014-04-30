@@ -1065,6 +1065,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sticker/sticker-Prefix.pch";
 				INFOPLIST_FILE = "sticker/sticker-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/sticker/ChatManager/WeChatSDK",
@@ -1089,6 +1090,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sticker/sticker-Prefix.pch";
 				INFOPLIST_FILE = "sticker/sticker-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/sticker/ChatManager/WeChatSDK",
