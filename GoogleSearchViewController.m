@@ -26,7 +26,6 @@
 {
     NSMutableArray *tbImageURLArray;
     NSMutableArray *originImageURLArray;
-    NSArray *suggestionWords;
     UICollectionView *googleCollectionView;
     int searchCount;
     NSString *inputString;
@@ -108,25 +107,29 @@
     [self.view addSubview:tableView];
     
     // Create default suggest string
-    suggestionWords = @[NSLocalizedString(@"I need money", nil),
-                        NSLocalizedString(@"cheers", nil),
-                        NSLocalizedString(@"nice hug", nil),
-                        NSLocalizedString(@"miss you", nil),
-                        NSLocalizedString(@"good bye hug", nil),
-                        NSLocalizedString(@"be happy", nil),
-                        NSLocalizedString(@"sweet kiss", nil),
-                        NSLocalizedString(@"kiss me", nil),
-                        NSLocalizedString(@"good morning kiss", nil),
-                        NSLocalizedString(@"listen to me", nil),
-                        NSLocalizedString(@"funny dog", nil),
-                        NSLocalizedString(@"cute cat", nil),
-                        NSLocalizedString(@"really happy", nil),
-                        NSLocalizedString(@"friendship", nil),
-                        NSLocalizedString(@"tony Chopper", nil),
-                        NSLocalizedString(@"captain america", nil),
-                        NSLocalizedString(@"up", nil),
-                        NSLocalizedString(@"marry me", nil)];
-    [suggestionWords retain];
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:kSuggestionWordsKey]) {
+        NSMutableArray *suggestionWords = [NSMutableArray arrayWithArray:@[NSLocalizedString(@"I need money", nil),
+                                     NSLocalizedString(@"cheers", nil),
+                                     NSLocalizedString(@"nice hug", nil),
+                                     NSLocalizedString(@"miss you", nil),
+                                     NSLocalizedString(@"good bye hug", nil),
+                                     NSLocalizedString(@"be happy", nil),
+                                     NSLocalizedString(@"sweet kiss", nil),
+                                     NSLocalizedString(@"kiss me", nil),
+                                     NSLocalizedString(@"good morning kiss", nil),
+                                     NSLocalizedString(@"listen to me", nil),
+                                     NSLocalizedString(@"funny dog", nil),
+                                     NSLocalizedString(@"cute cat", nil),
+                                     NSLocalizedString(@"really happy", nil),
+                                     NSLocalizedString(@"friendship", nil),
+                                     NSLocalizedString(@"tony Chopper", nil),
+                                     NSLocalizedString(@"captain america", nil),
+                                     NSLocalizedString(@"up", nil),
+                                     NSLocalizedString(@"marry me", nil)]];
+        [[NSUserDefaults standardUserDefaults] setValue:suggestionWords forKey:kSuggestionWordsKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+
     
 }
 
@@ -145,7 +148,6 @@
     [originImageURLArray release];
     [inputString release];
     [gestureTextField release];
-    [suggestionWords release];
     googleCollectionView.dataSource = nil;
     googleCollectionView.delegate = nil;
     [googleCollectionView release];
@@ -223,6 +225,13 @@
     } else {
         [gmailAnimateView startAnimating];
     }
+    
+    NSMutableArray *suggestionWords = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:kSuggestionWordsKey]];
+    [suggestionWords insertObject:text atIndex:0];
+    [suggestionWords removeLastObject];
+    [[NSUserDefaults standardUserDefaults] setObject:suggestionWords forKey:kSuggestionWordsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [tableView reloadData];
 
     inputString = [[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] retain];
     //retain to avoid crash!
@@ -392,6 +401,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
     }
+    NSArray *suggestionWords = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:kSuggestionWordsKey]];
     cell.textLabel.text = suggestionWords[indexPath.row];
     return cell;
 }
@@ -399,7 +409,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UISearchBar *searchBar = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:kSEARCH_BAR_TAG];
-    searchBar.text = suggestionWords[indexPath.row];
+    NSArray *suggestionWords = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:kSuggestionWordsKey]];    searchBar.text = suggestionWords[indexPath.row];
     
     [self searchBarSearchButtonClicked:searchBar];
     

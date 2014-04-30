@@ -25,6 +25,7 @@
 #define kImageDataArrayKey    @"Image_Data_Array"
 #define kIMDefaultKey         @"IM_Default_Key"
 #define kSaveAlbumKey         @"Save_Album_Key"
+#define kSuggestionWordsKey   @"Suggestion_Words_Key"
 
 #define KTakoBearKey          @"Load_TakoBear"
 #define KAddNewPhotoKey       @"Load_Add_New_Photo"
