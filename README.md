@@ -9,6 +9,10 @@ To know detail of our team and iOS tutorials, just visit our webSite:
 
 **TakoBear** : [http://www.takobear.tw](http://www.takobear.tw)
 
+To download our app from AppStore, click the link: [App Store](https://itunes.apple.com/us/app/tickr-by-takobear/id867046200?ls=1&mt=8)
+
+Or search __'tickr'__, __'takobear'__ on App Store 
+
 #### UI-Source
 
 The main entry point for this application is IndexViewController.m
