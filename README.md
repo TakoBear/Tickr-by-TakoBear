@@ -18,6 +18,7 @@ If you are interested to know our app flow, just start from this class.
 
 This class is used in the following screenshot:
 
+[![](https://raw.githubusercontent.com/TakoBear/Tickr-by-TakoBear/master/Screens/JMDropMenu.png)](https://raw.githubusercontent.com/TakoBear/Tickr-by-TakoBear/master/Screens/JMDropMenu.png)
 
 To know more, just check this class.
 
@@ -49,17 +50,49 @@ To pop out the menu, just use the method
 
 This class is used in the following screenshot:
 
+[![](https://raw.githubusercontent.com/TakoBear/Tickr-by-TakoBear/master/Screens/JMSprinView.png)](https://raw.githubusercontent.com/TakoBear/Tickr-by-TakoBear/master/Screens/JMSprinView.png)
+
+To init the menu view, follow the steps:
+
+``` objective-c
+JMSpringMenuView *colorMenu= [[JMSpringMenuView alloc] initWithViews:colorIconArray];
+    colorMenu.frame = CGRectMake(20,self.view.frame.size.height - 40, kColorButtonSize, kColorButtonSize * 8);
+    colorMenu.animateInterval = 0.5;
+    colorMenu.animateDirect = Animate_Drop_To_Top;
+    colorMenu.viewsInterval = 10;
+    colorMenu.tag = kCOLOR_VIEW_TAG;
+    colorMenu.delegate = self;
+    [self.view addSubview:colorMenu];
+```
+
+To show the sprinview :
+
+``` objective-c
+[colorMenu popOut];
+```
+To dismiss: 
+
+``` objective-c
+[colorMenu dismiss];
+```
+
+
 #### The other opensource used in this App
 
 Thanks to these opensource contributuion, we made this app close to our expectation.
 
 GmailLoadingView  		: Nikhil Gohil, 2012
+
 MBProgressHUD   (v0.8)	: Matej Bukovinski
+
 WYPopoverController    : Nicolas CHENG, 2013
+
 REMenu					: Roman Efimov [https://github.com/romaonthego](https://github.com/romaonthego) , 2013
 
 RATreeView				: Rafał Augustyniak, 2013
+
 SDWebImage				: [https://github.com/rs/SDWebImage](https://github.com/rs/SDWebImage)
+
 ASIHttp				    : [http://allseeing-i.com/ASIHTTPRequest/](http://allseeing-i.com/ASIHTTPRequest/)
 
 #### Thanks
