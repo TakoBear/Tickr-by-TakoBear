@@ -23,7 +23,8 @@
 {
     [WXApi registerApp:WXAPI_KEY];
     
-    if ([[UINavigationBar appearance] respondsToSelector:@selector(setBarTintColor:)]) {
+    float version = [[UIDevice currentDevice].systemVersion floatValue];
+    if (version >= 7.0) {
         [[UINavigationBar appearance] setBarTintColor:RGBA(247.0f, 166.0f, 0.0f, 1.0f)];
     }
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
