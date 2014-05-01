@@ -74,6 +74,10 @@
     isGoogleSearchNavController = NO;
     isErasing = NO;
     
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+    
     self.navigationItem.title = NSLocalizedString(@"Painting", nil);
     
     UIImageView *mainImgView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, kIMG_VIEW_STATUS_HEIGHT, self.view.frame.size.width, self.view.frame.size.width)] autorelease];
