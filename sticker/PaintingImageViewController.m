@@ -375,9 +375,9 @@
             break;
         case PaintingColorRed:
         {
-            red = 191.0f;
-            green = 27.0f;
-            blue = 11.0f;
+            red =   208.0f;
+            green = 2.0f;
+            blue = 27.0f;
             opacity = 1.0f;
             _drawColor = [RGBA(red, green, blue, opacity) retain];
         }
