@@ -396,6 +396,13 @@
 			path = SHImageEditor;
 			sourceTree = "<group>";
 		};
+		03A270CE1913E79E00B3AA86 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
 		03CA3D8218ED1196001C7077 /* WYPopoverController */ = {
 			isa = PBXGroup;
 			children = (
@@ -661,6 +668,7 @@
 		D6E4E77118B3949B003E1B90 = {
 			isa = PBXGroup;
 			children = (
+				03A270CE1913E79E00B3AA86 /* iPad */,
 				D6E4E78318B3949B003E1B90 /* sticker */,
 				D6E4E7A218B3949B003E1B90 /* stickerTests */,
 				D6E4E77C18B3949B003E1B90 /* Frameworks */,
@@ -1073,6 +1081,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = Tickr;
 				PROVISIONING_PROFILE = "76182E42-86FD-4797-9D28-57AC32BDBDC0";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv6";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1097,6 +1106,7 @@
 				);
 				PRODUCT_NAME = Tickr;
 				PROVISIONING_PROFILE = "76182E42-86FD-4797-9D28-57AC32BDBDC0";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv6";
 				WRAPPER_EXTENSION = app;
 			};
